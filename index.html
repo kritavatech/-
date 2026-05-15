@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KritaVa | Technology. Solutions. Impact.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS VARIABLES */
+        :root {
+            --bg-color: #030303;
+            --text-main: #f5f5f7;
+            --text-muted: #86868b;
+            --accent: #2997ff;
+            --accent-glow: rgba(41, 151, 255, 0.08);
+            --card-bg: rgba(255, 255, 255, 0.02);
+            --card-border: rgba(255, 255, 255, 0.06);
+            --card-hover: rgba(255, 255, 255, 0.05);
+            --transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* GLOBAL STYLES */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* TYPOGRAPHY */
+        h1 {
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 600;
+            letter-spacing: -0.04em;
+            line-height: 1.05;
+            margin-bottom: 1.5rem;
+        }
+
+        h2 {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 500;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.75rem;
+        }
+
+        p {
+            color: var(--text-muted);
+            font-size: 1.125rem;
+            max-width: 650px;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+        
+        .mx-auto {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* UTILITIES */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section {
+            padding: 8rem 0;
+            position: relative;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* CUSTOM LIST STYLES */
+        .styled-list {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .styled-list li {
+            position: relative;
+            padding-left: 1.5rem;
+            color: var(--text-main);
+            font-size: 1.05rem;
+        }
+
+        .styled-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.6rem;
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        /* NAVBAR & SCROLL BEHAVIOR */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.25rem 0;
+            background: rgba(3, 3, 3, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 100;
+            border-bottom: 1px solid var(--card-border);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s;
+        }
+
+        .nav-hidden {
+            transform: translateY(-100%);
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* MASSIVE LOGO UPGRADE */
+        .css-logo {
+            font-size: 2.2rem; /* Significantly Larger */
+            font-weight: 600;
+            letter-spacing: -0.04em;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+        }
+
+        .css-logo .dot {
+            width: 8px; /* Scaled up dot */
+            height: 8px;
+            background-color: var(--accent);
+            border-radius: 50%;
+            display: inline-block;
+            margin-bottom: 4px;
+            margin-left: 2px;
+        }
+
+        /* APPLE-STYLE CUSTOM DROPDOWN */
+        .custom-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            color: var(--text-main);
+            padding: 0.6rem 1.2rem;
+            border-radius: 12px;
+            font-size: 0.875rem;
+            cursor: pointer;
+            outline: none;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+        }
+
+        .dropdown-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .dropdown-btn svg {
+            width: 14px;
+            height: 14px;
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown-content {
+            position: absolute;
+            right: 0;
+            top: calc(100% + 10px);
+            background: rgba(15, 15, 15, 0.85);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            min-width: 160px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px) scale(0.95);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden;
+            z-index: 200;
+        }
+
+        .custom-dropdown.active .dropdown-content {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+        }
+
+        .custom-dropdown.active .dropdown-btn svg {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-item {
+            display: block;
+            padding: 0.75rem 1.2rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: background 0.2s, color 0.2s;
+            cursor: pointer;
+        }
+
+        .dropdown-item:hover, .dropdown-item.active-lang {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-main);
+        }
+
+        /* HERO SECTION */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            padding-top: 5rem;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 80vw;
+            height: 80vw;
+            max-width: 800px;
+            max-height: 800px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 60%);
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .hero p {
+            margin: 0 auto 3rem auto;
+            font-size: 1.25rem;
+            max-width: 700px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 0.875rem 2rem;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-primary {
+            background: var(--text-main);
+            color: var(--bg-color);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.02);
+            background: #ffffff;
+            box-shadow: 0 10px 20px rgba(255,255,255,0.1);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.03);
+            color: var(--text-main);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* IMMERSIVE TEXT BLOCK */
+        .immersive-text {
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            line-height: 1.4;
+            color: var(--text-main);
+            font-weight: 400;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .immersive-text span {
+            color: var(--text-muted);
+        }
+
+        /* GRIDS & CARDS */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 4rem;
+        }
+
+        .bento-grid-small {
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 2.5rem;
+            border-radius: 20px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(41, 151, 255, 0.06), transparent 40%);
+            z-index: 0;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.15);
+            background: var(--card-hover);
+        }
+
+        .card > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-icon {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+            opacity: 0.8;
+        }
+
+        /* TIMELINE SECTION */
+        .timeline-container {
+            display: flex;
+            gap: 2rem;
+            overflow-x: auto;
+            padding: 2rem 0;
+            scrollbar-width: none;
+        }
+        .timeline-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .timeline-item {
+            min-width: 300px;
+            flex: 1;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            top: 2rem;
+            left: -1rem;
+            width: 2rem;
+            height: 1px;
+            background: var(--accent);
+            opacity: 0.5;
+            z-index: -1;
+        }
+        .timeline-item:first-child::before {
+            display: none;
+        }
+
+        .timeline-step {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        /* QUOTE SECTION */
+        .quote-section {
+            padding: 8rem 0;
+            text-align: center;
+            background: radial-gradient(circle at center, rgba(41,151,255,0.05) 0%, transparent 70%);
+        }
+
+        .quote-text {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 300;
+            line-height: 1.3;
+            max-width: 1000px;
+            margin: 0 auto;
+            color: var(--text-main);
+        }
+
+        /* PROJECT CARD (NeeVLY) */
+        .project-card {
+            display: block;
+            background: linear-gradient(145deg, var(--card-bg), rgba(0,0,0,0.8));
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 4rem;
+            margin-top: 3rem;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+            text-align: left;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px) scale(1.01);
+            border-color: rgba(41, 151, 255, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .project-badge {
+            display: inline-block;
+            background: rgba(41, 151, 255, 0.1);
+            color: var(--accent);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-card h3 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 1rem;
+        }
+
+        .tags {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            border: 1px solid rgba(255,255,255,0.03);
+        }
+
+        .visit-btn {
+            position: absolute;
+            bottom: 4rem;
+            right: 4rem;
+            background: var(--text-main);
+            color: var(--bg-color);
+            padding: 0.875rem 1.75rem;
+            border-radius: 30px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .project-card:hover .visit-btn {
+            transform: translateX(5px);
+            background: #fff;
+        }
+
+        /* EARLY ACCESS FORM */
+        .form-container {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 4rem;
+            max-width: 600px;
+            margin: 0 auto;
+            backdrop-filter: blur(20px);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .form-control {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--card-border);
+            color: var(--text-main);
+            padding: 1rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            border-color: var(--accent);
+            background: rgba(0,0,0,0.6);
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: var(--text-main);
+            color: var(--bg-color);
+            border: none;
+            padding: 1rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 1rem;
+        }
+
+        .submit-btn:hover {
+            background: #fff;
+            transform: translateY(-2px);
+        }
+
+        /* FOOTER */
+        footer {
+            border-top: 1px solid var(--card-border);
+            padding: 6rem 0 3rem 0;
+            background: #000;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 4rem;
+        }
+
+        .footer-col h4 {
+            color: var(--text-main);
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-col ul li a {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            transition: color 0.3s;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--text-main);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--card-border);
+            padding-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* MEDIA QUERIES */
+        @media (max-width: 768px) {
+            .project-card {
+                padding: 2rem;
+            }
+            .visit-btn {
+                position: relative;
+                bottom: 0;
+                right: 0;
+                margin-top: 2rem;
+                display: inline-flex;
+            }
+            .form-container {
+                padding: 2rem;
+            }
+            .btn-group {
+                flex-direction: column;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .timeline-container {
+                flex-direction: column;
+            }
+            .timeline-item::before {
+                top: -1rem;
+                left: 2rem;
+                width: 1px;
+                height: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav id="navbar">
+        <div class="container nav-content">
+            <a href="#" class="css-logo">
+                Krita<span style="font-weight: 400; color: var(--text-muted);">Va</span><span class="dot"></span>
+            </a>
+            
+            <div class="custom-dropdown" id="langDropdown">
+                <button class="dropdown-btn" id="langBtn">
+                    <span id="currentLangText">English</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="dropdown-content">
+                    <a class="dropdown-item active-lang" data-val="en">English</a>
+                    <a class="dropdown-item" data-val="hi">हिन्दी (Hindi)</a>
+                    <a class="dropdown-item" data-val="bn">বাংলা (Bengali)</a>
+                    <a class="dropdown-item" data-val="mr">मराठी (Marathi)</a>
+                    <a class="dropdown-item" data-val="ta">தமிழ் (Tamil)</a>
+                    <a class="dropdown-item" data-val="te">తెలుగు (Telugu)</a>
+                    <a class="dropdown-item" data-val="gu">ગુજરાતી (Gujarati)</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="section hero" id="home">
+        <div class="container fade-in">
+            <h1 data-i18n="hero_title">Building Intelligent Technology Systems for the Future.</h1>
+            <p data-i18n="hero_sub">KritaVa is building scalable software, intelligent systems, and future-focused technology products designed to solve real-world problems through practical innovation and long-term execution.</p>
+            <div class="btn-group">
+                <a href="#projects" class="btn btn-primary" data-i18n="btn_projects">Explore Projects</a>
+                <a href="#early-access" class="btn btn-secondary" data-i18n="btn_access">Be part of the foundation</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="about">
+        <div class="container">
+            <div class="fade-in text-center">
+                <h2 data-i18n="why_title">The Ecosystem Vision</h2>
+                <p class="immersive-text fade-in" style="margin-top: 2rem;" data-i18n="why_desc">
+                    Modern technology has become increasingly fragmented. Users interact with disconnected systems, bloated interfaces, and overly complicated digital environments. <span>KritaVa is being built around the idea that the future will belong not to isolated apps, but to interconnected ecosystems</span> of software, automation, and adaptive environments.
+                </p>
+                <p class="immersive-text fade-in" style="margin-top: 2rem;" data-i18n="why_desc_2">
+                    We aim to build systems that reduce unnecessary friction, simplify complexity, and increase accessibility. Technology that feels <span>cleaner, smarter, more integrated, and genuinely useful.</span>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="fade-in">
+                <h2 data-i18n="eng_title">Engineering Approach</h2>
+                <p data-i18n="eng_sub">We build with a focus on resilience, modularity, and uncompromising performance.</p>
+            </div>
+            
+            <div class="bento-grid fade-in" style="margin-top: 3rem;">
+                <div class="card">
+                    <div class="card-icon">🧩</div>
+                    <h3 data-i18n="eng_1_title">Modular Architecture</h3>
+                    <p data-i18n="eng_1_desc" style="font-size: 0.875rem;">Systems designed as independent, scalable components to ensure long-term flexibility.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🚀</div>
+                    <h3 data-i18n="eng_2_title">Performance First</h3>
+                    <p data-i18n="eng_2_desc" style="font-size: 0.875rem;">Optimized for speed, minimal resource consumption, and seamless user experiences.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">💻</div>
+                    <h3 data-i18n="eng_3_title">Clean Codebases</h3>
+                    <p data-i18n="eng_3_desc" style="font-size: 0.875rem;">Maintainability, clarity, and robust documentation prioritized over temporary quick hacks.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section bg-alt">
+        <div class="container">
+            <div class="fade-in">
+                <h2 data-i18n="phil_title">Building Philosophy</h2>
+                <p data-i18n="phil_sub">Meaningful technological progress happens through execution, not just ideas.</p>
+                
+                <ul class="styled-list fade-in">
+                    <li data-i18n="list_phil_1">Disciplined execution</li>
+                    <li data-i18n="list_phil_2">Systems thinking</li>
+                    <li data-i18n="list_phil_3">Long-term iteration</li>
+                    <li data-i18n="list_phil_4">Infrastructure understanding</li>
+                    <li data-i18n="list_phil_5">Product evolution</li>
+                    <li data-i18n="list_phil_6">Operational learning</li>
+                    <li data-i18n="list_phil_7">User-centered design</li>
+                    <li data-i18n="list_phil_8">Scalable architecture</li>
+                    <li data-i18n="list_phil_9">Intelligent simplification</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container text-center fade-in">
+            <h2 data-i18n="aes_title">Design & Interface Philosophy</h2>
+            <p class="mx-auto" style="margin-bottom: 3rem;" data-i18n="aes_sub">Our aesthetic is heavily inspired by modern minimal technology systems. We build products to feel clean, focused, calm, and premium without excess.</p>
+            
+            <div class="bento-grid bento-grid-small mx-auto" style="max-width: 900px;">
+                <div class="card" style="padding: 1.5rem;"><h3 style="font-size: 1.1rem; margin:0;" data-i18n="aes_1">Clarity over clutter</h3></div>
+                <div class="card" style="padding: 1.5rem;"><h3 style="font-size: 1.1rem; margin:0;" data-i18n="aes_2">Usability over decoration</h3></div>
+                <div class="card" style="padding: 1.5rem;"><h3 style="font-size: 1.1rem; margin:0;" data-i18n="aes_3">Speed over complexity</h3></div>
+                <div class="card" style="padding: 1.5rem;"><h3 style="font-size: 1.1rem; margin:0;" data-i18n="aes_4">Structure over chaos</h3></div>
+                <div class="card" style="padding: 1.5rem;"><h3 style="font-size: 1.1rem; margin:0;" data-i18n="aes_5">Simplicity with depth</h3></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="quote-section section fade-in" style="padding: 6rem 0;">
+        <div class="container">
+            <h2 data-i18n="ai_title" style="margin-bottom: 2rem;">The Practical AI Approach</h2>
+            <p class="quote-text" data-i18n="ai_desc" style="font-size: clamp(1.5rem, 3vw, 2.2rem);">
+                "We do not view AI as merely a marketing label. Instead, AI is seen as a capability layer, a systems enhancement mechanism, an efficiency multiplier, and a future infrastructure component."
+            </p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container text-center">
+            <div class="fade-in">
+                <h2 data-i18n="found_title">Realistic Self-Awareness</h2>
+                <p class="mx-auto" style="max-width: 900px;" data-i18n="found_desc_extended">
+                    A defining characteristic of KritaVa is that we intentionally avoid pretending to already be what we hope to become. We openly recognize that we are early-stage. The current phase is heavily focused on software development, product architecture, interface design, operational learning, and building long-term technical capability. Real ecosystems are built gradually.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="fade-in">
+                <h2 data-i18n="tech_title">Technology Direction</h2>
+                <p data-i18n="tech_sub">The vectors of our future research and development.</p>
+            </div>
+
+            <div class="bento-grid bento-grid-small fade-in" style="margin-top: 3rem;">
+                <div class="card"><h3 style="font-size: 1.1rem;" data-i18n="tech_1_title">AI-Integrated Systems</h3><p style="font-size: 0.875rem;" data-i18n="tech_1_desc">Embedded machine intelligence.</p></div>
+                <div class="card"><h3 style="font-size: 1.1rem;" data-i18n="tech_2_title">Automation Infrastructure</h3><p style="font-size: 0.875rem;" data-i18n="tech_2_desc">Reducing manual workflow friction.</p></div>
+                <div class="card"><h3 style="font-size: 1.1rem;" data-i18n="tech_3_title">Smart Productivity</h3><p style="font-size: 0.875rem;" data-i18n="tech_3_desc">Tools that augment human focus.</p></div>
+                <div class="card"><h3 style="font-size: 1.1rem;" data-i18n="tech_4_title">Digital Ecosystems</h3><p style="font-size: 0.875rem;" data-i18n="tech_4_desc">Interconnected platform architectures.</p></div>
+                <div class="card"><h3 style="font-size: 1.1rem;" data-i18n="tech_5_title">Local Commerce Tech</h3><p style="font-size: 0.875rem;" data-i18n="tech_5_desc">Digitizing unorganized sectors.</p></div>
+                <div class="card"><h3 style="font-size: 1.1rem;" data-i18n="tech_6_title">Future Hardware</h3><p style="font-size: 0.875rem;" data-i18n="tech_6_desc">Bridging physical and digital systems.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container fade-in">
+            <h2 data-i18n="timeline_title">Long-Term Vision</h2>
+            
+            <div class="timeline-container">
+                <div class="timeline-item">
+                    <span class="timeline-step" data-i18n="stage_1">Stage 1</span>
+                    <h3 data-i18n="time_1_title">Learning & Foundation</h3>
+                    <p style="font-size: 0.875rem;" data-i18n="time_1_desc">Product experimentation, software systems setup, and deep operational understanding.</p>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-step" data-i18n="stage_2">Stage 2</span>
+                    <h3 data-i18n="time_2_title">Scalable Platforms</h3>
+                    <p style="font-size: 0.875rem;" data-i18n="time_2_desc">Ecosystem expansion, AI integration, and establishing robust user infrastructure.</p>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-step" data-i18n="stage_3">Stage 3</span>
+                    <h3 data-i18n="time_3_title">Intelligent Systems</h3>
+                    <p style="font-size: 0.875rem;" data-i18n="time_3_desc">Building automation environments, productivity ecosystems, and adaptive software.</p>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-step" data-i18n="stage_4">Stage 4</span>
+                    <h3 data-i18n="time_4_title">Advanced Ecosystems</h3>
+                    <p style="font-size: 0.875rem;" data-i18n="time_4_desc">AI-native infrastructure, connected digital systems, and hardware/software integration.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="projects">
+        <div class="container">
+            <div class="fade-in">
+                <h2 data-i18n="proj_title">First Initiative: NeeVLY</h2>
+                <p data-i18n="proj_sub">Our first major product initiative focused on infrastructure-learning.</p>
+            </div>
+
+            <a href="https://kritavatech.github.io/NeeVLY/#" target="_blank" class="project-card fade-in">
+                <div class="project-badge" data-i18n="proj_badge">Currently Building</div>
+                <h3>NeeVLY</h3>
+                <p style="max-width: 800px; font-size: 1.125rem; color: #ccc; margin-bottom: 2rem;" data-i18n="proj_neevly_desc">
+                    A hyperlocal construction-material discovery and ordering platform focused on Tier-2 and Tier-3 cities. It addresses major inefficiencies like fragmented seller ecosystems, lack of transparent pricing, and manual purchasing workflows.
+                </p>
+                
+                <h4 style="color: var(--text-main); margin-bottom: 1rem;" data-i18n="proj_neevly_features">Platform Capabilities:</h4>
+                <ul class="styled-list" style="margin-top: 0; margin-bottom: 2rem;">
+                    <li data-i18n="nf_1">Discover nearby suppliers</li>
+                    <li data-i18n="nf_2">Compare materials digitally</li>
+                    <li data-i18n="nf_3">Contact sellers efficiently</li>
+                    <li data-i18n="nf_4">Manage inquiries & orders</li>
+                </ul>
+
+                <p style="max-width: 800px; font-size: 0.95rem; color: var(--text-muted);" data-i18n="proj_neevly_infra">
+                    Rather than being viewed only as a marketplace, NeeVLY provides KritaVa with direct operational learning in logistics thinking, seller onboarding, commerce infrastructure, and scalable backend workflows.
+                </p>
+
+                <div class="tags">
+                    <span class="tag">Marketplace</span>
+                    <span class="tag">Local Commerce</span>
+                    <span class="tag">Infrastructure</span>
+                    <span class="tag">System Design</span>
+                </div>
+
+                <div class="visit-btn">
+                    <span data-i18n="proj_visit">Visit Project</span> 
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <section class="section" id="early-access">
+        <div class="container text-center">
+            <div class="fade-in">
+                <h2 data-i18n="early_title">Become a Founding Supporter</h2>
+                <p class="mx-auto" style="margin-bottom: 3rem;" data-i18n="early_sub">Help us build the next generation of scalable tech. Early supporters who join during our foundation stage get priority access and long-term ecosystem benefits.</p>
+            </div>
+
+            <div class="form-container fade-in">
+                <form id="earlyAccessForm" action="https://docs.google.com/forms/d/e/1FAIpQLSeH32psK_HTlfYMHhZ50EHakbaI0xy7SMEyG0yLSnNN-9KzwA/formResponse">
+                    
+                    <div class="form-group">
+                        <label for="name" data-i18n="form_name">Full Name</label>
+                        <input type="text" id="name" name="entry.2068067786" class="form-control" required placeholder="Rahul Sharma">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email" data-i18n="form_email">Email Address</label>
+                        <input type="email" id="email" name="entry.2036749053" class="form-control" required placeholder="rahul.sharma@gmail.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone"><span data-i18n="form_phone">Phone Number</span> <span style="color: var(--accent); font-size: 0.75rem;" data-i18n="form_phone_rule">* Indian 10-digit numbers only</span></label>
+                        <input type="tel" id="phone" name="entry.1958611137" class="form-control" required placeholder="9876543210">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="city" data-i18n="form_city">City</label>
+                        <input type="text" id="city" name="entry.1908520001" class="form-control" required placeholder="e.g., Patna, Ranchi">
+                    </div>
+                    
+                    <button type="submit" class="submit-btn" data-i18n="form_btn">Join us from day zero</button>
+                </form>
+
+                <div id="successMessage" style="display: none; margin-top: 2rem; color: var(--text-main);">
+                    <h3 data-i18n="form_success_title">Welcome to the Foundation.</h3>
+                    <p style="color: var(--accent);" data-i18n="form_success_desc">Your information has been received. We are building carefully, and we'll reach out soon.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container fade-in">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="css-logo" style="margin-bottom: 1rem;">
+                        Krita<span style="color: var(--text-muted); font-weight: 400;">Va</span><span class="dot"></span>
+                    </div>
+                    <p style="font-size: 0.875rem;" data-i18n="footer_desc">Building step-by-step toward intelligent technology ecosystems. Focused on practical utility, clean execution, and long-term infrastructure.</p>
+                </div>
+                <div class="footer-col">
+                    <h4 data-i18n="footer_links">Platform</h4>
+                    <ul>
+                        <li><a href="#about" data-i18n="link_about">About Us</a></li>
+                        <li><a href="#projects" data-i18n="link_proj">Projects</a></li>
+                        <li><a href="#early-access" data-i18n="link_early">Join Foundation</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4 data-i18n="footer_contact">Connect</h4>
+                    <ul>
+                        <li><span data-i18n="footer_lbl_email" style="color: var(--text-muted);">Email:</span> <a href="mailto:kritava.tech@gmail.com">kritava.tech@gmail.com</a></li>
+                        <li><span data-i18n="footer_lbl_ig" style="color: var(--text-muted);">Instagram:</span> <a href="https://instagram.com/kritava.tech" target="_blank">@kritava.tech</a></li>
+                        <li style="margin-top: 1rem;"><a href="#" data-i18n="link_privacy">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <span data-i18n="footer_copy">&copy; 2026 KritaVa Technologies. All rights reserved.</span>
+                <span>India</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 1. Custom Dropdown Logic (Apple-style)
+        const dropdown = document.getElementById('langDropdown');
+        const langBtn = document.getElementById('langBtn');
+        const langText = document.getElementById('currentLangText');
+        const dropdownItems = document.querySelectorAll('.dropdown-item');
+
+        langBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dropdown.classList.toggle('active');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!dropdown.contains(e.target)) {
+                dropdown.classList.remove('active');
+            }
+        });
+
+        dropdownItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                dropdownItems.forEach(i => i.classList.remove('active-lang'));
+                e.target.classList.add('active-lang');
+                
+                const selectedLang = e.target.getAttribute('data-val');
+                const selectedText = e.target.textContent.split(' ')[0]; // Get text before brackets if any
+                langText.textContent = selectedText;
+                
+                dropdown.classList.remove('active');
+                updateLanguage(selectedLang);
+            });
+        });
+
+        // 2. Navbar Scroll Logic (Hide on scroll down, show on scroll up)
+        let lastScrollY = window.scrollY;
+        const navbar = document.getElementById('navbar');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > lastScrollY && window.scrollY > 100) {
+                // Scrolling down -> Hide
+                navbar.classList.add('nav-hidden');
+                dropdown.classList.remove('active'); // close menu if open
+            } else {
+                // Scrolling up -> Show
+                navbar.classList.remove('nav-hidden');
+            }
+            lastScrollY = window.scrollY;
+        });
+
+        // 3. Intersection Observer for Fade-In Animations
+        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(element => {
+            observer.observe(element);
+        });
+
+        // 4. Card Hover Glow Effect
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+
+        // 5. Form Validation & Submission Handling (Pure Fetch API)
+        document.getElementById('earlyAccessForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const form = e.target;
+            let phoneInput = document.getElementById('phone');
+            let phoneVal = phoneInput.value.replace(/\D/g, ''); 
+            
+            if (phoneVal.length === 11 && phoneVal.startsWith('0')) {
+                phoneVal = phoneVal.substring(1);
+            }
+            if (phoneVal.length !== 10) {
+                alert('Please enter a valid 10-digit Indian mobile number.');
+                return;
+            }
+            
+            phoneInput.value = phoneVal;
+            
+            const submitBtn = form.querySelector('.submit-btn');
+            submitBtn.textContent = 'Submitting...';
+            submitBtn.style.opacity = '0.7';
+
+            const formData = new FormData(form);
+            const searchParams = new URLSearchParams();
+            for (const pair of formData) {
+                searchParams.append(pair[0], pair[1]);
+            }
+
+            fetch(form.action, {
+                method: 'POST',
+                mode: 'no-cors', 
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: searchParams.toString()
+            }).then(() => {
+                showSuccess();
+            }).catch(err => {
+                console.error("Form submission failed:", err);
+                showSuccess(); 
+            });
+        });
+
+        function showSuccess() {
+            document.getElementById('earlyAccessForm').style.display = 'none';
+            const successMsg = document.getElementById('successMessage');
+            successMsg.style.display = 'block';
+            successMsg.style.opacity = '0';
+            setTimeout(() => {
+                successMsg.style.transition = 'opacity 0.5s ease';
+                successMsg.style.opacity = '1';
+            }, 50);
+        }
+
+        // 6. Extended Multilingual Dictionary (EN, HI, BN, MR, TA, TE, GU)
+        const translations = {
+            en: {
+                hero_title: "Building Intelligent Technology Systems for the Future.",
+                hero_sub: "KritaVa is building scalable software, intelligent systems, and future-focused technology products designed to solve real-world problems through practical innovation and long-term execution.",
+                btn_projects: "Explore Projects", btn_access: "Be part of the foundation",
+                
+                why_title: "The Ecosystem Vision",
+                why_desc: "Modern technology has become increasingly fragmented. Users interact with disconnected systems, bloated interfaces, and overly complicated digital environments. <span>KritaVa is being built around the idea that the future will belong not to isolated apps, but to interconnected ecosystems</span> of software, automation, and adaptive environments.",
+                why_desc_2: "We aim to build systems that reduce unnecessary friction, simplify complexity, and increase accessibility. Technology that feels <span>cleaner, smarter, more integrated, and genuinely useful.</span>",
+                
+                eng_title: "Engineering Approach", eng_sub: "We build with a focus on resilience, modularity, and uncompromising performance.",
+                eng_1_title: "Modular Architecture", eng_1_desc: "Systems designed as independent, scalable components to ensure long-term flexibility.",
+                eng_2_title: "Performance First", eng_2_desc: "Optimized for speed, minimal resource consumption, and seamless user experiences.",
+                eng_3_title: "Clean Codebases", eng_3_desc: "Maintainability, clarity, and robust documentation prioritized over temporary quick hacks.",
+
+                phil_title: "Building Philosophy", phil_sub: "Meaningful technological progress happens through execution, not just ideas.",
+                list_phil_1: "Disciplined execution", list_phil_2: "Systems thinking", list_phil_3: "Long-term iteration",
+                list_phil_4: "Infrastructure understanding", list_phil_5: "Product evolution", list_phil_6: "Operational learning",
+                list_phil_7: "User-centered design", list_phil_8: "Scalable architecture", list_phil_9: "Intelligent simplification",
+
+                aes_title: "Design & Interface Philosophy", aes_sub: "Our aesthetic is heavily inspired by modern minimal technology systems. We build products to feel clean, focused, calm, and premium without excess.",
+                aes_1: "Clarity over clutter", aes_2: "Usability over decoration", aes_3: "Speed over complexity", aes_4: "Structure over chaos", aes_5: "Simplicity with depth",
+
+                ai_title: "The Practical AI Approach",
+                ai_desc: "\"We do not view AI as merely a marketing label. Instead, AI is seen as a capability layer, a systems enhancement mechanism, an efficiency multiplier, and a future infrastructure component.\"",
+
+                found_title: "Realistic Self-Awareness",
+                found_desc_extended: "A defining characteristic of KritaVa is that we intentionally avoid pretending to already be what we hope to become. We openly recognize that we are early-stage. The current phase is heavily focused on software development, product architecture, interface design, operational learning, and building long-term technical capability. Real ecosystems are built gradually.",
+                
+                tech_title: "Technology Direction", tech_sub: "The vectors of our future research and development.",
+                tech_1_title: "AI-Integrated Systems", tech_1_desc: "Embedded machine intelligence.",
+                tech_2_title: "Automation Infrastructure", tech_2_desc: "Reducing manual workflow friction.",
+                tech_3_title: "Smart Productivity", tech_3_desc: "Tools that augment human focus.",
+                tech_4_title: "Digital Ecosystems", tech_4_desc: "Interconnected platform architectures.",
+                tech_5_title: "Local Commerce Tech", tech_5_desc: "Digitizing unorganized sectors.",
+                tech_6_title: "Future Hardware", tech_6_desc: "Bridging physical and digital systems.",
+
+                timeline_title: "Long-Term Vision",
+                stage_1: "Stage 1", stage_2: "Stage 2", stage_3: "Stage 3", stage_4: "Stage 4",
+                time_1_title: "Learning & Foundation", time_1_desc: "Product experimentation, software systems setup, and deep operational understanding.",
+                time_2_title: "Scalable Platforms", time_2_desc: "Ecosystem expansion, AI integration, and establishing robust user infrastructure.",
+                time_3_title: "Intelligent Systems", time_3_desc: "Building automation environments, productivity ecosystems, and adaptive software.",
+                time_4_title: "Advanced Ecosystems", time_4_desc: "AI-native infrastructure, connected digital systems, and hardware/software integration.",
+                
+                proj_title: "First Initiative: NeeVLY", proj_sub: "Our first major product initiative focused on infrastructure-learning.",
+                proj_badge: "Currently Building",
+                proj_neevly_desc: "A hyperlocal construction-material discovery and ordering platform focused on Tier-2 and Tier-3 cities. It addresses major inefficiencies like fragmented seller ecosystems, lack of transparent pricing, and manual purchasing workflows.",
+                proj_neevly_features: "Platform Capabilities:",
+                nf_1: "Discover nearby suppliers", nf_2: "Compare materials digitally", nf_3: "Contact sellers efficiently", nf_4: "Manage inquiries & orders",
+                proj_neevly_infra: "Rather than being viewed only as a marketplace, NeeVLY provides KritaVa with direct operational learning in logistics thinking, seller onboarding, commerce infrastructure, and scalable backend workflows.",
+                proj_visit: "Visit Project",
+                
+                early_title: "Become a Founding Supporter", early_sub: "Help us build the next generation of scalable tech. Early supporters who join during our foundation stage get priority access and long-term ecosystem benefits.",
+                form_name: "Full Name", form_email: "Email Address", form_phone: "Phone Number", form_phone_rule: "* Indian 10-digit numbers only",
+                form_city: "City", form_btn: "Join us from day zero",
+                form_success_title: "Welcome to the Foundation.", form_success_desc: "Your information has been received. We are building carefully, and we'll reach out soon.",
+                
+                footer_desc: "Building step-by-step toward intelligent technology ecosystems. Focused on practical utility, clean execution, and long-term infrastructure.",
+                footer_links: "Platform", footer_contact: "Connect", footer_lbl_email: "Email:", footer_lbl_ig: "Instagram:",
+                link_about: "About Us", link_proj: "Projects", link_early: "Join Foundation", link_privacy: "Privacy Policy",
+                footer_copy: "© 2026 KritaVa Technologies. All rights reserved."
+            },
+            hi: {
+                hero_title: "भविष्य के लिए इंटेलिजेंट टेक्नोलॉजी सिस्टम्स का निर्माण।",
+                hero_sub: "कृतावा स्केलेबल सॉफ्टवेयर, इंटेलिजेंट सिस्टम्स और भविष्य पर केंद्रित टेक्नोलॉजी उत्पाद बना रहा है जो वास्तविक दुनिया की समस्याओं को सुलझाते हैं।",
+                btn_projects: "प्रोजेक्ट्स देखें", btn_access: "बुनियाद का हिस्सा बनें",
+                why_title: "इकोसिस्टम विजन",
+                why_desc: "आधुनिक तकनीक खंडित हो गई है। उपयोगकर्ता असंबद्ध सिस्टम से जूझते हैं। <span>कृतावा इस विचार पर बनाया जा रहा है कि भविष्य केवल अलग-अलग ऐप्स का नहीं, बल्कि जुड़े हुए इकोसिस्टम का होगा।</span>",
+                why_desc_2: "हम ऐसे सिस्टम बनाना चाहते हैं जो जटिलता को कम करें। ऐसी तकनीक जो <span>अधिक साफ, स्मार्ट, एकीकृत और वास्तव में उपयोगी लगे।</span>",
+                
+                eng_title: "इंजीनियरिंग दृष्टिकोण", eng_sub: "हम लचीलापन, मॉड्यूलरिटी और बेहतरीन प्रदर्शन पर ध्यान केंद्रित करते हैं।",
+                eng_1_title: "मॉड्यूलर आर्किटेक्चर", eng_1_desc: "लचीलेपन के लिए स्वतंत्र और स्केलेबल घटक।", eng_2_title: "परफॉर्मेंस फर्स्ट", eng_2_desc: "गति और बेहतरीन उपयोगकर्ता अनुभव के लिए अनुकूलित।",
+                eng_3_title: "क्लीन कोडबेस", eng_3_desc: "रखरखाव और स्पष्टता को त्वरित हैक पर प्राथमिकता।",
+
+                phil_title: "निर्माण दर्शन", phil_sub: "सार्थक तकनीकी प्रगति केवल विचारों से नहीं, बल्कि निष्पादन से होती है।",
+                list_phil_1: "अनुशासित निष्पादन", list_phil_2: "सिस्टम थिंकिंग", list_phil_3: "दीर्घकालिक इटरेशन",
+                list_phil_4: "इन्फ्रास्ट्रक्चर समझ", list_phil_5: "उत्पाद विकास", list_phil_6: "ऑपरेशनल लर्निंग",
+                list_phil_7: "उपयोगकर्ता-केंद्रित डिज़ाइन", list_phil_8: "स्केलेबल आर्किटेक्चर", list_phil_9: "बुद्धिमान सरलीकरण",
+
+                aes_title: "डिज़ाइन और इंटरफ़ेस", aes_sub: "हमारा सौंदर्यशास्त्र न्यूनतम तकनीक से प्रेरित है। उत्पाद साफ, शांत और प्रीमियम महसूस होने चाहिए।",
+                aes_1: "अव्यवस्था पर स्पष्टता", aes_2: "सजावट पर उपयोगिता", aes_3: "जटिलता पर गति", aes_4: "अराजकता पर संरचना", aes_5: "गहराई के साथ सादगी",
+
+                ai_title: "व्यावहारिक एआई दृष्टिकोण",
+                ai_desc: "\"हम एआई को केवल मार्केटिंग लेबल के रूप में नहीं देखते हैं। इसके बजाय, एआई एक क्षमता परत और दक्षता गुणक है।\"",
+
+                found_title: "यथार्थवादी आत्म-जागरूकता",
+                found_desc_extended: "हम जानबूझकर वह होने का दिखावा करने से बचते हैं जो हम भविष्य में बनने की उम्मीद करते हैं। हम खुले तौर पर स्वीकार करते हैं कि हम शुरुआती चरण में हैं। वर्तमान चरण प्रयोग और सीखने पर केंद्रित है।",
+                
+                tech_title: "तकनीकी दिशा", tech_sub: "भविष्य के अनुसंधान और विकास की दिशाएं।",
+                tech_1_title: "एआई इंटीग्रेटेड सिस्टम", tech_1_desc: "एम्बेडेड मशीन इंटेलिजेंस।", tech_2_title: "ऑटोमेशन इंफ्रास्ट्रक्चर", tech_2_desc: "मैनुअल वर्कफ़्लो घर्षण को कम करना।",
+                tech_3_title: "स्मार्ट प्रोडक्टिविटी", tech_3_desc: "मानव फोकस बढ़ाने वाले टूल।", tech_4_title: "डिजिटल इकोसिस्टम", tech_4_desc: "इंटरकनेक्टेड प्लेटफॉर्म।",
+                tech_5_title: "लोकल कॉमर्स टेक", tech_5_desc: "असंगठित क्षेत्रों का डिजिटलीकरण।", tech_6_title: "फ्यूचर हार्डवेयर", tech_6_desc: "फिजिकल और डिजिटल सिस्टम को जोड़ना।",
+
+                timeline_title: "दीर्घकालिक दृष्टिकोण",
+                stage_1: "चरण 1", stage_2: "चरण 2", stage_3: "चरण 3", stage_4: "चरण 4",
+                time_1_title: "सीखना और नींव", time_1_desc: "उत्पाद प्रयोग, सॉफ्टवेयर सिस्टम सेटअप, और परिचालन समझ।",
+                time_2_title: "स्केलेबल प्लेटफॉर्म", time_2_desc: "इकोसिस्टम विस्तार, एआई एकीकरण, और उपयोगकर्ता बुनियादी ढांचा।",
+                time_3_title: "इंटेलिजेंट सिस्टम्स", time_3_desc: "स्वचालन वातावरण, और अनुकूली सॉफ्टवेयर का निर्माण।",
+                time_4_title: "उन्नत इकोसिस्टम", time_4_desc: "एआई-नेटिव इंफ्रास्ट्रक्चर और हार्डवेयर/सॉफ्टवेयर एकीकरण।",
+                
+                proj_title: "पहली पहल: NeeVLY", proj_sub: "बुनियादी ढांचे को सीखने पर केंद्रित हमारी पहली प्रमुख उत्पाद पहल।",
+                proj_badge: "निर्माण जारी है",
+                proj_neevly_desc: "टियर-2 और टियर-3 शहरों के लिए एक हाइपरलोकल निर्माण-सामग्री खोज मंच। यह खंडित विक्रेता पारिस्थितिकी तंत्र और मैनुअल वर्कफ़्लो जैसी अक्षमताओं को संबोधित करता है।",
+                proj_neevly_features: "प्लेटफ़ॉर्म क्षमताएं:",
+                nf_1: "आस-पास के आपूर्तिकर्ता खोजें", nf_2: "सामग्री की डिजिटल तुलना करें", nf_3: "विक्रेताओं से संपर्क करें", nf_4: "पूछताछ और ऑर्डर प्रबंधित करें",
+                proj_neevly_infra: "केवल एक बाज़ार के रूप में देखे जाने के बजाय, NeeVLY रसद, वाणिज्य बुनियादी ढांचे और स्केलेबल बैकएंड में प्रत्यक्ष परिचालन शिक्षा प्रदान करता है।",
+                proj_visit: "प्रोजेक्ट देखें",
+                
+                early_title: "संस्थापक समर्थक बनें", early_sub: "अगली पीढ़ी की स्केलेबल तकनीक बनाने में हमारी मदद करें। शुरुआती समर्थकों को प्राथमिकता और दीर्घकालिक लाभ मिलते हैं।",
+                form_name: "पूरा नाम", form_email: "ईमेल पता", form_phone: "फ़ोन नंबर", form_phone_rule: "* केवल 10 अंकों का भारतीय नंबर",
+                form_city: "शहर", form_btn: "डे ज़ीरो से हमारे साथ जुड़ें",
+                form_success_title: "फाउंडेशन में आपका स्वागत है।", form_success_desc: "आपकी जानकारी प्राप्त हो गई है। हम जल्द ही आपसे संपर्क करेंगे।",
+                
+                footer_desc: "इंटेलिजेंट टेक्नोलॉजी इकोसिस्टम की दिशा में कदम-दर-कदम निर्माण।",
+                footer_links: "प्लेटफ़ॉर्म", footer_contact: "संपर्क", footer_lbl_email: "ईमेल:", footer_lbl_ig: "इंस्टाग्राम:",
+                link_about: "हमारे बारे में", link_proj: "प्रोजेक्ट्स", link_early: "बुनियाद से जुड़ें", link_privacy: "गोपनीयता नीति",
+                footer_copy: "© 2026 कृतावा टेक्नोलॉजीज। सर्वाधिकार सुरक्षित।"
+            },
+            bn: {
+                hero_title: "ভবিষ্যতের জন্য ইন্টেলিজেন্ট প্রযুক্তি সিস্টেম তৈরি করা।", hero_sub: "ক্রিতাভা বাস্তব বিশ্বের সমস্যা সমাধানের জন্য স্কেলেবল সফটওয়্যার এবং ভবিষ্যৎ-কেন্দ্রিক প্রযুক্তি পণ্য তৈরি করছে।",
+                btn_projects: "প্রকল্প দেখুন", btn_access: "ভিত্তির অংশ হন",
+                why_title: "ইকোসিস্টেম ভিশন", why_desc: "ভবিষ্যৎ শুধুমাত্র বিচ্ছিন্ন অ্যাপ্লিকেশনের নয়, বরং সংযুক্ত ইকোসিস্টেমের হবে।", why_desc_2: "আমরা এমন প্রযুক্তি তৈরি করতে চাই যা পরিষ্কার, স্মার্ট এবং দরকারী মনে হয়।",
+                eng_title: "প্রকৌশল পদ্ধতি", eng_sub: "স্থিতিস্থাপকতা এবং কর্মক্ষমতার উপর দৃষ্টি নিবদ্ধ।", eng_1_title: "মডুলার আর্কিটেকচার", eng_1_desc: "দীর্ঘমেয়াদী নমনীয়তার জন্য স্কেলেবল উপাদান।", eng_2_title: "কর্মক্ষমতা প্রথম", eng_2_desc: "গতির জন্য অপ্টিমাইজ করা।", eng_3_title: "ক্লিন কোডবেস", eng_3_desc: "রক্ষণাবেক্ষণ এবং স্বচ্ছতা।",
+                phil_title: "নির্মাণ দর্শন", phil_sub: "প্রযুক্তিগত অগ্রগতি বাস্তবায়নের মাধ্যমে ঘটে।", list_phil_1: "শৃঙ্খলামূলক বাস্তবায়ন", list_phil_2: "সিস্টেম চিন্তা", list_phil_3: "দীর্ঘমেয়াদী ইটারেশন", list_phil_4: "অবকাঠামো বোঝা", list_phil_5: "পণ্য বিবর্তন", list_phil_6: "অপারেশনাল শিক্ষা", list_phil_7: "ব্যবহারকারী-কেন্দ্রিক ডিজাইন", list_phil_8: "স্কেলেবল আর্কিটেকচার", list_phil_9: "বুদ্ধিমান সরলীকরণ",
+                aes_title: "ডিজাইন দর্শন", aes_sub: "আমাদের পণ্যগুলি পরিষ্কার এবং শান্ত অনুভব করার জন্য ডিজাইন করা হয়েছে।", aes_1: "অগোছালোর চেয়ে পরিচ্ছন্নতা", aes_2: "সাজসজ্জার চেয়ে ব্যবহারযোগ্যতা", aes_3: "জটিলতার চেয়ে গতি", aes_4: "বিশৃঙ্খলা থেকে কাঠামো", aes_5: "গভীরতার সাথে সরলতা",
+                ai_title: "ব্যবহারিক এআই", ai_desc: "\"আমরা এআই-কে বিপণন লেবেল হিসেবে নয়, বরং সক্ষমতার স্তর হিসেবে দেখি।\"",
+                found_title: "বাস্তবসম্মত আত্মসচেতনতা", found_desc_extended: "আমরা স্বীকার করি যে আমরা প্রাথমিক পর্যায়ে আছি। আসল ইকোসিস্টেমগুলো ধীরে ধীরে গড়ে ওঠে।",
+                tech_title: "প্রযুক্তির দিকনির্দেশনা", tech_sub: "গবেষণা ও উন্নয়নের ভেক্টর।", tech_1_title: "এআই সিস্টেম", tech_1_desc: "এমবেডেড ইন্টেলিজেন্স।", tech_2_title: "অটোমেশন", tech_2_desc: "কাজের গতিশীলতা।", tech_3_title: "স্মার্ট প্রোডাক্টিভিটি", tech_3_desc: "ফোকাস বাড়ানো।", tech_4_title: "ডিজিটাল ইকোসিস্টেম", tech_4_desc: "সংযুক্ত প্ল্যাটফর্ম।", tech_5_title: "লোকাল কমার্স", tech_5_desc: "ডিজিটাইজেশন।", tech_6_title: "হার্ডওয়্যার", tech_6_desc: "ফিজিক্যাল ও ডিজিটাল ইন্টিগ্রেশন।",
+                timeline_title: "দীর্ঘমেয়াদী দৃষ্টিভঙ্গি", stage_1: "পর্যায় ১", stage_2: "পর্যায় ২", stage_3: "পর্যায় ৩", stage_4: "পর্যায় ৪", time_1_title: "ভিত্তি", time_1_desc: "সফ্টওয়্যার সেটআপ।", time_2_title: "প্লাটফর্ম", time_2_desc: "এআই ইন্টিগ্রেশন।", time_3_title: "সিস্টেম", time_3_desc: "অটোমেশন পরিবেশ।", time_4_title: "উন্নত ইকোসিস্টেম", time_4_desc: "হার্ডওয়্যার ইন্টিগ্রেশন।",
+                proj_title: "প্রথম উদ্যোগ: NeeVLY", proj_sub: "অবকাঠামো শেখার উপর দৃষ্টি নিবদ্ধ।", proj_badge: "বর্তমানে তৈরি হচ্ছে", proj_neevly_desc: "টায়ার-২ এবং টায়ার-৩ শহরের জন্য একটি হাইপারলোকাল প্ল্যাটফর্ম।", proj_neevly_features: "প্ল্যাটফর্মের ক্ষমতা:", nf_1: "সরবরাহকারী খুঁজুন", nf_2: "ডিজিটাল তুলনা", nf_3: "বিক্রেতাদের সাথে যোগাযোগ", nf_4: "অর্ডার পরিচালনা", proj_neevly_infra: "এটি আমাদের লজিস্টিক এবং কমার্স অবকাঠামো শিখতে সাহায্য করে।", proj_visit: "প্রকল্প দেখুন",
+                early_title: "প্রতিষ্ঠাতা সমর্থক হন", early_sub: "স্কেলেবল প্রযুক্তি তৈরি করতে সাহায্য করুন।", form_name: "পুরো নাম", form_email: "ইমেইল", form_phone: "ফোন নম্বর", form_phone_rule: "* শুধুমাত্র ১০ ডিজিটের নম্বর", form_city: "শহর", form_btn: "যোগ দিন", form_success_title: "স্বাগতম।", form_success_desc: "তথ্য গৃহীত হয়েছে। আমরা শীঘ্রই যোগাযোগ করব।",
+                footer_desc: "ইন্টেলিজেন্ট প্রযুক্তি ইকোসিস্টেম তৈরি করা।", footer_links: "প্ল্যাটফর্ম", footer_contact: "যোগাযোগ", footer_lbl_email: "ইমেইল:", footer_lbl_ig: "ইনস্টাগ্রাম:", link_about: "আমাদের সম্পর্কে", link_proj: "প্রকল্প", link_early: "যোগ দিন", link_privacy: "গোপনীয়তা নীতি", footer_copy: "© ২০২৬ ক্রিতাভা টেকনোলজিস।"
+            },
+            mr: {
+                hero_title: "भविष्यासाठी इंटेलिजेंट टेक्नॉलॉजी सिस्टीम.", hero_sub: "क्रितावा वास्तविक जगातील समस्या सोडवण्यासाठी तंत्रज्ञान उत्पादने तयार करत आहे.",
+                btn_projects: "प्रोजेक्ट्स पहा", btn_access: "पायाचा भाग व्हा",
+                why_title: "इकोसिस्टम व्हिजन", why_desc: "भविष्य केवळ ॲप्सचे नाही तर जोडलेल्या इकोसिस्टमचे असेल.", why_desc_2: "आम्ही स्वच्छ, स्मार्ट आणि उपयुक्त तंत्रज्ञान तयार करत आहोत.",
+                eng_title: "अभियांत्रिकी दृष्टिकोन", eng_sub: "लवचिकता आणि उत्कृष्ट कामगिरीवर लक्ष.", eng_1_title: "मॉड्यूलर आर्किटेक्चर", eng_1_desc: "स्केलेबल घटक.", eng_2_title: "कामगिरी", eng_2_desc: "वेगासाठी ऑप्टिमाइझ केलेले.", eng_3_title: "क्लीन कोडबेस", eng_3_desc: "देखभाल आणि स्पष्टता.",
+                phil_title: "निर्मितीचे तत्त्वज्ञान", phil_sub: "प्रगती अंमलबजावणीतून होते.", list_phil_1: "शिस्तबद्ध अंमलबजावणी", list_phil_2: "सिस्टीम थिंकिंग", list_phil_3: "दीर्घकालीन इटरेशन", list_phil_4: "पायाभूत सुविधा समज", list_phil_5: "उत्पादन विकास", list_phil_6: "ऑपरेशनल लर्निंग", list_phil_7: "वापरकर्ता-केंद्रित डिझाइन", list_phil_8: "स्केलेबल आर्किटेक्चर", list_phil_9: "स्मार्ट सुलभीकरण",
+                aes_title: "डिझाइन तत्त्वज्ञान", aes_sub: "उत्पादने स्वच्छ आणि प्रीमियम वाटली पाहिजेत.", aes_1: "स्पष्टता", aes_2: "उपयुक्तता", aes_3: "वेग", aes_4: "रचना", aes_5: "साधेपणा",
+                ai_title: "व्यावहारिक एआय", ai_desc: "\"आम्ही एआय कडे फक्त मार्केटिंग लेबल म्हणून नाही, तर क्षमतेचा स्तर म्हणून पाहतो.\"",
+                found_title: "वास्तववादी आत्म-जागरूकता", found_desc_extended: "आम्ही सुरुवातीच्या टप्प्यात आहोत हे आम्ही मान्य करतो. खऱ्या इकोसिस्टम्स हळूहळू बनतात.",
+                tech_title: "तंत्रज्ञानाची दिशा", tech_sub: "भविष्यातील संशोधन.", tech_1_title: "एआय सिस्टीम्स", tech_1_desc: "मशीन इंटेलिजन्स.", tech_2_title: "ऑटोमेशन", tech_2_desc: "वर्कफ्लो सुधारणा.", tech_3_title: "स्मार्ट उत्पादकता", tech_3_desc: "लक्ष केंद्रित करणारी साधने.", tech_4_title: "डिजिटल इकोसिस्टम", tech_4_desc: "इंटरकनेक्टेड प्लॅटफॉर्म.", tech_5_title: "लोकल कॉमर्स", tech_5_desc: "डिजिटायझेशन.", tech_6_title: "हार्डवेअर", tech_6_desc: "फिजिकल आणि डिजिटल.",
+                timeline_title: "दीर्घकालीन दृष्टी", stage_1: "टप्पा १", stage_2: "टप्पा २", stage_3: "टप्पा ३", stage_4: "टप्पा ४", time_1_title: "पाया", time_1_desc: "सॉफ्टवेअर सेटअप.", time_2_title: "प्लॅटफॉर्म", time_2_desc: "एआय एकत्रीकरण.", time_3_title: "सिस्टीम", time_3_desc: "ऑटोमेशन.", time_4_title: "प्रगत इकोसिस्टम", time_4_desc: "हार्डवेअर इंटिग्रेशन.",
+                proj_title: "पहिली पहल: NeeVLY", proj_sub: "पायाभूत सुविधा शिकण्यावर लक्ष केंद्रित.", proj_badge: "निर्मिती सुरू आहे", proj_neevly_desc: "टियर-२ आणि टियर-३ शहरांसाठी एक हायपरलोकल प्लॅटफॉर्म.", proj_neevly_features: "प्लॅटफॉर्म क्षमता:", nf_1: "पुरवठादार शोधा", nf_2: "डिजिटल तुलना", nf_3: "संपर्क करा", nf_4: "ऑर्डर व्यवस्थापन", proj_neevly_infra: "यातून आम्हाला लॉजिस्टिक्स आणि कॉमर्स इन्फ्रास्ट्रक्चर शिकायला मिळते.", proj_visit: "प्रोजेक्ट पहा",
+                early_title: "संस्थापक समर्थक बना", early_sub: "स्केलेबल तंत्रज्ञान तयार करण्यात मदत करा.", form_name: "पूर्ण नाव", form_email: "ईमेल", form_phone: "फोन नंबर", form_phone_rule: "* फक्त १० अंकी नंबर", form_city: "शहर", form_btn: "सामील व्हा", form_success_title: "स्वागत आहे.", form_success_desc: "तुमची माहिती मिळाली आहे. आम्ही संपर्क करू.",
+                footer_desc: "इंटेलिजेंट तंत्रज्ञान इकोसिस्टीमची निर्मिती.", footer_links: "प्लॅटफॉर्म", footer_contact: "संपर्क", footer_lbl_email: "ईमेल:", footer_lbl_ig: "इन्स्टाग्राम:", link_about: "आमच्याबद्दल", link_proj: "प्रोजेक्ट्स", link_early: "सामील व्हा", link_privacy: "गोपनीयता धोरण", footer_copy: "© 2026 क्रितावा टेक्नॉलॉजीज."
+            },
+            ta: {
+                hero_title: "எதிர்காலத்திற்கான அறிவார்ந்த தொழில்நுட்ப அமைப்புகள்.", hero_sub: "நடைமுறை கண்டுபிடிப்புகள் மூலம் நிஜ உலக பிரச்சனைகளை தீர்க்கும் தொழில்நுட்பம்.",
+                btn_projects: "திட்டங்களை காண்க", btn_access: "அடித்தளத்தில் சேரவும்",
+                why_title: "சுற்றுச்சூழல் பார்வை", why_desc: "எதிர்காலம் தனிமைப்படுத்தப்பட்ட செயலிகளுக்கானது அல்ல, இணைக்கப்பட்ட அமைப்புகளுக்கானது.", why_desc_2: "சுத்தமான, புத்திசாலித்தனமான தொழில்நுட்பத்தை நாங்கள் உருவாக்குகிறோம்.",
+                eng_title: "பொறியியல் அணுகுமுறை", eng_sub: "செயல்திறன் மற்றும் நெகிழ்வுத்தன்மை.", eng_1_title: "மாடுலர் கட்டமைப்பு", eng_1_desc: "அளவிடக்கூடிய கூறுகள்.", eng_2_title: "செயல்திறன்", eng_2_desc: "வேகத்திற்காக உகந்ததாக்கப்பட்டது.", eng_3_title: "சுத்தமான குறியீடு", eng_3_desc: "பராமரிப்பு மற்றும் தெளிவு.",
+                phil_title: "உருவாக்கும் தத்துவம்", phil_sub: "முன்னேற்றம் செயல்படுத்தல் மூலம் நடக்கிறது.", list_phil_1: "ஒழுங்கான செயல்பாடு", list_phil_2: "சிஸ்டம் சிந்தனை", list_phil_3: "நீண்ட கால வளர்ச்சி", list_phil_4: "உள்கட்டமைப்பு புரிதல்", list_phil_5: "தயாரிப்பு பரிணாமம்", list_phil_6: "செயல்பாட்டு கற்றல்", list_phil_7: "பயனர் மைய வடிவமைப்பு", list_phil_8: "அளவிடக்கூடிய கட்டமைப்பு", list_phil_9: "புத்திசாலித்தனமான எளிமைப்படுத்தல்",
+                aes_title: "வடிவமைப்பு தத்துவம்", aes_sub: "எங்கள் தயாரிப்புகள் சுத்தமாகவும் அமைதியாகவும் உணர வேண்டும்.", aes_1: "தெளிவு", aes_2: "பயன்பாடு", aes_3: "வேகம்", aes_4: "அமைப்பு", aes_5: "எளிமை",
+                ai_title: "நடைமுறை AI", ai_desc: "\"AI என்பது வெறும் சந்தைப்படுத்தல் சொல் அல்ல, அது ஒரு திறன் அடுக்கு.\"",
+                found_title: "யதார்த்தமான விழிப்புணர்வு", found_desc_extended: "நாங்கள் ஆரம்ப கட்டத்தில் இருக்கிறோம் என்பதை நாங்கள் ஏற்றுக்கொள்கிறோம். உண்மையான அமைப்புகள் படிப்படியாக உருவாக்கப்படுகின்றன.",
+                tech_title: "தொழில்நுட்ப திசை", tech_sub: "எதிர்கால ஆராய்ச்சி.", tech_1_title: "AI அமைப்புகள்", tech_1_desc: "இயந்திர நுண்ணறிவு.", tech_2_title: "ஆட்டோமேஷன்", tech_2_desc: "வேலைப்பாய்வு மேம்பாடு.", tech_3_title: "ஸ்மார்ட் உற்பத்தி", tech_3_desc: "கவனம் செலுத்தும் கருவிகள்.", tech_4_title: "டிஜிட்டல் சுற்றுச்சூழல்", tech_4_desc: "இணைக்கப்பட்ட தளங்கள்.", tech_5_title: "உள்ளூர் வர்த்தகம்", tech_5_desc: "டிஜிட்டல் மயமாக்கல்.", tech_6_title: "வன்பொருள்", tech_6_desc: "பௌதீக மற்றும் டிஜிட்டல் இணைப்பு.",
+                timeline_title: "நீண்ட கால பார்வை", stage_1: "நிலை 1", stage_2: "நிலை 2", stage_3: "நிலை 3", stage_4: "நிலை 4", time_1_title: "அடித்தளம்", time_1_desc: "மென்பொருள் அமைப்பு.", time_2_title: "தளம்", time_2_desc: "AI ஒருங்கிணைப்பு.", time_3_title: "சிஸ்டம்", time_3_desc: "ஆட்டோமேஷன்.", time_4_title: "மேம்பட்ட சுற்றுச்சூழல்", time_4_desc: "வன்பொருள் ஒருங்கிணைப்பு.",
+                proj_title: "முதல் முயற்சி: NeeVLY", proj_sub: "உள்கட்டமைப்பு கற்றல் மீதான கவனம்.", proj_badge: "உருவாக்கப்படுகிறது", proj_neevly_desc: "அடுக்கு-2 மற்றும் 3 நகரங்களுக்கான உள்ளூர் தளம்.", proj_neevly_features: "திறன்கள்:", nf_1: "வழங்குநர்களைக் கண்டறியவும்", nf_2: "டிஜிட்டல் ஒப்பீடு", nf_3: "தொடர்பு கொள்ளவும்", nf_4: "ஆர்டர்களை நிர்வகிக்கவும்", proj_neevly_infra: "தளவாடங்கள் மற்றும் வர்த்தக உள்கட்டமைப்பை அறிய இது எங்களுக்கு உதவுகிறது.", proj_visit: "திட்டத்தை காண்க",
+                early_title: "ஆதரவாளராக மாறுங்கள்", early_sub: "தொழில்நுட்பத்தை உருவாக்க உதவுங்கள்.", form_name: "முழு பெயர்", form_email: "மின்னஞ்சல்", form_phone: "தொலைபேசி", form_phone_rule: "* 10 இலக்க எண்கள் மட்டும்", form_city: "நகரம்", form_btn: "இணையுங்கள்", form_success_title: "நல்வரவு.", form_success_desc: "உங்கள் தகவல்கள் பெறப்பட்டன. விரைவில் தொடர்புகொள்வோம்.",
+                footer_desc: "அறிவார்ந்த தொழில்நுட்பத்தை உருவாக்குதல்.", footer_links: "தளம்", footer_contact: "தொடர்பு", footer_lbl_email: "மின்னஞ்சல்:", footer_lbl_ig: "இன்ஸ்டாகிராம்:", link_about: "எங்களை பற்றி", link_proj: "திட்டங்கள்", link_early: "இணையுங்கள்", link_privacy: "தனியுரிமை கொள்கை", footer_copy: "© 2026 KritaVa Technologies."
+            },
+            te: {
+                hero_title: "భవిష్యత్తు కోసం ఇంటెలిజెంట్ టెక్నాలజీ సిస్టమ్స్.", hero_sub: "కృతవా వాస్తవ ప్రపంచ సమస్యలను పరిష్కరించడానికి సాంకేతికతను నిర్మిస్తోంది.",
+                btn_projects: "ప్రాజెక్ట్‌లను చూడండి", btn_access: "ఫౌండేషన్‌లో చేరండి",
+                why_title: "ఎకోసిస్టమ్ విజన్", why_desc: "భవిష్యత్తు కేవలం యాప్‌లది కాదు, కనెక్ట్ చేయబడిన సిస్టమ్‌లది.", why_desc_2: "మేము శుభ్రమైన మరియు స్మార్ట్ టెక్నాలజీని నిర్మిస్తాము.",
+                eng_title: "ఇంజనీరింగ్ విధానం", eng_sub: "పనితీరు మరియు వశ్యతపై దృష్టి.", eng_1_title: "మాడ్యులర్ ఆర్కిటెక్చర్", eng_1_desc: "స్కేలబుల్ భాగాలు.", eng_2_title: "పనితీరు", eng_2_desc: "వేగం కోసం ఆప్టిమైజ్ చేయబడింది.", eng_3_title: "క్లీన్ కోడ్‌బేస్", eng_3_desc: "నిర్వహణ మరియు స్పష్టత.",
+                phil_title: "నిర్మాణ తత్వశాస్త్రం", phil_sub: "ఆచరణ ద్వారా పురోగతి వస్తుంది.", list_phil_1: "క్రమశిక్షణతో అమలు", list_phil_2: "సిస్టమ్ థింకింగ్", list_phil_3: "దీర్ఘకాలిక పునరావృతం", list_phil_4: "మౌలిక సదుపాయాల అవగాహన", list_phil_5: "ఉత్పత్తి పరిణామం", list_phil_6: "ఆపరేషనల్ లెర్నింగ్", list_phil_7: "వినియోగదారు-కేంద్రీకృత డిజైన్", list_phil_8: "స్కేలబుల్ ఆర్కిటెక్చర్", list_phil_9: "స్మార్ట్ సరళీకరణ",
+                aes_title: "డిజైన్ తత్వశాస్త్రం", aes_sub: "మా ఉత్పత్తులు శుభ్రంగా మరియు ప్రశాంతంగా ఉండాలి.", aes_1: "స్పష్టత", aes_2: "ఉపయోగం", aes_3: "వేగం", aes_4: "నిర్మాణం", aes_5: "సరళత",
+                ai_title: "ప్రాక్టికల్ AI", ai_desc: "\"AI కేవలం మార్కెటింగ్ పదం కాదు, అది ఒక సామర్థ్య పొర.\"",
+                found_title: "వాస్తవిక అవగాహన", found_desc_extended: "మేము ప్రారంభ దశలో ఉన్నామని మేము అంగీకరిస్తున్నాము. నిజమైన వ్యవస్థలు క్రమంగా నిర్మించబడతాయి.",
+                tech_title: "టెక్నాలజీ దిశ", tech_sub: "భవిష్యత్ పరిశోధన.", tech_1_title: "AI సిస్టమ్స్", tech_1_desc: "మెషిన్ ఇంటెలిజెన్స్.", tech_2_title: "ఆటోమేషన్", tech_2_desc: "వర్క్‌ఫ్లో మెరుగుదల.", tech_3_title: "స్మార్ట్ ఉత్పాదకత", tech_3_desc: "దృష్టి సాధనాలు.", tech_4_title: "డిజిటల్ ఎకోసిస్టమ్", tech_4_desc: "కనెక్ట్ చేయబడిన ప్లాట్‌ఫారమ్‌లు.", tech_5_title: "లోకల్ కామర్స్", tech_5_desc: "డిజిటలైజేషన్.", tech_6_title: "హార్డ్‌వేర్", tech_6_desc: "భౌతిక మరియు డిజిటల్.",
+                timeline_title: "దీర్ఘకాలిక దృష్టి", stage_1: "దశ 1", stage_2: "దశ 2", stage_3: "దశ 3", stage_4: "దశ 4", time_1_title: "పునాది", time_1_desc: "సాఫ్ట్‌వేర్ సెటప్.", time_2_title: "ప్లాట్‌ఫారమ్", time_2_desc: "AI ఇంటిగ్రేషన్.", time_3_title: "సిస్టమ్", time_3_desc: "ఆటోమేషన్.", time_4_title: "అధునాతన ఎకోసిస్టమ్", time_4_desc: "హార్డ్‌వేర్ ఇంటిగ్రేషన్.",
+                proj_title: "మొదటి చొరవ: NeeVLY", proj_sub: "మౌలిక సదుపాయాల అభ్యాసంపై దృష్టి.", proj_badge: "నిర్మిస్తున్నాము", proj_neevly_desc: "టైర్-2 మరియు 3 నగరాలకు లోకల్ ప్లాట్‌ఫారమ్.", proj_neevly_features: "సామర్థ్యాలు:", nf_1: "సరఫరాదారులను కనుగొనండి", nf_2: "డిజిటల్ పోలిక", nf_3: "సంప్రదించండి", nf_4: "ఆర్డర్‌లను నిర్వహించండి", proj_neevly_infra: "ఇది లాజిస్టిక్స్ మరియు కామర్స్ ఇన్‌ఫ్రాస్ట్రక్చర్ నేర్చుకోవడంలో మాకు సహాయపడుతుంది.", proj_visit: "ప్రాజెక్ట్ చూడండి",
+                early_title: "మద్దతుదారుగా మారండి", early_sub: "సాంకేతికతను నిర్మించడంలో సహాయపడండి.", form_name: "పూర్తి పేరు", form_email: "ఇమెయిల్", form_phone: "ఫోన్ నంబర్", form_phone_rule: "* 10 అంకెల నంబర్లు మాత్రమే", form_city: "నగరం", form_btn: "చేరండి", form_success_title: "స్వాగతం.", form_success_desc: "మీ సమాచారం స్వీకరించబడింది. త్వరలో సంప్రదిస్తాము.",
+                footer_desc: "ఇంటెలిజెంట్ టెక్నాలజీని నిర్మించడం.", footer_links: "ప్లాట్‌ఫారమ్", footer_contact: "సంప్రదించండి", footer_lbl_email: "ఇమెయిల్:", footer_lbl_ig: "ఇన్‌స్టాగ్రామ్:", link_about: "మా గురించి", link_proj: "ప్రాజెక్ట్‌లు", link_early: "చేరండి", link_privacy: "గోప్యతా విధానం", footer_copy: "© 2026 KritaVa Technologies."
+            },
+            gu: {
+                hero_title: "ભવિષ્ય માટે ઇન્ટેલિજન્ટ ટેક્નોલોજી સિસ્ટમ્સ.", hero_sub: "ક્રિતાવા વાસ્તવિક દુનિયાની સમસ્યાઓ હલ કરવા માટે ટેક્નોલોજી બનાવી રહ્યું છે.",
+                btn_projects: "પ્રોજેક્ટ્સ જુઓ", btn_access: "જોડાવો",
+                why_title: "ઇકોસિસ્ટમ વિઝન", why_desc: "ભવિષ્ય માત્ર એપ્સનું નહીં, પરંતુ જોડાયેલ સિસ્ટમ્સનું હશે.", why_desc_2: "અમે સ્વચ્છ અને સ્માર્ટ ટેક્નોલોજી બનાવીએ છીએ.",
+                eng_title: "એન્જિનિયરિંગ અભિગમ", eng_sub: "પ્રદર્શન અને સુગમતા પર ધ્યાન.", eng_1_title: "મોડ્યુલર આર્કિટેક્ચર", eng_1_desc: "સ્કેલેબલ ભાગો.", eng_2_title: "પ્રદર્શન", eng_2_desc: "ઝડપ માટે ઑપ્ટિમાઇઝ.", eng_3_title: "ક્લીન કોડબેસ", eng_3_desc: "જાળવણી અને સ્પષ્ટતા.",
+                phil_title: "નિર્માણ ફિલસૂફી", phil_sub: "અમલીકરણ દ્વારા પ્રગતિ થાય છે.", list_phil_1: "શિસ્તબદ્ધ અમલ", list_phil_2: "સિસ્ટમ થિંકિંગ", list_phil_3: "લાંબા ગાળાના ઇટરેશન", list_phil_4: "ઇન્ફ્રાસ્ટ્રક્ચર સમજ", list_phil_5: "ઉત્પાદન ઉત્ક્રાંતિ", list_phil_6: "ઓપરેશનલ લર્નિંગ", list_phil_7: "વપરાશકર્તા-કેન્દ્રિત ડિઝાઇન", list_phil_8: "સ્કેલેબલ આર્કિટેક્ચર", list_phil_9: "સ્માર્ટ સરળીકરણ",
+                aes_title: "ડિઝાઇન ફિલસૂફી", aes_sub: "અમારા ઉત્પાદનો સ્વચ્છ અને શાંત હોવા જોઈએ.", aes_1: "સ્પષ્ટતા", aes_2: "ઉપયોગિતા", aes_3: "ઝડપ", aes_4: "માળખું", aes_5: "સરળતા",
+                ai_title: "વ્યવહારુ AI", ai_desc: "\"AI માત્ર એક માર્કેટિંગ શબ્દ નથી, તે એક ક્ષમતા સ્તર છે.\"",
+                found_title: "વાસ્તવિક જાગૃતિ", found_desc_extended: "અમે સ્વીકારીએ છીએ કે અમે પ્રારંભિક તબક્કામાં છીએ. સાચી ઇકોસિસ્ટમ ધીમે ધીમે બને છે.",
+                tech_title: "ટેક્નોલોજી દિશા", tech_sub: "ભવિષ્યનું સંશોધન.", tech_1_title: "AI સિસ્ટમ્સ", tech_1_desc: "મશીન ઇન્ટેલિજન્સ.", tech_2_title: "ઓટોમેશન", tech_2_desc: "વર્કફ્લો સુધારણા.", tech_3_title: "સ્માર્ટ ઉત્પાદકતા", tech_3_desc: "ધ્યાન કેન્દ્રિત કરતા સાધનો.", tech_4_title: "ડિજિટલ ઇકોસિસ્ટમ", tech_4_desc: "કનેક્ટેડ પ્લેટફોર્મ.", tech_5_title: "લોકલ કોમર્સ", tech_5_desc: "ડિજિટલાઇઝેશન.", tech_6_title: "હાર્ડવેર", tech_6_desc: "ભૌતિક અને ડિજિટલ.",
+                timeline_title: "લાંબા ગાળાની દ્રષ્ટિ", stage_1: "તબક્કો 1", stage_2: "તબક્કો 2", stage_3: "તબક્કો 3", stage_4: "તબક્કો 4", time_1_title: "પાયો", time_1_desc: "સોફ્ટવેર સેટઅપ.", time_2_title: "પ્લેટફોર્મ", time_2_desc: "AI એકીકરણ.", time_3_title: "સિસ્ટમ", time_3_desc: "ઓટોમેશન.", time_4_title: "અદ્યતન ઇકોસિસ્ટમ", time_4_desc: "હાર્ડવેર એકીકરણ.",
+                proj_title: "પ્રથમ પહેલ: NeeVLY", proj_sub: "ઇન્ફ્રાસ્ટ્રક્ચર શીખવા પર ધ્યાન.", proj_badge: "બની રહ્યું છે", proj_neevly_desc: "ટાયર-2 અને 3 શહેરો માટે લોકલ પ્લેટફોર્મ.", proj_neevly_features: "ક્ષમતાઓ:", nf_1: "સપ્લાયર્સ શોધો", nf_2: "ડિજિટલ સરખામણી", nf_3: "સંપર્ક કરો", nf_4: "ઓર્ડર સંચાલિત કરો", proj_neevly_infra: "આ અમને લોજિસ્ટિક્સ અને કોમર્સ ઇન્ફ્રાસ્ટ્રક્ચર શીખવામાં મદદ કરે છે.", proj_visit: "પ્રોજેક્ટ જુઓ",
+                early_title: "સમર્થક બનો", early_sub: "ટેક્નોલોજી બનાવવામાં મદદ કરો.", form_name: "પૂરું નામ", form_email: "ઇમેઇલ", form_phone: "ફોન નંબર", form_phone_rule: "* માત્ર 10 અંકના નંબરો", form_city: "શહેર", form_btn: "જોડાવો", form_success_title: "સ્વાગત છે.", form_success_desc: "તમારી માહિતી મળી ગઈ છે. ટૂંક સમયમાં સંપર્ક કરીશું.",
+                footer_desc: "ઇન્ટેલિજન્ટ ટેક્નોલોજી બનાવવી.", footer_links: "પ્લેટફોર્મ", footer_contact: "સંપર્ક", footer_lbl_email: "ઇમેઇલ:", footer_lbl_ig: "ઇન્સ્ટાગ્રામ:", link_about: "અમારા વિશે", link_proj: "પ્રોજેક્ટ્સ", link_early: "જોડાવો", link_privacy: "ગોપનીયતા નીતિ", footer_copy: "© 2026 KritaVa Technologies."
+            }
+        };
+
+        function updateLanguage(lang) {
+            if(translations[lang]) {
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if(translations[lang][key]) {
+                        if (key === 'why_desc' && lang === 'en') {
+                            el.innerHTML = "Modern technology has become increasingly fragmented. Users interact with disconnected systems, bloated interfaces, and overly complicated digital environments. <span>KritaVa is being built around the idea that the future will belong not to isolated apps, but to interconnected ecosystems</span> of software, automation, and adaptive environments.";
+                        } else if (key === 'why_desc_2' && lang === 'en') {
+                            el.innerHTML = "We aim to build systems that reduce unnecessary friction, simplify complexity, and increase accessibility. Technology that feels <span>cleaner, smarter, more integrated, and genuinely useful.</span>";
+                        } else if (key === 'why_desc' && lang === 'hi') {
+                            el.innerHTML = "आधुनिक तकनीक खंडित हो गई है। उपयोगकर्ता असंबद्ध सिस्टम से जूझते हैं। <span>कृतावा इस विचार पर बनाया जा रहा है कि भविष्य केवल अलग-अलग ऐप्स का नहीं, बल्कि जुड़े हुए इकोसिस्टम का होगा।</span>";
+                        } else if (key === 'why_desc_2' && lang === 'hi') {
+                            el.innerHTML = "हम ऐसे सिस्टम बनाना चाहते हैं जो जटिलता को कम करें। ऐसी तकनीक जो <span>अधिक साफ, स्मार्ट, एकीकृत और वास्तव में उपयोगी लगे।</span>";
+                        } else {
+                            el.textContent = translations[lang][key];
+                        }
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>
