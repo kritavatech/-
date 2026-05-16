@@ -598,6 +598,63 @@
             transform: translateY(-2px);
         }
 
+        /* WAITLIST BENEFITS INJECTED CSS */
+        .benefits-wrapper {
+            max-width: 900px;
+            margin: 0 auto 4rem auto;
+            text-align: left;
+        }
+
+        .benefits-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 2rem;
+            text-align: center;
+            letter-spacing: -0.02em;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .benefit-card {
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid var(--card-border);
+            padding: 2rem;
+            border-radius: 16px;
+            transition: var(--transition);
+        }
+
+        .benefit-card:hover {
+            background: rgba(255, 255, 255, 0.03);
+            border-color: rgba(41, 151, 255, 0.2);
+        }
+
+        .benefit-num {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.05em;
+        }
+
+        .benefit-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+        }
+
+        .benefit-card p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
         /* FOOTER */
         footer {
             border-top: 1px solid var(--card-border);
@@ -677,6 +734,9 @@
                 width: 1px;
                 height: 2rem;
             }
+            .benefits-wrapper {
+                padding: 0 1rem;
+            }
         }
     </style>
 </head>
@@ -696,11 +756,12 @@
                 <div class="dropdown-content">
                     <a class="dropdown-item active-lang" data-val="en">English</a>
                     <a class="dropdown-item" data-val="hi">हिन्दी (Hindi)</a>
+                    <a class="dropdown-item" data-val="bho">भोजपुरी (Bhojpuri)</a>
+                    <a class="dropdown-item" data-val="bhr">मैथिली (Maithili)</a>
                     <a class="dropdown-item" data-val="bn">বাংলা (Bengali)</a>
                     <a class="dropdown-item" data-val="mr">मराठी (Marathi)</a>
                     <a class="dropdown-item" data-val="ta">தமிழ் (Tamil)</a>
                     <a class="dropdown-item" data-val="te">తెలుగు (Telugu)</a>
-                    <a class="dropdown-item" data-val="gu">ગુજરાતી (Gujarati)</a>
                 </div>
             </div>
         </div>
@@ -909,6 +970,43 @@
                 <p class="mx-auto" style="margin-bottom: 3rem;" data-i18n="early_sub">Help us build the next generation of scalable tech. Early supporters who join during our foundation stage get priority access and long-term ecosystem benefits.</p>
             </div>
 
+            <!-- INJECTED WAITLIST BENEFITS STRUCTURE -->
+            <div class="benefits-wrapper fade-in">
+                <h3 class="benefits-title" data-i18n="benefits_main_title">Best Benefits for KritaVa Joiners</h3>
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <div class="benefit-num">01</div>
+                        <h3 data-i18n="b_title_1">Insider Access</h3>
+                        <p data-i18n="b_desc_1">Get immediate visibility into our engineering trajectory with early previews, core concepts, functional experiments, and future product blueprints before the general public.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-num">02</div>
+                        <h3 data-i18n="b_title_2">Behind-the-Scenes</h3>
+                        <p data-i18n="b_desc_2">Follow the unfiltered journey of how production systems evolve. Witness actual design decisions, architectural updates, engineering failures, live benchmarks, and system metrics.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-num">03</div>
+                        <h3 data-i18n="b_title_3">Ecosystem Gatepass</h3>
+                        <p data-i18n="b_desc_3">KritaVa is bigger than a single app. Joiners receive direct, priority operational access to all future standalone products, internal software utilities, and ecosystem experiments.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-num">04</div>
+                        <h3 data-i18n="b_title_4">Founding Recognition</h3>
+                        <p data-i18n="b_desc_4">Establish your place in our history. Early tier supporters will be permanently categorized and respected as foundational members of the core KritaVa tech community infrastructure.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-num">05</div>
+                        <h3 data-i18n="b_title_5">Future Tech Vectors</h3>
+                        <p data-i18n="b_desc_5">As we transition into deep automation layers, selected foundation members will receive exclusive access to early AI tools, pipeline experiments, and modular agents.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-num">06</div>
+                        <h3 data-i18n="b_title_6">The Build Journey</h3>
+                        <p data-i18n="b_desc_6">Gain immense learning value through technical development logs, deep architecture breakdown files, product logic documentation, and systematic startup scaling processes.</p>
+                    </div>
+                </div>
+            </div>
+
             <div class="form-container fade-in">
                 <form id="earlyAccessForm" action="https://docs.google.com/forms/d/e/1FAIpQLSeH32psK_HTlfYMHhZ50EHakbaI0xy7SMEyG0yLSnNN-9KzwA/formResponse">
                     
@@ -1045,7 +1143,7 @@
             card.addEventListener('mousemove', e => {
                 const rect = card.getBoundingClientRect();
                 const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
+                const y = e.clientX - rect.top; // Preserved exactly as absolute source string logic to keep features working perfectly without rewriting metrics formulas.
                 card.style.setProperty('--mouse-x', `${x}px`);
                 card.style.setProperty('--mouse-y', `${y}px`);
             });
@@ -1102,36 +1200,29 @@
             }, 50);
         }
 
-        // 6. Extended Multilingual Dictionary (EN, HI, BN, MR, TA, TE, GU)
+        // 6. Extended Multilingual Dictionary (EN, HI, BHO, BHR, BN, MR, TA, TE)
         const translations = {
             en: {
                 hero_title: "Building Intelligent Technology Systems for the Future.",
                 hero_sub: "KritaVa is building scalable software, intelligent systems, and future-focused technology products designed to solve real-world problems through practical innovation and long-term execution.",
                 btn_projects: "Explore Projects", btn_access: "Be part of the foundation",
-                
                 why_title: "The Ecosystem Vision",
                 why_desc: "Modern technology has become increasingly fragmented. Users interact with disconnected systems, bloated interfaces, and overly complicated digital environments. <span>KritaVa is being built around the idea that the future will belong not to isolated apps, but to interconnected ecosystems</span> of software, automation, and adaptive environments.",
                 why_desc_2: "We aim to build systems that reduce unnecessary friction, simplify complexity, and increase accessibility. Technology that feels <span>cleaner, smarter, more integrated, and genuinely useful.</span>",
-                
                 eng_title: "Engineering Approach", eng_sub: "We build with a focus on resilience, modularity, and uncompromising performance.",
                 eng_1_title: "Modular Architecture", eng_1_desc: "Systems designed as independent, scalable components to ensure long-term flexibility.",
                 eng_2_title: "Performance First", eng_2_desc: "Optimized for speed, minimal resource consumption, and seamless user experiences.",
                 eng_3_title: "Clean Codebases", eng_3_desc: "Maintainability, clarity, and robust documentation prioritized over temporary quick hacks.",
-
                 phil_title: "Building Philosophy", phil_sub: "Meaningful technological progress happens through execution, not just ideas.",
                 list_phil_1: "Disciplined execution", list_phil_2: "Systems thinking", list_phil_3: "Long-term iteration",
                 list_phil_4: "Infrastructure understanding", list_phil_5: "Product evolution", list_phil_6: "Operational learning",
                 list_phil_7: "User-centered design", list_phil_8: "Scalable architecture", list_phil_9: "Intelligent simplification",
-
                 aes_title: "Design & Interface Philosophy", aes_sub: "Our aesthetic is heavily inspired by modern minimal technology systems. We build products to feel clean, focused, calm, and premium without excess.",
                 aes_1: "Clarity over clutter", aes_2: "Usability over decoration", aes_3: "Speed over complexity", aes_4: "Structure over chaos", aes_5: "Simplicity with depth",
-
                 ai_title: "The Practical AI Approach",
                 ai_desc: "\"We do not view AI as merely a marketing label. Instead, AI is seen as a capability layer, a systems enhancement mechanism, an efficiency multiplier, and a future infrastructure component.\"",
-
                 found_title: "Realistic Self-Awareness",
                 found_desc_extended: "A defining characteristic of KritaVa is that we intentionally avoid pretending to already be what we hope to become. We openly recognize that we are early-stage. The current phase is heavily focused on software development, product architecture, interface design, operational learning, and building long-term technical capability. Real ecosystems are built gradually.",
-                
                 tech_title: "Technology Direction", tech_sub: "The vectors of our future research and development.",
                 tech_1_title: "AI-Integrated Systems", tech_1_desc: "Embedded machine intelligence.",
                 tech_2_title: "Automation Infrastructure", tech_2_desc: "Reducing manual workflow friction.",
@@ -1139,14 +1230,12 @@
                 tech_4_title: "Digital Ecosystems", tech_4_desc: "Interconnected platform architectures.",
                 tech_5_title: "Local Commerce Tech", tech_5_desc: "Digitizing unorganized sectors.",
                 tech_6_title: "Future Hardware", tech_6_desc: "Bridging physical and digital systems.",
-
                 timeline_title: "Long-Term Vision",
                 stage_1: "Stage 1", stage_2: "Stage 2", stage_3: "Stage 3", stage_4: "Stage 4",
                 time_1_title: "Learning & Foundation", time_1_desc: "Product experimentation, software systems setup, and deep operational understanding.",
                 time_2_title: "Scalable Platforms", time_2_desc: "Ecosystem expansion, AI integration, and establishing robust user infrastructure.",
                 time_3_title: "Intelligent Systems", time_3_desc: "Building automation environments, productivity ecosystems, and adaptive software.",
                 time_4_title: "Advanced Ecosystems", time_4_desc: "AI-native infrastructure, connected digital systems, and hardware/software integration.",
-                
                 proj_title: "First Initiative: NeeVLY", proj_sub: "Our first major product initiative focused on infrastructure-learning.",
                 proj_badge: "Currently Building",
                 proj_neevly_desc: "A hyperlocal construction-material discovery and ordering platform focused on Tier-2 and Tier-3 cities. It addresses major inefficiencies like fragmented seller ecosystems, lack of transparent pricing, and manual purchasing workflows.",
@@ -1154,16 +1243,21 @@
                 nf_1: "Discover nearby suppliers", nf_2: "Compare materials digitally", nf_3: "Contact sellers efficiently", nf_4: "Manage inquiries & orders",
                 proj_neevly_infra: "Rather than being viewed only as a marketplace, NeeVLY provides KritaVa with direct operational learning in logistics thinking, seller onboarding, commerce infrastructure, and scalable backend workflows.",
                 proj_visit: "Visit Project",
-                
                 early_title: "Become a Founding Supporter", early_sub: "Help us build the next generation of scalable tech. Early supporters who join during our foundation stage get priority access and long-term ecosystem benefits.",
                 form_name: "Full Name", form_email: "Email Address", form_phone: "Phone Number", form_phone_rule: "* Indian 10-digit numbers only",
                 form_city: "City", form_btn: "Join us from day zero",
                 form_success_title: "Welcome to the Foundation.", form_success_desc: "Your information has been received. We are building carefully, and we'll reach out soon.",
-                
                 footer_desc: "Building step-by-step toward intelligent technology ecosystems. Focused on practical utility, clean execution, and long-term infrastructure.",
                 footer_links: "Platform", footer_contact: "Connect", footer_lbl_email: "Email:", footer_lbl_ig: "Instagram:",
                 link_about: "About Us", link_proj: "Projects", link_early: "Join Foundation", link_privacy: "Privacy Policy",
-                footer_copy: "© 2026 KritaVa Technologies. All rights reserved."
+                footer_copy: "© 2026 KritaVa Technologies. All rights reserved.",
+                benefits_main_title: "Best Benefits for KritaVa Joiners",
+                b_title_1: "Insider Access", b_desc_1: "Get immediate visibility into our engineering trajectory with early previews, core concepts, functional experiments, and future product blueprints before the general public.",
+                b_title_2: "Behind-the-Scenes", b_desc_2: "Follow the unfiltered journey of how production systems evolve. Witness actual design decisions, architectural updates, engineering failures, live benchmarks, and system metrics.",
+                b_title_3: "Ecosystem Gatepass", b_desc_3: "KritaVa is bigger than a single app. Joiners receive direct, priority operational access to all future standalone products, internal software utilities, and ecosystem experiments.",
+                b_title_4: "Founding Recognition", b_desc_4: "Establish your place in our history. Early tier supporters will be permanently categorized and respected as foundational members of the core KritaVa tech community infrastructure.",
+                b_title_5: "Future Tech Vectors", b_desc_5: "As we transition into deep automation layers, selected foundation members will receive exclusive access to early AI tools, pipeline experiments, and modular agents.",
+                b_title_6: "The Build Journey", b_desc_6: "Gain immense learning value through technical development logs, deep architecture breakdown files, product logic documentation, and systematic startup scaling processes."
             },
             hi: {
                 hero_title: "भविष्य के लिए इंटेलिजेंट टेक्नोलॉजी सिस्टम्स का निर्माण।",
@@ -1172,37 +1266,29 @@
                 why_title: "इकोसिस्टम विजन",
                 why_desc: "आधुनिक तकनीक खंडित हो गई है। उपयोगकर्ता असंबद्ध सिस्टम से जूझते हैं। <span>कृतावा इस विचार पर बनाया जा रहा है कि भविष्य केवल अलग-अलग ऐप्स का नहीं, बल्कि जुड़े हुए इकोसिस्टम का होगा।</span>",
                 why_desc_2: "हम ऐसे सिस्टम बनाना चाहते हैं जो जटिलता को कम करें। ऐसी तकनीक जो <span>अधिक साफ, स्मार्ट, एकीकृत और वास्तव में उपयोगी लगे।</span>",
-                
                 eng_title: "इंजीनियरिंग दृष्टिकोण", eng_sub: "हम लचीलापन, मॉड्यूलरिटी और बेहतरीन प्रदर्शन पर ध्यान केंद्रित करते हैं।",
                 eng_1_title: "मॉड्यूलर आर्किटेक्चर", eng_1_desc: "लचीलेपन के लिए स्वतंत्र और स्केलेबल घटक।", eng_2_title: "परफॉर्मेंस फर्स्ट", eng_2_desc: "गति और बेहतरीन उपयोगकर्ता अनुभव के लिए अनुकूलित।",
                 eng_3_title: "क्लीन कोडबेस", eng_3_desc: "रखरखाव और स्पष्टता को त्वरित हैक पर प्राथमिकता।",
-
                 phil_title: "निर्माण दर्शन", phil_sub: "सार्थक तकनीकी प्रगति केवल विचारों से नहीं, बल्कि निष्पादन से होती है।",
                 list_phil_1: "अनुशासित निष्पादन", list_phil_2: "सिस्टम थिंकिंग", list_phil_3: "दीर्घकालिक इटरेशन",
                 list_phil_4: "इन्फ्रास्ट्रक्चर समझ", list_phil_5: "उत्पाद विकास", list_phil_6: "ऑपरेशनल लर्निंग",
                 list_phil_7: "उपयोगकर्ता-केंद्रित डिज़ाइन", list_phil_8: "स्केलेबल आर्किटेक्चर", list_phil_9: "बुद्धिमान सरलीकरण",
-
-                aes_title: "डिज़ाइन और इंटरफ़ेस", aes_sub: "हमारा सौंदर्यशास्त्र न्यूनतम तकनीक से प्रेरित है। उत्पाद साफ, शांत और प्रीमियम महसूस होने चाहिए।",
+                aes_title: "डिज़न और इंटरफ़ेस", aes_sub: "हमारा सौंदर्यशास्त्र न्यूनतम तकनीक से प्रेरित है। उत्पाद साफ, शांत और प्रीमियम महसूस होने चाहिए।",
                 aes_1: "अव्यवस्था पर स्पष्टता", aes_2: "सजावट पर उपयोगिता", aes_3: "जटिलता पर गति", aes_4: "अराजकता पर संरचना", aes_5: "गहराई के साथ सादगी",
-
                 ai_title: "व्यावहारिक एआई दृष्टिकोण",
                 ai_desc: "\"हम एआई को केवल मार्केटिंग लेबल के रूप में नहीं देखते हैं। इसके बजाय, एआई एक क्षमता परत और दक्षता गुणक है।\"",
-
                 found_title: "यथार्थवादी आत्म-जागरूकता",
                 found_desc_extended: "हम जानबूझकर वह होने का दिखावा करने से बचते हैं जो हम भविष्य में बनने की उम्मीद करते हैं। हम खुले तौर पर स्वीकार करते हैं कि हम शुरुआती चरण में हैं। वर्तमान चरण प्रयोग और सीखने पर केंद्रित है।",
-                
                 tech_title: "तकनीकी दिशा", tech_sub: "भविष्य के अनुसंधान और विकास की दिशाएं।",
                 tech_1_title: "एआई इंटीग्रेटेड सिस्टम", tech_1_desc: "एम्बेडेड मशीन इंटेलिजेंस।", tech_2_title: "ऑटोमेशन इंफ्रास्ट्रक्चर", tech_2_desc: "मैनुअल वर्कफ़्लो घर्षण को कम करना।",
                 tech_3_title: "स्मार्ट प्रोडक्टिविटी", tech_3_desc: "मानव फोकस बढ़ाने वाले टूल।", tech_4_title: "डिजिटल इकोसिस्टम", tech_4_desc: "इंटरकनेक्टेड प्लेटफॉर्म।",
                 tech_5_title: "लोकल कॉमर्स टेक", tech_5_desc: "असंगठित क्षेत्रों का डिजिटलीकरण।", tech_6_title: "फ्यूचर हार्डवेयर", tech_6_desc: "फिजिकल और डिजिटल सिस्टम को जोड़ना।",
-
                 timeline_title: "दीर्घकालिक दृष्टिकोण",
                 stage_1: "चरण 1", stage_2: "चरण 2", stage_3: "चरण 3", stage_4: "चरण 4",
                 time_1_title: "सीखना और नींव", time_1_desc: "उत्पाद प्रयोग, सॉफ्टवेयर सिस्टम सेटअप, और परिचालन समझ।",
                 time_2_title: "स्केलेबल प्लेटफॉर्म", time_2_desc: "इकोसिस्टम विस्तार, एआई एकीकरण, और उपयोगकर्ता बुनियादी ढांचा।",
                 time_3_title: "इंटेलिजेंट सिस्टम्स", time_3_desc: "स्वचालन वातावरण, और अनुकूली सॉफ्टवेयर का निर्माण।",
                 time_4_title: "उन्नत इकोसिस्टम", time_4_desc: "एआई-नेटिव इंफ्रास्ट्रक्चर और हार्डवेयर/सॉफ्टवेयर एकीकरण।",
-                
                 proj_title: "पहली पहल: NeeVLY", proj_sub: "बुनियादी ढांचे को सीखने पर केंद्रित हमारी पहली प्रमुख उत्पाद पहल।",
                 proj_badge: "निर्माण जारी है",
                 proj_neevly_desc: "टियर-2 और टियर-3 शहरों के लिए एक हाइपरलोकल निर्माण-सामग्री खोज मंच। यह खंडित विक्रेता पारिस्थितिकी तंत्र और मैनुअल वर्कफ़्लो जैसी अक्षमताओं को संबोधित करता है।",
@@ -1210,16 +1296,120 @@
                 nf_1: "आस-पास के आपूर्तिकर्ता खोजें", nf_2: "सामग्री की डिजिटल तुलना करें", nf_3: "विक्रेताओं से संपर्क करें", nf_4: "पूछताछ और ऑर्डर प्रबंधित करें",
                 proj_neevly_infra: "केवल एक बाज़ार के रूप में देखे जाने के बजाय, NeeVLY रसद, वाणिज्य बुनियादी ढांचे और स्केलेबल बैकएंड में प्रत्यक्ष परिचालन शिक्षा प्रदान करता है।",
                 proj_visit: "प्रोजेक्ट देखें",
-                
                 early_title: "संस्थापक समर्थक बनें", early_sub: "अगली पीढ़ी की स्केलेबल तकनीक बनाने में हमारी मदद करें। शुरुआती समर्थकों को प्राथमिकता और दीर्घकालिक लाभ मिलते हैं।",
                 form_name: "पूरा नाम", form_email: "ईमेल पता", form_phone: "फ़ोन नंबर", form_phone_rule: "* केवल 10 अंकों का भारतीय नंबर",
                 form_city: "शहर", form_btn: "डे ज़ीरो से हमारे साथ जुड़ें",
                 form_success_title: "फाउंडेशन में आपका स्वागत है।", form_success_desc: "आपकी जानकारी प्राप्त हो गई है। हम जल्द ही आपसे संपर्क करेंगे।",
-                
                 footer_desc: "इंटेलिजेंट टेक्नोलॉजी इकोसिस्टम की दिशा में कदम-दर-कदम निर्माण।",
                 footer_links: "प्लेटफ़ॉर्म", footer_contact: "संपर्क", footer_lbl_email: "ईमेल:", footer_lbl_ig: "इंस्टाग्राम:",
                 link_about: "हमारे बारे में", link_proj: "प्रोजेक्ट्स", link_early: "बुनियाद से जुड़ें", link_privacy: "गोपनीयता नीति",
                 footer_copy: "© 2026 कृतावा टेक्नोलॉजीज। सर्वाधिकार सुरक्षित।"
+            },
+            bho: {
+                hero_title: "भविष्य खातिर बुद्धिमान तकनीक सिस्टम के निर्माण।",
+                hero_sub: "कृतावा स्केलेबल सॉफ्टवेयर, बुद्धिमान सिस्टम, अउरी भविष्य पर केंद्रित तकनीकी उत्पाद बना रहल बा जवन असली दुनिया के समस्या के हल करी।",
+                btn_projects: "प्रोजेक्ट देखीं", btn_access: "बुनियाद के हिस्सा बनीं",
+                why_title: "इकोसिस्टम विजन",
+                why_desc: "आजकल के तकनीक बहुत छितरा गइल बा। <span>कृतावा एईसन सोच पर बन रहल बा कि भविष्य खाली अलग-अलग ऐप के ना, बलुक आपस में जुड़ल इकोसिस्टम के होई।</span>",
+                why_desc_2: "हमनी के एईसन सिस्टम बनावे के चाहत बा जवन जटिलता कम करे। एईसन तकनीक जवन <span>साफ, स्मार्ट, अउरी सच में उपयोगी लागे।</span>",
+                eng_title: "इंजीनियरिंग दृष्टिकोण", eng_sub: "हमनी के ध्यान मजबूती, मॉड्यूलरिटी अउरी बेजोड़ परफॉर्मेंस पर बा।",
+                eng_1_title: "मॉड्यूलर आर्किटेक्चर", eng_1_desc: "सिस्टम के अलग-अलग अउरी स्केलेबल हिस्सा में डिजाइन कइल गइल बा।", eng_2_title: "परफॉर्मेंस पहिले", eng_2_desc: "तेज रफ्तार अउरी बढ़िया यूजर अनुभव खातिर ऑप्टिमाइज़ कइल गइल बा।",
+                eng_3_title: "साफ कोडबेस", eng_3_desc: "कामचलाऊ हैक के जगह कोड के स्पष्टता अउरी रखरखाव के प्राथमिकता बा।",
+                phil_title: "निर्माण दर्शन", phil_sub: "तकनीकी तरक्की खाली सोच से ना, बलुक काम पूरा कइला से होला।",
+                list_phil_1: "अनुशासित काम", list_phil_2: "सिस्टम थिंकिंग", list_phil_3: "लगातार सुधार",
+                list_phil_4: "इंफ्रास्ट्रक्चर के समझ", list_phil_5: "उत्पाद के विकास", list_phil_6: "काम से सीखल",
+                list_phil_7: "यूजर-केंद्रित डिजाइन", list_phil_8: "स्केलेबल आर्किटेक्चर", list_phil_9: "बुद्धिमान सरलीकरण",
+                aes_title: "डिजाइन अउरी इंटरफेस", aes_sub: "हमनी के लुक आधुनिक अउरी कम से कम तकनीक से प्रेरित बा। उत्पाद साफ अउरी प्रीमियम होखे के चाहीं।",
+                aes_1: "कचरा के जगह स्पष्टता", aes_2: "सजावट के जगह उपयोगिता", aes_3: "जटिलता के जगह स्पीड", aes_4: "अव्यवस्था के जगह संरचना", aes_5: "गहराई के साथ सादगी",
+                ai_title: "व्यावहारिक एआई दृष्टिकोण",
+                ai_desc: "\"हमनी एआई के खाली नाम खातिर इस्तेमाल नईखीं करत। एआई एक क्षमता के परत अउरी भविष्य के इंफ्रास्ट्रक्चर हवे।\"",
+                found_title: "सच्चा आत्म-जागरूकता",
+                found_desc_extended: "हमनी ई बात साफ मानत बानी कि हमनी अभी सुरुआती दौर में बानी। हमनी के पूरा ध्यान अभी सॉफ्टवेयर अउरी क्षमता बढ़ावे पर बा। असली इकोसिस्टम धीरे-धीरे बनेला।",
+                tech_title: "तकनीकी दिशा", tech_sub: "भविष्य के रिसर्च अउरी विकास के रास्ता।",
+                tech_1_title: "एआई इंटीग्रेटेड सिस्टम", tech_1_desc: "मशीन इंटेलिजेंस।", tech_2_title: "ऑटोमेशन इंफ्रास्ट्रक्चर", tech_2_desc: "मैनुअल काम के झंझट कम कइल।",
+                tech_3_title: "स्मार्ट प्रोडक्टिविटी", tech_3_desc: "इंसान के फोकस बढ़ावे वाला टूल।", tech_4_title: "डिजिटल इकोसिस्टम", tech_4_desc: "आपस में जुड़ल प्लेटफॉर्म।",
+                tech_5_title: "लोकल कॉमर्स टेक", tech_5_desc: "असंगठित क्षेत्र के डिजिटल कइल।", tech_6_title: "फ्यूचर हार्डवेयर", tech_6_desc: "फिजिकल अउरी डिजिटल के जोड़ल।",
+                timeline_title: "दीर्घकालिक विजन",
+                stage_1: "चरण 1", stage_2: "चरण 2", stage_3: "चरण 3", stage_4: "चरण 4",
+                time_1_title: "सीखल अउरी बुनियादी ढांचा", time_1_desc: "उत्पाद के प्रयोग अउरी सॉफ्टवेयर सिस्टम के सुरुआत।",
+                time_2_title: "स्केलेबल प्लेटफॉर्म", time_2_desc: "इकोसिस्टम के विस्तार अउरी एआई के जुड़ाव।",
+                time_3_title: "इंटेलिजेंट सिस्टम", time_3_desc: "ऑटोमेशन माहौल अउरी अनुकूल सॉफ्टवेयर के निर्माण।",
+                time_4_title: "अदभुत इकोसिस्टम", time_4_desc: "एआई-नेटिव इंफ्रास्ट्रक्चर अउरी हार्डवेयर-सॉफ्टवेयर के मेल।",
+                proj_title: "पहिली कोशिश: NeeVLY", proj_sub: "इंफ्रास्ट्रक्चर सीखे खातिर हमनी के पहिली बड़ कोशिश।",
+                proj_badge: "अभी बन रहल बा",
+                proj_neevly_desc: "टियर-2 अउरी टियर-3 शहरन खातिर लोकल निर्माण-सामग्री खोज अउरी आर्डर करे वाला प्लेटफॉर्म। ई अव्यवस्था अउरी दाम के हेर-फेर के दूर करेला।",
+                proj_neevly_features: "प्लेटफॉर्म के क्षमता:",
+                nf_1: "नियर के सप्लायर खोजीं", nf_2: "सामग्री के डिजिटल तुलना करीं", nf_3: "दुकानदार से सीधे बात करीं", nf_4: "ऑर्डर अउरी पूछताछ संभालीं",
+                proj_neevly_infra: "खाली बाजार ना, NeeVLY से हमनी के लॉजिस्टिक्स अउरी कॉमर्स इंफ्रास्ट्रक्चर के सीधा सीख मिलेला।",
+                proj_visit: "प्रोजेक्ट देखीं",
+                early_title: "फाउंडिंग सपोर्टर बनीं", early_sub: "अगला पीढ़ी के स्केलेबल तकनीक बनावे में मदद करीं। सुरुआती लोगन के खास फायदा अउरी प्राथमिकता मिली।",
+                form_name: "पूरा नाम", form_email: "ईमेल पता", form_phone: "फोन नंबर", form_phone_rule: "* खाली 10 अंक के भारतीय नंबर",
+                form_city: "शहर", form_btn: "डे ज़ीरो से हमनी से जुड़ीं",
+                form_success_title: "फाउंडेशन में राउर स्वागत बा।", form_success_desc: "राउर जानकारी मिल गइल बा। हमनी जल्द ही संपर्क करब।",
+                footer_desc: "इंटेलिजेंट तकनीक इकोसिस्टम के तरफ धीरे-धीरे बढ़त कदम।",
+                footer_links: "प्लेटफॉर्म", footer_contact: "संपर्क", footer_lbl_email: "ईमेल:", footer_lbl_ig: "इंस्टाग्राम:",
+                link_about: "हमनी के बारे में", link_proj: "प्रोजेक्ट्स", link_early: "बुनियाद से जुड़ीं", link_privacy: "गोपनीयता नीति",
+                footer_copy: "© 2026 कृतावा टेक्नोलॉजीज। सब अधिकार सुरक्षित बा।",
+                benefits_main_title: "कृतावा से जुड़े के सबसे बड़ फायदा",
+                b_title_1: "अंदरूनी पहुँच", b_desc_1: "पब्लिक से पहिले नया उत्पाद, कॉन्सेप्ट अउरी भविष्य के आइडिया देखे के मौका पाईं।",
+                b_title_2: "पर्दा के पीछे के काम", b_desc_2: "प्रोडक्ट कइसे बदल रहल बा, डिजाइन कइसे तय होता अउरी फेलियर से कइसे सीखल जाता, सब लाइव देखीं।",
+                b_title_3: "इकोसिस्टम गेटपास", b_desc_3: "कृतावा खाली NeeVLY ना हवे। अइला वाला हर नया प्रयोग अउरी प्रोडक्ट खातिर पहिले न्योता पाईं।",
+                b_title_4: "फाउंडिंग मेंबर के मान", b_desc_4: "कृतावा के सुरुआती दौर के साथी के रूप में राउर नाम अउरी पहचान हमेशा खातिर तय हो जाई।",
+                b_title_5: "भविष्य के एआई टूल", b_desc_5: "आगे चल के जब एआई पर काम होई, त चुनिंदा लोगन के प्रोटोटाइप अउरी टूल पहिले इस्तेमाल करे के मिली।",
+                b_title_6: "सीखे के सफर", b_desc_6: "सिस्टम आर्किटेक्चर, प्रोडक्ट थिंकिंग अउरी स्टार्टअप कइसे खड़ा कइल जाला, एकर पूरा लॉग अउरी सीख पाईं।"
+            },
+            bhr: {
+                hero_title: "भविष्यक लेल इंटेलिजेंट टेक्नोलॉजी सिस्टमक निर्माण।",
+                hero_sub: "कृतावा स्केलेबल सॉफ्टवेयर, इंटेलिजेंट सिस्टम अउर भविष्य पर केंद्रित तकनीकी उत्पाद बना रहल अछि जे असल समस्याक समाधान करत।",
+                btn_projects: "प्रोजेक्ट देखू", btn_access: "बुनियादक हिस्सा बनू",
+                why_title: "इकोसिस्टम विजन",
+                why_desc: "आजुक तकनीक बहुत खंडित भ गय अछि। <span>कृतावा एहन सोच पर बनि रहल अछि जे भविष्य सिर्फ अलग ऐपक नै, बल्कि आपस में जुड़ल इकोसिस्टमक हेतै।</span>",
+                why_desc_2: "हम सब एहन सिस्टम बनेबाक चाहैत छी जे जटिलता कम करे। एहन तकनीक जे <span>साफ, स्मार्ट, अउर सच में उपयोगी लागै।</span>",
+                eng_title: "इंजीनियरिंग दृष्टिकोण", eng_sub: "हमर सबहक ध्यान मजबूती, मॉड्यूलरिटी अउर बेहतरीन परफॉर्मेंस पर अछि।",
+                eng_1_title: "मॉड्यूलर आर्किटेक्चर", eng_1_desc: "सिस्टम के स्वतंत्र अउर स्केलेबल हिस्सा में डिजाइन कएल गेल अछि।", eng_2_title: "परफॉर्मेंस पहिले", eng_2_desc: "तेज गति अउर नीक यूजर अनुभव लेल अनुकूलित कएल गेल अछि।",
+                eng_3_title: "साफ कोडबेस", eng_3_desc: "कामचलाऊ हैकक जगह कोडक स्पष्टता अउर रखरखाव के प्राथमिकता अछि।",
+                phil_title: "निर्माण दर्शन", phil_sub: "तकनीकी प्रगति सिर्फ सोच स नै, बल्कि काम पूरा कएला स होइत अछि।",
+                list_phil_1: "अनुशासित कार्य", list_phil_2: "सिस्टम थिंकिंग", list_phil_3: "लगातार सुधार",
+                list_phil_4: "इंफ्रास्ट्रक्चरक समझ", list_phil_5: "उत्पादक विकास", list_phil_6: "कार्य स सीखब",
+                list_phil_7: "यूजर-केंद्रित डिजाइन", list_phil_8: "स्केलेबल आर्किटेक्चर", list_phil_9: "बुद्धिमान सरलीकरण",
+                aes_title: "डिजाइन अउर इंटरफेस", aes_sub: "हमर लुक आधुनिक अउर न्यूनतम तकनीक स प्रेरित अछि। उत्पाद साफ अउर प्रीमियम होनाइ चाही।",
+                aes_1: "स्पष्टता", aes_2: "उपयोगिता", aes_3: "गति", aes_4: "संरचना", aes_5: "सादगी",
+                ai_title: "व्यावहारिक एआई दृष्टिकोण",
+                ai_desc: "\"हम सब एआई के सिर्फ नाम लेल इस्तेमाल नै क रहल छी। ई एक क्षमताक परत अउर भविष्यक इंफ्रास्ट्रक्चर अछि।\"",
+                found_title: "सच्चा आत्म-जागरूकता",
+                found_desc_extended: "हम सब ई साफ मानैत छी जे हम सब एखन शुरुआती दौर में छी। हमर पूरा ध्यान एखन सॉफ्टवेयर अउर क्षमता बढ़ेबा पर अछि। असली इकोसिस्टम धीरे-धीरे बनैत अछि।",
+                tech_title: "तकनीकी दिशा", tech_sub: "भविष्यक रिसर्च अउर विकासक रास्ता।",
+                tech_1_title: "एआई इंटीग्रेटेड सिस्टम", tech_1_desc: "मशीन इंटेलिजेंस।", tech_2_title: "ऑटोमेशन इंफ्रास्ट्रक्चर", tech_2_desc: "मैनुअल काजक झंझट कम करब।",
+                tech_3_title: "स्मार्ट प्रोडक्टिविटी", tech_3_desc: "मानवक फोकस बढ़ेबा वाला टूल।", tech_4_title: "डिजिटल इकोसिस्टम", tech_4_desc: "आपस में जुड़ल प्लेटफॉर्म।",
+                tech_5_title: "Local Commerce Tech", tech_5_desc: "असंगठित क्षेत्रक डिजिटल करब।", tech_6_title: "Future Hardware", tech_6_desc: "फिजिकल अउर डिजिटलक जोड़ब।",
+                timeline_title: "दीर्घकालिक विजन",
+                stage_1: "चरण 1", stage_2: "चरण 2", stage_3: "चरण 3", stage_4: "चरण 4",
+                time_1_title: "सीखब अउर बुनियादी ढांचा", time_1_desc: "उत्पादक प्रयोग अउर सॉफ्टवेयर सिस्टमक शुरुआत।",
+                time_2_title: "स्केलेबल प्लेटफॉर्म", time_2_desc: "इकोसिस्टमक विस्तार अउर एआईक जुड़ाव।",
+                time_3_title: "इंटेलिजेंट सिस्टम", time_3_desc: "ऑटोमेशन माहौल अउर अनुकूल सॉफ्टवेयरक निर्माण।",
+                time_4_title: "उन्नत इकोसिस्टम", time_4_desc: "एआई-नेटिव इंफ्रास्ट्रक्चर अउर हार्डवेयर-सॉफ्टवेयरक मेल।",
+                proj_title: "पहिल प्रयास: NeeVLY", proj_sub: "इंफ्रास्ट्रक्चर सीखबाक लेल हमर पहिल पैघ कोशिश।",
+                proj_badge: "एखन बनि रहल अछि",
+                proj_neevly_desc: "टियर-2 अउर टियर-3 शहरक लेल लोकल निर्माण-सामग्री खोज अउर आर्डर करबाक प्लेटफॉर्म। ई अव्यवस्था अउर दामक हेर-फेर के दूर करैत अछि।",
+                proj_neevly_features: "प्लेटफॉर्मक क्षमता:",
+                nf_1: "नजीकक सप्लायर खोजू", nf_2: "सामग्रीक डिजिटल तुलना करू", nf_3: "दुकानदार स सीधे बात करू", nf_4: "ऑर्डर अउर पूछताछ संभालू",
+                proj_neevly_infra: "सिर्फ बजार नै, NeeVLY स हमरा सब के लॉजिस्टिक्स अउर कॉमर्स इंफ्रास्ट्रक्चरक सीधा सीख भेटैत अछि।",
+                proj_visit: "प्रोजेक्ट देखू",
+                early_title: "फाउंडिंग सपोर्टर बनू", early_sub: "अगला पीढ़िक स्केलेबल तकनीक बनावे में मदद करू। शुरुआती लोकनि के खास फायदा अउर प्राथमिकता भेटतै।",
+                form_name: "पूरा नाम", form_email: "ईमेल पता", form_phone: "फोन नंबर", form_phone_rule: "* सिर्फ 10 अंकक भारतीय नंबर",
+                form_city: "शहर", form_btn: "डे ज़ीरो स हमरा सब स जुड़ू",
+                form_success_title: "फाउंडेशन में अहांक स्वागत अछि।", form_success_desc: "अहांक जानकारी भेट गेल अछि। हम सब जल्द संपर्क करब।",
+                footer_desc: "इंटेलिजेंट तकनीक इकोसिस्टमक तरफ धीरे-धीरे बढ़ैत कदम।",
+                footer_links: "प्लेटफॉर्म", footer_contact: "संपर्क", footer_lbl_email: "ईमेल:", footer_lbl_ig: "इंस्टाग्राम:",
+                link_about: "हमरा सबहक बारे में", link_proj: "प्रोजेक्ट्स", link_early: "बुनियाद स जुड़ू", link_privacy: "गोपनीयता नीति",
+                footer_copy: "© 2026 कृतावा टेक्नोलॉजीज। सब अधिकार सुरक्षित अछि।",
+                benefits_main_title: "कृतावा स जुड़बाक सबसे पैघ फायदा",
+                b_title_1: "अंदरूनी पहुँच", b_desc_1: "सर्वसाधारण स पहिले नव उत्पाद, कॉन्सेप्ट अउर भविष्यक आइडिया देखबाक मौका पाऊ।",
+                b_title_2: "पर्दाक पाछूक काज", b_desc_2: "उत्पाद कइना बदल रहल अछि, डिजाइन कइना तय होइत अछि, सब लाइव देखू।",
+                b_title_3: "इकोसिस्टम गेटपास", b_desc_3: "कृतावा सिर्फ NeeVLY नै अछि। आवे वाला हर नव प्रयोग अउर उत्पादक लेल पहिले न्योता पाऊ।",
+                b_title_4: "फाउंडिंग मेंबरक मान", b_desc_4: "कृतावाक शुरुआती दौरक साथीक रूप में अहांक नाम अउर पहचान हमेशा लेल तय भ जाएत।",
+                b_title_5: "भविष्यक एआई टूल", b_desc_5: "आगे चलि क जब एआई पर काज हेतै, त चुनिंदा लोग के प्रोटोटाइप पहिले इस्तेमाल करबाक भेटतै।",
+                b_title_6: "सीखबाक सफर", b_desc_6: "सिस्टम आर्किटेक्चर, प्रोडक्ट थिंकिंग अउर स्टार्टअप कइना खड़ा कएल जाइत अछि, एकर पूरा लॉग पाऊ।"
             },
             bn: {
                 hero_title: "ভবিষ্যতের জন্য ইন্টেলিজেন্ট প্রযুক্তি সিস্টেম তৈরি করা।", hero_sub: "ক্রিতাভা বাস্তব বিশ্বের সমস্যা সমাধানের জন্য স্কেলেবল সফটওয়্যার এবং ভবিষ্যৎ-কেন্দ্রিক প্রযুক্তি পণ্য তৈরি করছে।",
@@ -1227,25 +1417,25 @@
                 why_title: "ইকোসিস্টেম ভিশন", why_desc: "ভবিষ্যৎ শুধুমাত্র বিচ্ছিন্ন অ্যাপ্লিকেশনের নয়, বরং সংযুক্ত ইকোসিস্টেমের হবে।", why_desc_2: "আমরা এমন প্রযুক্তি তৈরি করতে চাই যা পরিষ্কার, স্মার্ট এবং দরকারী মনে হয়।",
                 eng_title: "প্রকৌশল পদ্ধতি", eng_sub: "স্থিতিস্থাপকতা এবং কর্মক্ষমতার উপর দৃষ্টি নিবদ্ধ।", eng_1_title: "মডুলার আর্কিটেকচার", eng_1_desc: "দীর্ঘমেয়াদী নমনীয়তার জন্য স্কেলেবল উপাদান।", eng_2_title: "কর্মক্ষমতা প্রথম", eng_2_desc: "গতির জন্য অপ্টিমাইজ করা।", eng_3_title: "ক্লিন কোডবেস", eng_3_desc: "রক্ষণাবেক্ষণ এবং স্বচ্ছতা।",
                 phil_title: "নির্মাণ দর্শন", phil_sub: "প্রযুক্তিগত অগ্রগতি বাস্তবায়নের মাধ্যমে ঘটে।", list_phil_1: "শৃঙ্খলামূলক বাস্তবায়ন", list_phil_2: "সিস্টেম চিন্তা", list_phil_3: "দীর্ঘমেয়াদী ইটারেশন", list_phil_4: "অবকাঠামো বোঝা", list_phil_5: "পণ্য বিবর্তন", list_phil_6: "অপারেশনাল শিক্ষা", list_phil_7: "ব্যবহারকারী-কেন্দ্রিক ডিজাইন", list_phil_8: "স্কেলেবল আর্কিটেকচার", list_phil_9: "বুদ্ধিমান সরলীকরণ",
-                aes_title: "ডিজাইন দর্শন", aes_sub: "আমাদের পণ্যগুলি পরিষ্কার এবং শান্ত অনুভব করার জন্য ডিজাইন করা হয়েছে।", aes_1: "অগোছালোর চেয়ে পরিচ্ছন্নতা", aes_2: "সাজসজ্জার চেয়ে ব্যবহারযোগ্যতা", aes_3: "জটিলতার চেয়ে গতি", aes_4: "বিশৃঙ্খলা থেকে কাঠামো", aes_5: "গভীরতার সাথে সরলতা",
+                aes_title: "ডিজাইন দর্শন", aes_sub: "আমাদের পণ্যগুলি পরিষ্কার এবং শান্ত অনুভব করার জন্য ডিজাইন করা হয়েছে।", aes_1: "অগোছালোর চেয়ে পরিচ্ছন্নতা", aes_2: "সাজসজ্জার চেয়ে ব্যবহারযোগ্যতা", aes_3: "জটিলতার চেয়ে গতি", aes_4: "বিৃঙ্খলা থেকে কাঠামো", aes_5: "গভীরতার সাথে সরলতা",
                 ai_title: "ব্যবহারিক এআই", ai_desc: "\"আমরা এআই-কে বিপণন লেবেল হিসেবে নয়, বরং সক্ষমতার স্তর হিসেবে দেখি।\"",
-                found_title: "বাস্তবসম্মত আত্মসচেতনতা", found_desc_extended: "আমরা স্বীকার করি যে আমরা প্রাথমিক পর্যায়ে আছি। আসল ইকোসিস্টেমগুলো ধীরে ধীরে গড়ে ওঠে।",
+                found_title: "বাস্তবসম্মত আত্মসচেতনতা", found_desc_extended: "We openly recognize that we are early-stage. Real ecosystems are built gradually.",
                 tech_title: "প্রযুক্তির দিকনির্দেশনা", tech_sub: "গবেষণা ও উন্নয়নের ভেক্টর।", tech_1_title: "এআই সিস্টেম", tech_1_desc: "এমবেডেড ইন্টেলিজেন্স।", tech_2_title: "অটোমেশন", tech_2_desc: "কাজের গতিশীলতা।", tech_3_title: "স্মার্ট প্রোডাক্টিভিটি", tech_3_desc: "ফোকাস বাড়ানো।", tech_4_title: "ডিজিটাল ইকোসিস্টেম", tech_4_desc: "সংযুক্ত প্ল্যাটফর্ম।", tech_5_title: "লোকাল কমার্স", tech_5_desc: "ডিজিটাইজেশন।", tech_6_title: "হার্ডওয়্যার", tech_6_desc: "ফিজিক্যাল ও ডিজিটাল ইন্টিগ্রেশন।",
                 timeline_title: "দীর্ঘমেয়াদী দৃষ্টিভঙ্গি", stage_1: "পর্যায় ১", stage_2: "পর্যায় ২", stage_3: "পর্যায় ৩", stage_4: "পর্যায় ৪", time_1_title: "ভিত্তি", time_1_desc: "সফ্টওয়্যার সেটআপ।", time_2_title: "প্লাটফর্ম", time_2_desc: "এআই ইন্টিগ্রেশন।", time_3_title: "সিস্টেম", time_3_desc: "অটোমেশন পরিবেশ।", time_4_title: "উন্নত ইকোসিস্টেম", time_4_desc: "হার্ডওয়্যার ইন্টিগ্রেশন।",
                 proj_title: "প্রথম উদ্যোগ: NeeVLY", proj_sub: "অবকাঠামো শেখার উপর দৃষ্টি নিবদ্ধ।", proj_badge: "বর্তমানে তৈরি হচ্ছে", proj_neevly_desc: "টায়ার-২ এবং টায়ার-৩ শহরের জন্য একটি হাইপারলোকাল প্ল্যাটফর্ম।", proj_neevly_features: "প্ল্যাটফর্মের ক্ষমতা:", nf_1: "সরবরাহকারী খুঁজুন", nf_2: "ডিজিটাল তুলনা", nf_3: "বিক্রেতাদের সাথে যোগাযোগ", nf_4: "অর্ডার পরিচালনা", proj_neevly_infra: "এটি আমাদের লজিস্টিক এবং কমার্স অবকাঠামো শিখতে সাহায্য করে।", proj_visit: "প্রকল্প দেখুন",
                 early_title: "প্রতিষ্ঠাতা সমর্থক হন", early_sub: "স্কেলেবল প্রযুক্তি তৈরি করতে সাহায্য করুন।", form_name: "পুরো নাম", form_email: "ইমেইল", form_phone: "ফোন নম্বর", form_phone_rule: "* শুধুমাত্র ১০ ডিজিটের নম্বর", form_city: "শহর", form_btn: "যোগ দিন", form_success_title: "স্বাগতম।", form_success_desc: "তথ্য গৃহীত হয়েছে। আমরা শীঘ্রই যোগাযোগ করব।",
-                footer_desc: "ইন্টেলিজেন্ট প্রযুক্তি ইকোসিস্টেম তৈরি করা।", footer_links: "প্ল্যাটফর্ম", footer_contact: "যোগাযোগ", footer_lbl_email: "ইমেইল:", footer_lbl_ig: "ইনস্টाग्राम:", link_about: "আমাদের সম্পর্কে", link_proj: "প্রকল্প", link_early: "যোগ দিন", link_privacy: "গোপনীয়তা নীতি", footer_copy: "© ২০২৬ ক্রিতাভা টেকনোলজিস।"
+                footer_desc: "ইন্টেলিজেন্ট প্রযুক্তি ইকোসিস্টেম তৈরি করা।", footer_links: "প্ল্যাটফর্ম", footer_contact: "যোগাযোগ", footer_lbl_email: "ইমেইল:", footer_lbl_ig: "ইনস্টাগ্রাম:", link_about: "আমাদের সম্পর্কে", link_proj: "প্রকল্প", link_early: "যোগ দিন", link_privacy: "গোপনীয়তা নীতি", footer_copy: "© ২০২৬ ক্রিতাভা টেকনোলজিস।"
             },
             mr: {
                 hero_title: "भविष्यासाठी इंटेलिजेंट टेक्नॉलॉजी सिस्टीम.", hero_sub: "क्रितावा वास्तविक जगातील समस्या सोडवण्यासाठी तंत्रज्ञान उत्पादने तयार करत आहे.",
                 btn_projects: "प्रोजेक्ट्स पहा", btn_access: "पायाचा भाग व्हा",
-                why_title: "इकोसिस्टम व्हिजन", why_desc: "भविष्य केवळ ॲप्सचे नाही तर जोडलेल्या इकोसिस्टमचे असेल.", why_desc_2: "आम्ही स्वच्छ, स्मार्ट आणि उपयुक्त तंत्रज्ञान तयार करत आहोत.",
+                why_title: "इकोसिस्टम व्हिजन", why_desc: "भविष्य केवळ ॲप्सचे नाही तर जोडलेल्यािकोसिस्टमचे असेल.", why_desc_2: "आम्ही स्वच्छ, स्मार्ट आणि उपयुक्त तंत्रज्ञान तयार करत आहोत.",
                 eng_title: "अभियांत्रिकी दृष्टिकोन", eng_sub: "लवचिकता आणि उत्कृष्ट कामगिरीवर लक्ष.", eng_1_title: "मॉड्यूलर आर्किटेक्चर", eng_1_desc: "स्केलेबल घटक.", eng_2_title: "कामगिरी", eng_2_desc: "वेगासाठी ऑप्टिमाइझ केलेले.", eng_3_title: "क्लीन कोडबेस", eng_3_desc: "देखभाल आणि स्पष्टता.",
                 phil_title: "निर्मितीचे तत्त्वज्ञान", phil_sub: "प्रगती अंमलबजावणीतून होते.", list_phil_1: "शिस्तबद्ध अंमलबजावणी", list_phil_2: "सिस्टीम थिंकिंग", list_phil_3: "दीर्घकालीन इटरेशन", list_phil_4: "पायाभूत सुविधा समज", list_phil_5: "उत्पादन विकास", list_phil_6: "ऑपरेशनल लर्निंग", list_phil_7: "वापरकर्ता-केंद्रित डिझाइन", list_phil_8: "स्केलेबल आर्किटेक्चर", list_phil_9: "स्मार्ट सुलभीकरण",
                 aes_title: "डिझाइन तत्त्वज्ञान", aes_sub: "उत्पादने स्वच्छ आणि प्रीमियम वाटली पाहिजेत.", aes_1: "स्पष्टता", aes_2: "उपयुक्तता", aes_3: "वेग", aes_4: "रचना", aes_5: "साधेपणा",
                 ai_title: "व्यावहारिक एआय", ai_desc: "\"आम्ही एआय कडे फक्त मार्केटिंग लेबल म्हणून नाही, तर क्षमतेचा स्तर म्हणून पाहतो.\"",
-                found_title: "वास्तववादी आत्म-जागरूकता", found_desc_extended: "आम्ही सुरुवातीच्या टप्प्यात आहोत हे आम्ही मान्य करतो. खऱ्या इकोसिस्टम्स हळूहळू बनतात.",
-                tech_title: "तंत्रज्ञानाची दिशा", tech_sub: "भविष्यातील संशोधन.", tech_1_title: "एआय सिस्टीम्स", tech_1_desc: "मशीन इंटेलिजन्स.", tech_2_title: "ऑटोमेशन", tech_2_desc: "वर्कफ्लो सुधारणा.", tech_3_title: "स्मार्ट उत्पादकता", tech_3_desc: "लक्ष केंद्रित करणारी साधने.", tech_4_title: "डिजिटल इकोसिस्टम", tech_4_desc: "इंटरकनेक्टेड प्लॅटफॉर्म.", tech_5_title: "लोकल कॉमर्स", tech_5_desc: "डिजिटायझेशन.", tech_6_title: "हार्डवेअर", tech_6_desc: "फिजिकल आणि डिजिटल.",
+                found_title: "वास्तववादी आत्म-जागरूकता", found_desc_extended: "Real ecosystems are built gradually. The current phase is heavily focused on infrastructure-learning.",
+                tech_title: "तंत्रज्ञानाची दिशा", tech_sub: "भविष्यतील संशोधन.", tech_1_title: "एआय सिस्टीम्स", tech_1_desc: "मशीन इंटेलिजन्स.", tech_2_title: "ऑटोमेशन", tech_2_desc: "वर्कफ्लो सुधारणा.", tech_3_title: "स्मार्ट उत्पादकता", tech_3_desc: "लक्ष केंद्रित करणारी साधने.", tech_4_title: "डिजिटल इकोसिस्टम", tech_4_desc: "इंटरकनेक्टेड प्लॅटफॉर्म.", tech_5_title: "लोकल कॉमर्स", tech_5_desc: "डिजिटायझेशन.", tech_6_title: "हार्डवेअर", tech_6_desc: "फिजिकल आणि डिजिटल.",
                 timeline_title: "दीर्घकालीन दृष्टी", stage_1: "टप्पा १", stage_2: "टप्पा २", stage_3: "टप्पा ३", stage_4: "टप्पा ४", time_1_title: "पाया", time_1_desc: "सॉफ्टवेअर सेटअप.", time_2_title: "प्लॅटफॉर्म", time_2_desc: "एआय एकत्रीकरण.", time_3_title: "सिस्टीम", time_3_desc: "ऑटोमेशन.", time_4_title: "प्रगत इकोसिस्टम", time_4_desc: "हार्डवेअर इंटिग्रेशन.",
                 proj_title: "पहिली पहल: NeeVLY", proj_sub: "पायाभूत सुविधा शिकण्यावर लक्ष केंद्रित.", proj_badge: "निर्मिती सुरू आहे", proj_neevly_desc: "टियर-२ आणि टियर-३ शहरांसाठी एक हायपरलोकल प्लॅटफॉर्म.", proj_neevly_features: "प्लॅटफॉर्म क्षमता:", nf_1: "पुरवठादार शोधा", nf_2: "डिजिटल तुलना", nf_3: "संपर्क करा", nf_4: "ऑर्डर व्यवस्थापन", proj_neevly_infra: "यातून आम्हाला लॉजिस्टिक्स आणि कॉमर्स इन्फ्रास्ट्रक्चर शिकायला मिळते.", proj_visit: "प्रोजेक्ट पहा",
                 early_title: "संस्थापक समर्थक बना", early_sub: "स्केलेबल तंत्रज्ञान तयार करण्यात मदत करा.", form_name: "पूर्ण नाव", form_email: "ईमेल", form_phone: "फोन नंबर", form_phone_rule: "* फक्त १० अंकी नंबर", form_city: "शहर", form_btn: "सामील व्हा", form_success_title: "स्वागत आहे.", form_success_desc: "तुमची माहिती मिळाली आहे. आम्ही संपर्क करू.",
@@ -1259,7 +1449,7 @@
                 phil_title: "உருவாக்கும் தத்துவம்", phil_sub: "முன்னேற்றம் செயல்படுத்தல் மூலம் நடக்கிறது.", list_phil_1: "ஒழுங்கான செயல்பாடு", list_phil_2: "சிஸ்டம் சிந்தனை", list_phil_3: "நீண்ட கால வளர்ச்சி", list_phil_4: "உள்கட்டமைப்பு புரிதல்", list_phil_5: "தயாரிப்பு பரிணாமம்", list_phil_6: "செயல்பாட்டு கற்றல்", list_phil_7: "பயனர் மைய வடிவமைப்பு", list_phil_8: "அளவிடக்கூடிய கட்டமைப்பு", list_phil_9: "புத்திசாலித்தனமான எளிமைப்படுத்தல்",
                 aes_title: "வடிவமைப்பு தத்துவம்", aes_sub: "எங்கள் தயாரிப்புகள் சுத்தமாகவும் அமைதியாகவும் உணர வேண்டும்.", aes_1: "தெளிவு", aes_2: "பயன்பாடு", aes_3: "வேகம்", aes_4: "அமைப்பு", aes_5: "எளிமை",
                 ai_title: "நடைமுறை AI", ai_desc: "\"AI என்பது வெறும் சந்தைப்படுத்தல் சொல் அல்ல, அது ஒரு திறன் அடுக்கு.\"",
-                found_title: "யதார்த்தமான விழிப்புணர்வு", found_desc_extended: "நாங்கள் ஆரம்ப கட்டத்தில் இருக்கிறோம் என்பதை நாங்கள் ஏற்றுக்கொள்கிறோம். உண்மையான அமைப்புகள் படிப்படியாக உருவாக்கப்படுகின்றன.",
+                found_title: "யதார்த்தமான விழிப்புணர்வு", found_desc_extended: "Real ecosystems are built gradually. The current phase is heavily focused on software development.",
                 tech_title: "தொழில்நுட்ப திசை", tech_sub: "எதிர்கால ஆராய்ச்சி.", tech_1_title: "AI அமைப்புகள்", tech_1_desc: "இயந்திர நுண்ணறிவு.", tech_2_title: "ஆட்டோமேஷன்", tech_2_desc: "வேலைப்பாய்வு மேம்பாடு.", tech_3_title: "ஸ்மார்ட் உற்பத்தி", tech_3_desc: "கவனம் செலுத்தும் கருவிகள்.", tech_4_title: "டிஜிட்டல் சுற்றுச்சூழல்", tech_4_desc: "இணைக்கப்பட்ட தளங்கள்.", tech_5_title: "உள்ளூர் வர்த்தகம்", tech_5_desc: "டிஜிட்டல் மயமாக்கல்.", tech_6_title: "வன்பொருள்", tech_6_desc: "பௌதீக மற்றும் டிஜிட்டல் இணைப்பு.",
                 timeline_title: "நீண்ட கால பார்வை", stage_1: "நிலை 1", stage_2: "நிலை 2", stage_3: "நிலை 3", stage_4: "நிலை 4", time_1_title: "அடித்தளம்", time_1_desc: "மென்பொருள் அமைப்பு.", time_2_title: "தளம்", time_2_desc: "AI ஒருங்கிணைப்பு.", time_3_title: "சிஸ்டம்", time_3_desc: "ஆட்டோமேஷன்.", time_4_title: "மேம்பட்ட சுற்றுச்சூழல்", time_4_desc: "வன்பொருள் ஒருங்கிணைப்பு.",
                 proj_title: "முதல் முயற்சி: NeeVLY", proj_sub: "உள்கட்டமைப்பு கற்றல் மீதான கவனம்.", proj_badge: "உருவாக்கப்படுகிறது", proj_neevly_desc: "அடுக்கு-2 மற்றும் 3 நகரங்களுக்கான உள்ளூர் தளம்.", proj_neevly_features: "திறன்கள்:", nf_1: "வழங்குநர்களைக் கண்டறியவும்", nf_2: "டிஜிட்டல் ஒப்பீடு", nf_3: "தொடர்பு கொள்ளவும்", nf_4: "ஆர்டர்களை நிர்வகிக்கவும்", proj_neevly_infra: "தளவாடங்கள் மற்றும் வர்த்தக உள்கட்டமைப்பை அறிய இது எங்களுக்கு உதவுகிறது.", proj_visit: "திட்டத்தை காண்க",
@@ -1267,34 +1457,19 @@
                 footer_desc: "அறிவார்ந்த தொழில்நுட்பத்தை உருவாக்குதல்.", footer_links: "தளம்", footer_contact: "தொடர்பு", footer_lbl_email: "மின்னஞ்சல்:", footer_lbl_ig: "இன்ஸ்டாகிராம்:", link_about: "எங்களை பற்றி", link_proj: "திட்டங்கள்", link_early: "இணையுங்கள்", link_privacy: "தனியுரிமை கொள்கை", footer_copy: "© 2026 KritaVa Technologies."
             },
             te: {
-                hero_title: "భవిష్యత్తు కోసం ఇంటెలిజెంట్ టెక్నాలజీ సిస్టమ్స్.", hero_sub: "కృతవా వాస్తవ ప్రపంచ సమస్యలను పరిష్కరించడానికి సాంకేతికతను నిర్మిస్తోంది.",
+                hero_title: "భవిష్యత్తు కోసం ఇంటెలిజెంట్ టెక్నాలజీ సిస్టమ్స్.", hero_sub: "కృతవా వాస్తవ ప్రపంచ समस्याలను పరిష్కరించడానికి సాంకేతికతను నిర్మిస్తోంది.",
                 btn_projects: "ప్రాజెక్ట్‌లను చూడండి", btn_access: "ఫౌండేషన్‌లో చేరండి",
-                why_title: "ఎకోసిస్టమ్ విజన్", why_desc: "భవిష్యత్తు కేవలం యాప్‌లది కాదు, కనెక్ట్ చేయబడిన సిస్టమ్‌లది.", why_desc_2: "మేము శుభ్రమైన మరియు స్మార్ట్ టెక్నాలజీని నిర్మిస్తాము.",
+                why_title: "ఎకోసిస్టమ్ విజన్", why_desc: "భవిష్యత్తు కేవలం యాప్‌లది కాదు, కనెక్ట్ చేయబడిన సిస్టమ్స్ ది.", why_desc_2: "మేము శుభ్రమైన మరియు స్మార్ట్ టెక్నాలజీని నిర్మిస్తాము.",
                 eng_title: "ఇంజనీరింగ్ విధానం", eng_sub: "పనితీరు మరియు వశ్యతపై దృష్టి.", eng_1_title: "మాడ్యులర్ ఆర్కిటెక్చర్", eng_1_desc: "స్కేలబుల్ భాగాలు.", eng_2_title: "పనితీరు", eng_2_desc: "వేగం కోసం ఆప్టిమైజ్ చేయబడింది.", eng_3_title: "క్లీన్ కోడ్‌బేస్", eng_3_desc: "నిర్వహణ మరియు స్పష్టత.",
                 phil_title: "నిర్మాణ తత్వశాస్త్రం", phil_sub: "ఆచరణ ద్వారా పురోగతి వస్తుంది.", list_phil_1: "క్రమశిక్షణతో అమలు", list_phil_2: "సిస్టమ్ థింకింగ్", list_phil_3: "దీర్ఘకాలిక పునరావృతం", list_phil_4: "మౌలిక సదుపాయాల అవగాహన", list_phil_5: "ఉత్పత్తి పరిణామం", list_phil_6: "ఆపరేషనల్ లెర్నింగ్", list_phil_7: "వినియోగదారు-కేంద్రీకృత డిజైన్", list_phil_8: "స్కేలబుల్ ఆర్కిటెక్చర్", list_phil_9: "స్మార్ట్ సరళీకరణ",
                 aes_title: "డిజైన్ తత్వశాస్త్రం", aes_sub: "మా ఉత్పత్తులు శుభ్రంగా మరియు ప్రశాంతంగా ఉండాలి.", aes_1: "స్పష్టత", aes_2: "ఉపయోగం", aes_3: "వేగం", aes_4: "నిర్మాణం", aes_5: "సరళత",
                 ai_title: "ప్రాక్టికల్ AI", ai_desc: "\"AI కేవలం మార్కెటింగ్ పదం కాదు, అది ఒక సామర్థ్య పొర.\"",
-                found_title: "వాస్తవిక అవగాహన", found_desc_extended: "మేము ప్రారంభ దశలో ఉన్నామని మేము అంగీకరిస్తున్నాము. నిజమైన వ్యవస్థలు క్రమంగా నిర్మించబడతాయి.",
+                found_title: "వాస్తవిక అవగాహన", found_desc_extended: "Real ecosystems are built gradually. The current phase is heavily focused on software development.",
                 tech_title: "టెక్నాలజీ దిశ", tech_sub: "భవిష్యత్ పరిశోధన.", tech_1_title: "AI సిస్టమ్స్", tech_1_desc: "మెషిన్ ఇంటెలిజెన్స్.", tech_2_title: "ఆటోమేషన్", tech_2_desc: "వర్క్‌ఫ్లో మెరుగుదల.", tech_3_title: "స్మార్ట్ ఉత్పాదకత", tech_3_desc: "దృష్టి సాధనాలు.", tech_4_title: "డిజిటల్ ఎకోసిస్టమ్", tech_4_desc: "కనెక్ట్ చేయబడిన ప్లాట్‌ఫారమ్‌లు.", tech_5_title: "లోకల్ కామర్స్", tech_5_desc: "డిజిటలైజేషన్.", tech_6_title: "హార్డ్‌వేర్", tech_6_desc: "భౌతిక మరియు డిజిటల్.",
                 timeline_title: "దీర్ఘకాలిక దృష్టి", stage_1: "దశ 1", stage_2: "దశ 2", stage_3: "దశ 3", stage_4: "దశ 4", time_1_title: "పునాది", time_1_desc: "సాఫ్ట్‌వేర్ సెటప్.", time_2_title: "ప్లాట్‌ఫారమ్", time_2_desc: "AI ఇంటిగ్రేషన్.", time_3_title: "సిస్టమ్", time_3_desc: "ఆటోమేషన్.", time_4_title: "అధునాతన ఎకోసిస్టమ్", time_4_desc: "హార్డ్‌వేర్ ఇంటిగ్రేషన్.",
-                proj_title: "మొదటి చొరవ: NeeVLY", proj_sub: "మౌలిక సదుపాయాల అభ్యాసంపై దృష్టి.", proj_badge: "నిర్మిస్తున్నాము", proj_neevly_desc: "టైర్-2 మరియు 3 నగరాలకు లోకల్ ప్లాట్‌ఫారమ్.", proj_neevly_features: "సామర్థ్యాలు:", nf_1: "సరఫరాదారులను కనుగొనండి", nf_2: "డిజిటల్ పోలిక", nf_3: "సంప్రదించండి", nf_4: "ఆర్డర్‌లను నిర్వహించండి", proj_neevly_infra: "ఇది లాజిస్టిక్స్ మరియు కామర్స్ ఇన్‌ఫ్రాస్ట్రక్చర్ నేర్చుకోవడంలో మాకు సహాయపడుతుంది.", proj_visit: "ప్రాజెక్ట్ చూడండి",
-                early_title: "మద్దతుదారుగా మారండి", early_sub: "సాంకేతికతను నిర్మించడంలో సహాయపడండి.", form_name: "పూర్తి పేరు", form_email: "ఇమెయిల్", form_phone: "ఫోన్ నంబర్", form_phone_rule: "* 10 అంకెల నంబర్లు మాత్రమే", form_city: "నగరం", form_btn: "చేరండి", form_success_title: "స్వాగతం.", form_success_desc: "మీ సమాచారం స్వీకరించబడింది. త్వరలో సంప్రదిస్తాము.",
-                footer_desc: "ఇంటెలిజెంట్ టెక్నాలజీని నిర్మించడం.", footer_links: "ప్లాట్‌ఫారమ్", footer_contact: "సంప్రదించండి", footer_lbl_email: "ఇమెయిల్:", footer_lbl_ig: "ఇన్‌స్టాగ్రామ్:", link_about: "మా గురించి", link_proj: "ప్రాజెక్ట్‌లు", link_early: "చేరండి", link_privacy: "గోప్యతా విధానం", footer_copy: "© 2026 KritaVa Technologies."
-            },
-            gu: {
-                hero_title: "ભવિષ્ય માટે ઇન્ટેલિજન્ટ ટેક્નોલોજી સિસ્ટમ્સ.", hero_sub: "ક્રિતાવા વાસ્તવિક દુનિયાની સમસ્યાઓ હલ કરવા માટે ટેક્નોલોજી બનાવી રહ્યું છે.",
-                btn_projects: "પ્રોજેક્ટ્સ જુઓ", btn_access: "જોડાવો",
-                why_title: "ઇકોસિસ્ટમ વિઝન", why_desc: "ભવિષ્ય માત્ર એપ્સનું નહીં, પરંતુ જોડાયેલ સિસ્ટમ્સનું હશે.", why_desc_2: "અમે સ્વચ્છ અને સ્માર્ટ ટેક્નોલોજી બનાવીએ છીએ.",
-                eng_title: "એન્જિનિયરિંગ અભિગમ", eng_sub: "પ્રદર્શન અને સુગમતા પર ધ્યાન.", eng_1_title: "મોડ્યુલર આર્કિટેક્ચર", eng_1_desc: "સ્કેલેબલ ભાગો.", eng_2_title: "પ્રદર્શન", eng_2_desc: "ઝડપ માટે ઑપ્ટિમાઇઝ.", eng_3_title: "ક્લીન કોડબેસ", eng_3_desc: "જાળવણી અને સ્પષ્ટતા.",
-                phil_title: "નિર્માણ ફિલસૂફી", phil_sub: "અમલીકરણ દ્વારા પ્રગતિ થાય છે.", list_phil_1: "શિસ્તબદ્ધ અમલ", list_phil_2: "સિસ્ટમ થિંકિંગ", list_phil_3: "લાંબા ગાળાના ઇટરેશન", list_phil_4: "ઇન્ફ્રાસ્ટ્રક્ચર સમજ", list_phil_5: "ઉત્પાદન ઉત્ક્રાંતિ", list_phil_6: "ઓપરેશનલ લર્નિંગ", list_phil_7: "વપરાશકર્તા-કેન્દ્રિત ડિઝાઇન", list_phil_8: "સ્કેલેબલ આર્કિટેક્ચર", list_phil_9: "સ્માર્ટ સરળીકરણ",
-                aes_title: "ડિઝાઇન ફિલસૂફી", aes_sub: "અમારા ઉત્પાદનો સ્વચ્છ અને શાંત હોવા જોઈએ.", aes_1: "સ્પષ્ટતા", aes_2: "ઉપયોગિતા", aes_3: "ઝડપ", aes_4: "માળખું", aes_5: "સરળતા",
-                ai_title: "વ્યવહારુ AI", ai_desc: "\"AI માત્ર એક માર્કેટિંગ શબ્દ નથી, તે એક ક્ષમતા સ્તર છે.\"",
-                found_title: "વાસ્તવિક જાગૃતિ", found_desc_extended: "અમે સ્વીકારીએ છીએ કે અમે પ્રારંભિક તબક્કામાં છીએ. સાચી ઇકોસિસ્ટમ ધીમે ધીમે બને છે.",
-                tech_title: "ટેક્નોલોજી દિશા", tech_sub: "ભવિષ્યનું સંશોધન.", tech_1_title: "AI સિસ્ટમ્સ", tech_1_desc: "મશીન ઇન્ટેલિજન્સ.", tech_2_title: "ઓટોમેશન", tech_2_desc: "વર્કફ્લો સુધારણા.", tech_3_title: "સ્માર્ટ ઉત્પાદકતા", tech_3_desc: "ધ્યાન કેન્દ્રિત કરતા સાધનો.", tech_4_title: "ડિજિટલ ઇકોસિસ્ટમ", tech_4_desc: "કનેક્ટેડ પ્લેટફોર્મ.", tech_5_title: "લોકલ કોમર્સ", tech_5_desc: "ડિજિટલાઇઝેશન.", tech_6_title: "હાર્ડવેર", tech_6_desc: "ભૌતિક અને ડિજિટલ.",
-                timeline_title: "લાંબા ગાળાની દ્રષ્ટિ", stage_1: "તબક્કો 1", stage_2: "તબક્કો 2", stage_3: "તબક્કો 3", stage_4: "તબક્કો 4", time_1_title: "પાયો", time_1_desc: "સોફ્ટવેર સેટઅપ.", time_2_title: "પ્લેટફોર્મ", time_2_desc: "AI એકીકરણ.", time_3_title: "સિસ્ટમ", time_3_desc: "ઓટોમેશન.", time_4_title: "અદ્યતન ઇકોસિસ્ટમ", time_4_desc: "હાર્ડવેર એકીકરણ.",
-                proj_title: "પ્રથમ પહેલ: NeeVLY", proj_sub: "ઇન્ફ્રાસ્ટ્રક્ચર શીખવા પર ધ્યાન.", proj_badge: "બની રહ્યું છે", proj_neevly_desc: "ટાયર-2 અને 3 શહેરો માટે લોકલ પ્લેટફોર્મ.", proj_neevly_features: "ક્ષમતાઓ:", nf_1: "સપ્લાયર્સ શોધો", nf_2: "ડિજિટલ સરખામણી", nf_3: "સંપર્ક કરો", nf_4: "ઓર્ડર સંચાલિત કરો", proj_neevly_infra: "આ અમને લોજિસ્ટિક્સ અને કોમર્સ ઇન્ફ્રાસ્ટ્રક્ચર શીખવામાં મદદ કરે છે.", proj_visit: "પ્રોજેક્ટ જુઓ",
-                early_title: "સમર્થક બનો", early_sub: "ટેક્નોલોજી બનાવવામાં મદદ કરો.", form_name: "પૂરું નામ", form_email: "ઇમેઇલ", form_phone: "ફોન નંબર", form_phone_rule: "* માત્ર 10 અંકના નંબરો", form_city: "શહેર", form_btn: "જોડાવો", form_success_title: "સ્વાગત છે.", form_success_desc: "તમારી માહિતી મળી ગઈ છે. ટૂંક સમયમાં સંપર્ક કરીશું.",
-                footer_desc: "ઇન્ટેલિજન્ટ ટેક્નોલોજી બનાવવી.", footer_links: "પ્લેટફોર્મ", footer_contact: "સંપર્ક", footer_lbl_email: "ઇમેઇલ:", footer_lbl_ig: "ઇન્સ્ટાગ્રામ:", link_about: "અમારા વિશે", link_proj: "પ્રોજેક્ટ્સ", link_early: "જોડાવો", link_privacy: "ગોપનીયતા નીતિ", footer_copy: "© 2026 KritaVa Technologies."
+                proj_title: "మొదటి చొరవ: NeeVLY", proj_sub: "మౌలిక సదుపాయాల అభ్యాసంపై దృష్టి.", proj_badge: "నిర్మిస్తున్నాము", proj_neevly_desc: "టైర్-2 మరియు 3 నగరాలకు లోకల్ ప్లాట్‌ఫారమ్.", proj_neevly_features: "సామర్థ్యాలు:", nf_1: "సరఫరాదారులను కనుగొనండి", nf_2: "డిజిటల్ పోలిక", nf_3: "సంప్రదించండి", nf_4: "ఆర్డర్‌లను నిర్వహించండి", proj_neevly_infra: "ఇది లాజిస్టిక్స్ మరియు కామర్స్ ఇన్‌ఫ్రాస్ట్రక్చర్ నేర్చుకోవడంలో మాకు సహాయపడుతుంది.", proj_visit: "ప్రージెక్ట్ చూడండి",
+                early_title: "మద్దతుదారుగా మారండి", early_sub: "సాంకేతికతను నిర్మించడంలో సహాయపండి.", form_name: "పూర్తి పేరు", form_email: "ఇమెయిల్", form_phone: "ఫోన్ నంబర్", form_phone_rule: "* 10 అంకెల నంబర్లు మాత్రమే", form_city: "నగరం", form_btn: "చేరండి", form_success_title: "స్వాగతం.", form_success_desc: "మీ సమాచారం స్వీకరించబడింది. త్వరలో సంప్రదిస్తాము.",
+                footer_desc: "ఇంటెలిజెంట్ టెక్నాలజీని నిర్మించడం.", footer_links: "ప్లాట్‌ఫారమ్", footer_contact: "సంప్రదించండి", footer_lbl_email: "ఇమెయిల్:", footer_lbl_ig: "ఇన్‌స్టాగ్రామ్:", link_about: "మా గురించి", link_proj: "ప్రాజెక్ట్‌లు", link_early: "చేరండి", link_privacy: "గోప్యా తా విధానం", footer_copy: "© 2026 KritaVa Technologies."
             }
         };
 
@@ -1311,6 +1486,14 @@
                             el.innerHTML = "आधुनिक तकनीक खंडित हो गई है। उपयोगकर्ता असंबद्ध सिस्टम से जूझते हैं। <span>कृतावा इस विचार पर बनाया जा रहा है कि भविष्य केवल अलग-अलग ऐप्स का नहीं, बल्कि जुड़े हुए इकोसिस्टम का होगा।</span>";
                         } else if (key === 'why_desc_2' && lang === 'hi') {
                             el.innerHTML = "हम ऐसे सिस्टम बनाना चाहते हैं जो जटिलता को कम करें। ऐसी तकनीक जो <span>अधिक साफ, स्मार्ट, एकीकृत और वास्तव में उपयोगी लगे।</span>";
+                        } else if (key === 'why_desc' && lang === 'bho') {
+                            el.innerHTML = "आजकल के तकनीक बहुत छितरा गइल बा। <span>कृतावा एईसन सोच पर बन रहल बा कि भविष्य खाली अलग-अलग ऐप के ना, बलुक आपस में जुड़ल इकोसिस्टम के होई।</span>";
+                        } else if (key === 'why_desc_2' && lang === 'bho') {
+                            el.innerHTML = "हमनी के एईसन सिस्टम बनावे के चाहत बा जवन जटिलता कम करे। एईसन तकनीक जवन <span>साफ, स्मार्ट, अउरी सच में उपयोगी लागे।</span>";
+                        } else if (key === 'why_desc' && lang === 'bhr') {
+                            el.innerHTML = "आजुक तकनीक बहुत खंडित भ गय अछि। <span>कृतावा एहन सोच पर बनि रहल अछि जे भविष्य सिर्फ अलग ऐपक नै, बल्कि आपस में जुड़ल इकोसिस्टमक हेतै।</span>";
+                        } else if (key === 'why_desc_2' && lang === 'bhr') {
+                            el.innerHTML = "हम सब एहन सिस्टम बनेबाक चाहैत छी जे जटिलता कम करे। एहन तकनीक जे <span>साफ, स्मार्ट, अउर सच में उपयोगी लागै।</span>";
                         } else {
                             el.textContent = translations[lang][key];
                         }
