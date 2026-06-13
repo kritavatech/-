@@ -523,7 +523,7 @@
 
                 <!-- Right: Form -->
                 <div class="lg:col-span-5 reveal-blur delay-200">
-                    <div class="glass-panel p-8 md:p-10 relative glow-card">
+                    <div class="glass-panel p-8 md:p-10 relative glow-card hoverable !overflow-visible">
                         <div class="absolute top-6 right-6 p-3 bg-black/50 backdrop-blur-md rounded-full border border-white/10 shadow-[0_0_20px_rgba(34,197,94,0.2)]">
                             <i class="fab fa-whatsapp text-3xl text-green-500"></i>
                         </div>
@@ -1245,6 +1245,16 @@
                     if (chevron) chevron.classList.remove('rotate-180');
                 }
             });
+
+            // Close language dropdown if clicked outside
+            const langContainer = document.getElementById('lang-selector-container');
+            if (langContainer && !langContainer.contains(e.target)) {
+                const langDropdown = document.getElementById('lang-dropdown');
+                const langChevron = document.getElementById('lang-chevron');
+                langDropdown.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
+                langDropdown.classList.add('opacity-0', 'pointer-events-none', 'translate-y-2');
+                langChevron.classList.remove('rotate-180');
+            }
         });
 
         // Form Inputs & Submission
