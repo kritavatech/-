@@ -10,6 +10,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"/>
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png"/>
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png"/>
+    <link rel="manifest" href="site.webmanifest"/>
 
     <!-- Tailwind & Fonts -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -31,11 +32,11 @@
                             bg2: '#06070B',
                             text1: '#FFFFFF',
                             text2: '#94A3B8',
-                            accent1: '#00F0FF', 
+                            accent1: '#00F0FF', /* Cyber Teal */
                             accent2: '#00D1FF',
-                            aurora1: '#1E1B4B', 
-                            aurora2: '#064E3B', 
-                            aurora3: '#0F172A', 
+                            aurora1: '#1E1B4B', /* Deep Purple */
+                            aurora2: '#064E3B', /* Deep Teal/Green */
+                            aurora3: '#0F172A', /* Navy Blue */
                         }
                     },
                     fontFamily: {
@@ -43,11 +44,16 @@
                         display: ['Space Grotesk', 'sans-serif'],
                     },
                     animation: {
+                        'slow-spin': 'spin-slow 30s linear infinite',
                         'pulse-subtle': 'pulse-subtle 4s ease-in-out infinite alternate',
+                        'float': 'float 6s ease-in-out infinite',
+                        'gradient-glow': 'gradient-glow 8s linear infinite',
                         'blob-float': 'blob-float 20s infinite alternate cubic-bezier(0.4, 0, 0.2, 1)',
                     },
                     keyframes: {
+                        'spin-slow': { '0%': { transform: 'rotate(0deg)' }, '100%': { transform: 'rotate(360deg)' } },
                         'pulse-subtle': { '0%': { opacity: '0.3', transform: 'scale(0.98)' }, '100%': { opacity: '0.6', transform: 'scale(1.02)' } },
+                        'float': { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } },
                         'gradient-glow': { '0%, 100%': { backgroundPosition: '0% 50%' }, '50%': { backgroundPosition: '100% 50%' } },
                         'blob-float': { '0%': { transform: 'translate(0, 0) scale(1)' }, '50%': { transform: 'translate(50px, -50px) scale(1.1)' }, '100%': { transform: 'translate(-50px, 50px) scale(0.9)' } }
                     }
@@ -63,12 +69,7 @@
             color: #FFFFFF;
             max-width: 100vw;
             overflow-x: hidden;
-            cursor: none; 
-        }
-
-        @media (hover: none) and (pointer: coarse) {
-            body { cursor: auto; }
-            .custom-cursor { display: none !important; }
+            /* Removed cursor:none to fix UX issues globally */
         }
 
         ::-webkit-scrollbar { width: 6px; height: 6px; }
@@ -78,12 +79,12 @@
 
         /* Premium Glassmorphism */
         .glass-panel {
-            background: linear-gradient(145deg, rgba(20, 20, 25, 0.6) 0%, rgba(10, 10, 15, 0.3) 100%);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
+            background: linear-gradient(145deg, rgba(20, 20, 25, 0.7) 0%, rgba(10, 10, 15, 0.4) 100%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 24px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(0, 240, 255, 0.03);
             position: relative;
             overflow: hidden;
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -92,7 +93,7 @@
         .glass-panel::before {
             content: '';
             position: absolute;
-            inset: 0;
+            top: 0; left: 0; right: 0; bottom: 0;
             border-radius: inherit;
             padding: 2px;
             background: linear-gradient(45deg, transparent, rgba(0, 240, 255, 0.5), transparent);
@@ -104,26 +105,10 @@
             pointer-events: none;
         }
         .glass-panel:hover::before { opacity: 1; }
+        
         .glass-panel:hover {
-            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 240, 255, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 240, 255, 0.15), inset 0 0 0 1px rgba(0, 240, 255, 0.1);
             transform: translateY(-5px);
-            background: linear-gradient(145deg, rgba(25, 25, 30, 0.7) 0%, rgba(12, 12, 18, 0.4) 100%);
-        }
-
-        /* Pure Navbar Heavy Glass */
-        .nav-glass {
-            background: rgba(20, 20, 25, 0.2);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-        }
-        .nav-glass-scrolled {
-            background: rgba(5, 5, 10, 0.65);
-            backdrop-filter: blur(40px) saturate(150%);
-            -webkit-backdrop-filter: blur(40px) saturate(150%);
-            border: 1px solid rgba(0, 240, 255, 0.15);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(255, 255, 255, 0.1);
         }
 
         .cyber-grid {
@@ -173,24 +158,8 @@
         .custom-option:hover { background-color: rgba(0, 240, 255, 0.1); color: #FFF; padding-left: 25px; }
 
         .loader { border: 2px solid rgba(255,255,255,0.1); border-left-color: #00F0FF; border-radius: 50%; width: 20px; height: 20px; animation: spin 1s linear infinite; }
-        
-        /* Custom Cursor Elements */
-        .cursor-dot, .cursor-outline {
-            position: fixed; top: 0; left: 0; transform: translate(-50%, -50%);
-            border-radius: 50%; z-index: 9999; pointer-events: none;
-            will-change: transform;
-        }
-        .cursor-dot { 
-            width: 6px; height: 6px; background-color: #00F0FF; 
-            box-shadow: 0 0 10px #00F0FF, 0 0 20px #00F0FF; 
-            transition: transform 0.2s ease;
-        }
-        .cursor-outline {
-            width: 40px; height: 40px; border: 1.5px solid rgba(0, 240, 255, 0.5);
-            transition: width 0.2s ease, height 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
-        }
 
-        .magnetic-wrap { display: inline-block; padding: 20px; margin: -20px; cursor: pointer; }
+        .magnetic-wrap { display: inline-block; cursor: pointer; }
         
         #canvas-container {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -212,10 +181,6 @@
         <div class="absolute top-[40%] left-[30%] w-[40%] h-[40%] bg-brand-aurora3 opacity-40 blur-[100px] rounded-full animate-blob-float" style="animation-delay: -10s;"></div>
     </div>
 
-    <!-- Custom Cursor -->
-    <div class="cursor-dot custom-cursor"></div>
-    <div class="cursor-outline custom-cursor"></div>
-
     <!-- Toast Notification -->
     <div id="toast" class="fixed top-24 right-5 md:right-10 glass-panel !border-brand-accent1/30 px-6 py-4 transform translate-x-[150%] transition-transform duration-500 z-[100] flex items-center gap-3">
         <i id="toast-icon" class="fas fa-check-circle text-brand-accent1 text-xl"></i>
@@ -223,9 +188,9 @@
     </div>
 
     <!-- Navigation Bar -->
-    <nav id="navbar" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 rounded-full w-[90%] py-3 nav-glass transition-[width,padding,background-color,box-shadow,border-color,backdrop-filter] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
+    <nav id="navbar" style="width: 90%; padding-top: 16px; padding-bottom: 16px;" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 rounded-full transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] border border-white/10 bg-white/5 backdrop-blur-md">
         <div class="px-4 md:px-6 flex items-center justify-between">
-            <div class="flex items-center gap-3 cursor-pointer group hoverable" onclick="window.scrollTo(0,0)">
+            <div class="flex items-center gap-3 cursor-pointer group" onclick="window.scrollTo(0,0)">
                 <div class="relative w-8 h-8 rounded-full shadow-[0_0_12px_rgba(0,240,255,0.4)] group-hover:scale-110 transition-transform duration-500 overflow-hidden bg-black border border-white/10 flex items-center justify-center">
                     <img src="android-chrome-512x512.png" alt="KritaVa" class="w-full h-full object-cover z-10" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
                     <div class="hidden absolute w-3 h-3 bg-brand-accent1 rounded-full shadow-[0_0_15px_rgba(0,240,255,0.8)] animate-pulse z-0" style="display: none;"></div>
@@ -234,15 +199,15 @@
             </div>
 
             <div class="hidden md:flex items-center space-x-10 text-sm font-semibold tracking-wide text-brand-text2">
-                <a href="#about" class="hoverable relative hover:text-white hover:-translate-y-0.5 transition-all duration-300 after:content-[''] after:absolute after:-bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-[2px] after:bg-brand-accent1 hover:after:w-full after:transition-all after:duration-300" data-i18n="nav_about">About</a>
-                <a href="#architecture" class="hoverable relative hover:text-white hover:-translate-y-0.5 transition-all duration-300 after:content-[''] after:absolute after:-bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-[2px] after:bg-brand-accent1 hover:after:w-full after:transition-all after:duration-300" data-i18n="nav_arch">Architecture</a>
-                <a href="#projects" class="hoverable relative hover:text-white hover:-translate-y-0.5 transition-all duration-300 after:content-[''] after:absolute after:-bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-[2px] after:bg-brand-accent1 hover:after:w-full after:transition-all after:duration-300" data-i18n="nav_projects">Projects</a>
-                <a href="#community" class="hoverable relative hover:text-white hover:-translate-y-0.5 transition-all duration-300 after:content-[''] after:absolute after:-bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-[2px] after:bg-brand-accent1 hover:after:w-full after:transition-all after:duration-300" data-i18n="nav_community">Community</a>
+                <a href="#about" class="relative hover:text-white hover:-translate-y-0.5 transition-all duration-300 after:content-[''] after:absolute after:-bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-[2px] after:bg-brand-accent1 hover:after:w-full after:transition-all after:duration-300" data-i18n="nav_about">About</a>
+                <a href="#architecture" class="relative hover:text-white hover:-translate-y-0.5 transition-all duration-300 after:content-[''] after:absolute after:-bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-[2px] after:bg-brand-accent1 hover:after:w-full after:transition-all after:duration-300" data-i18n="nav_arch">Architecture</a>
+                <a href="#projects" class="relative hover:text-white hover:-translate-y-0.5 transition-all duration-300 after:content-[''] after:absolute after:-bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-[2px] after:bg-brand-accent1 hover:after:w-full after:transition-all after:duration-300" data-i18n="nav_projects">Projects</a>
+                <a href="#community" class="relative hover:text-white hover:-translate-y-0.5 transition-all duration-300 after:content-[''] after:absolute after:-bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-[2px] after:bg-brand-accent1 hover:after:w-full after:transition-all after:duration-300" data-i18n="nav_community">Community</a>
             </div>
 
             <div class="flex items-center gap-3">
                 <div class="relative" id="lang-selector-container">
-                    <button id="lang-btn" class="hoverable flex items-center gap-2 glass-panel !rounded-full !px-4 !py-2 text-xs font-bold tracking-wider hover:!border-brand-accent1/50 transition-all duration-300">
+                    <button id="lang-btn" class="flex items-center gap-2 glass-panel !rounded-full !px-4 !py-2 text-xs font-bold tracking-wider hover:!border-brand-accent1/50 transition-all duration-300">
                         <i class="fas fa-globe text-brand-accent1"></i>
                         <span id="current-lang">EN</span>
                         <i class="fas fa-chevron-down text-[10px] transition-transform duration-300" id="lang-chevron"></i>
@@ -252,7 +217,7 @@
                     </div>
                 </div>
 
-                <button id="mobile-menu-btn" class="md:hidden text-brand-accent1 p-2 rounded-full glass-panel hoverable flex items-center justify-center w-10 h-10">
+                <button id="mobile-menu-btn" class="md:hidden text-brand-accent1 p-2 rounded-full glass-panel flex items-center justify-center w-10 h-10">
                     <i class="fas fa-bars text-sm"></i>
                 </button>
             </div>
@@ -294,12 +259,12 @@
             
             <div class="flex flex-col sm:flex-row items-center justify-center gap-6 reveal-blur delay-300 pointer-events-auto">
                 <div class="magnetic-wrap w-full sm:w-auto">
-                    <a href="#projects" class="magnetic-btn hoverable w-full sm:w-auto px-10 py-4 rounded-2xl bg-white text-black font-bold hover:bg-brand-accent1 transition-all duration-300 flex items-center justify-center gap-3 shadow-[0_0_30px_rgba(255,255,255,0.2)]">
+                    <a href="#projects" class="magnetic-btn w-full sm:w-auto px-10 py-4 rounded-2xl bg-white text-black font-bold hover:bg-brand-accent1 transition-all duration-300 flex items-center justify-center gap-3 shadow-[0_0_30px_rgba(255,255,255,0.2)]">
                         <span data-i18n="hero_btn1">Explore Projects</span> <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
                 <div class="magnetic-wrap w-full sm:w-auto">
-                    <a href="#community" class="magnetic-btn hoverable w-full sm:w-auto px-10 py-4 rounded-2xl glass-panel font-bold transition-all duration-300 text-center flex items-center justify-center text-white" data-i18n="hero_btn2">
+                    <a href="#community" class="magnetic-btn w-full sm:w-auto px-10 py-4 rounded-2xl glass-panel font-bold transition-all duration-300 text-center flex items-center justify-center text-white" data-i18n="hero_btn2">
                         Join the Community
                     </a>
                 </div>
@@ -323,7 +288,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="glass-panel p-10 md:p-14 relative reveal-blur delay-200 hoverable group">
+                <div class="glass-panel p-10 md:p-14 relative reveal-blur delay-200 group">
                     <div class="absolute -top-32 -right-32 w-80 h-80 bg-brand-accent1/20 rounded-full blur-[100px] group-hover:bg-brand-accent1/30 transition-all"></div>
                     <div class="relative z-10 border-l-4 border-brand-accent1 pl-8">
                         <i class="fas fa-quote-left text-brand-accent1/50 text-4xl mb-4 block"></i>
@@ -347,7 +312,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <!-- Card 1 -->
-                <div class="glass-panel p-10 md:p-14 hoverable group reveal-blur">
+                <div class="glass-panel p-10 md:p-14 group reveal-blur">
                     <div class="w-16 h-16 rounded-2xl bg-black flex items-center justify-center text-brand-accent1 mb-8 shadow-[0_0_20px_rgba(0,240,255,0.2)] border border-brand-accent1/30 group-hover:scale-110 transition-transform">
                         <i class="fas fa-layer-group text-3xl"></i>
                     </div>
@@ -355,7 +320,7 @@
                     <p class="text-brand-text2 text-lg leading-relaxed" data-i18n="arch_1_desc">Practical platforms deployed to solve immediate, real-world operational bottlenecks. These serve as the foundational utility nodes, generating structured logic for the broader ecosystem.</p>
                 </div>
                 <!-- Card 2 -->
-                <div class="glass-panel p-10 md:p-14 hoverable group reveal-blur delay-100">
+                <div class="glass-panel p-10 md:p-14 group reveal-blur delay-100">
                     <div class="w-16 h-16 rounded-2xl bg-black flex items-center justify-center text-brand-accent1 mb-8 shadow-[0_0_20px_rgba(0,240,255,0.2)] border border-brand-accent1/30 group-hover:scale-110 transition-transform">
                         <i class="fas fa-network-wired text-3xl"></i>
                     </div>
@@ -363,7 +328,7 @@
                     <p class="text-brand-text2 text-lg leading-relaxed" data-i18n="arch_2_desc">Structuring fragmented industry workflows into cohesive, scalable backend architectures.</p>
                 </div>
                 <!-- Card 3 -->
-                <div class="glass-panel p-10 md:p-14 hoverable group reveal-blur">
+                <div class="glass-panel p-10 md:p-14 group reveal-blur">
                     <div class="w-16 h-16 rounded-2xl bg-black flex items-center justify-center text-brand-accent1 mb-8 shadow-[0_0_20px_rgba(0,240,255,0.2)] border border-brand-accent1/30 group-hover:scale-110 transition-transform">
                         <i class="fas fa-microchip text-3xl"></i>
                     </div>
@@ -371,7 +336,7 @@
                     <p class="text-brand-text2 text-lg leading-relaxed" data-i18n="arch_3_desc">Systematizing repetitive tasks through horizontal automation and intelligent routing.</p>
                 </div>
                 <!-- Card 4 -->
-                <div class="glass-panel p-10 md:p-14 hoverable group reveal-blur delay-100">
+                <div class="glass-panel p-10 md:p-14 group reveal-blur delay-100">
                     <div class="w-16 h-16 rounded-2xl bg-black flex items-center justify-center text-brand-accent1 mb-8 shadow-[0_0_20px_rgba(0,240,255,0.2)] border border-brand-accent1/30 group-hover:scale-110 transition-transform">
                         <i class="fas fa-project-diagram text-3xl"></i>
                     </div>
@@ -392,7 +357,7 @@
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
                 <!-- NeeVLY Card -->
-                <div onclick="window.location.href='https://kritavatech.github.io/NeeVLY/#'" class="glass-panel p-10 md:p-14 cursor-pointer reveal-blur relative overflow-hidden hoverable group">
+                <div onclick="window.location.href='https://kritavatech.github.io/NeeVLY/#'" class="glass-panel p-10 md:p-14 cursor-pointer reveal-blur relative overflow-hidden group glow-card">
                     <div class="absolute inset-0 bg-gradient-to-br from-brand-accent1/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div class="relative z-10 flex flex-col h-full justify-between pointer-events-none">
                         <div>
@@ -444,42 +409,42 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-                <div class="glass-panel p-8 reveal-blur hoverable group">
+                <div class="glass-panel p-8 reveal-blur group glow-card">
                     <div class="w-14 h-14 rounded-2xl bg-black flex items-center justify-center text-brand-accent1 text-2xl mb-6 shadow-[0_0_15px_rgba(0,240,255,0.2)] border border-brand-accent1/30 group-hover:bg-brand-accent1 group-hover:text-black transition-colors">
                         <i class="fas fa-microchip"></i>
                     </div>
                     <h4 class="text-2xl font-display font-bold mb-3 text-white" data-i18n="prin_1_title">Practical Innovation</h4>
                     <p class="text-brand-text2 text-base leading-relaxed" data-i18n="prin_1_desc">Solving real-world operational bottlenecks through intelligent implementation, not just theoretical technology.</p>
                 </div>
-                <div class="glass-panel p-8 reveal-blur delay-100 hoverable group">
+                <div class="glass-panel p-8 reveal-blur delay-100 group glow-card">
                     <div class="w-14 h-14 rounded-2xl bg-black flex items-center justify-center text-brand-accent1 text-2xl mb-6 shadow-[0_0_15px_rgba(0,240,255,0.2)] border border-brand-accent1/30 group-hover:bg-brand-accent1 group-hover:text-black transition-colors">
                         <i class="fas fa-users"></i>
                     </div>
                     <h4 class="text-2xl font-display font-bold mb-3 text-white" data-i18n="prin_2_title">Human-Centered</h4>
                     <p class="text-brand-text2 text-base leading-relaxed" data-i18n="prin_2_desc">Systems designed to augment human potential and coordinate workflows efficiently.</p>
                 </div>
-                <div class="glass-panel p-8 reveal-blur delay-200 hoverable group">
+                <div class="glass-panel p-8 reveal-blur delay-200 group glow-card">
                     <div class="w-14 h-14 rounded-2xl bg-black flex items-center justify-center text-brand-accent1 text-2xl mb-6 shadow-[0_0_15px_rgba(0,240,255,0.2)] border border-brand-accent1/30 group-hover:bg-brand-accent1 group-hover:text-black transition-colors">
                         <i class="fas fa-seedling"></i>
                     </div>
                     <h4 class="text-2xl font-display font-bold mb-3 text-white" data-i18n="prin_3_title">Long-Term Thinking</h4>
                     <p class="text-brand-text2 text-base leading-relaxed" data-i18n="prin_3_desc">Building architecture that scales and evolves organically over decades.</p>
                 </div>
-                <div class="glass-panel p-8 reveal-blur hoverable group">
+                <div class="glass-panel p-8 reveal-blur group glow-card">
                     <div class="w-14 h-14 rounded-2xl bg-black flex items-center justify-center text-brand-accent1 text-2xl mb-6 shadow-[0_0_15px_rgba(0,240,255,0.2)] border border-brand-accent1/30 group-hover:bg-brand-accent1 group-hover:text-black transition-colors">
                         <i class="fas fa-network-wired"></i>
                     </div>
                     <h4 class="text-2xl font-display font-bold mb-3 text-white" data-i18n="prin_4_title">Scalable Systems</h4>
                     <p class="text-brand-text2 text-base leading-relaxed" data-i18n="prin_4_desc">Foundational software environments capable of supporting vast future ecosystems.</p>
                 </div>
-                <div class="glass-panel p-8 reveal-blur delay-100 hoverable group">
+                <div class="glass-panel p-8 reveal-blur delay-100 group glow-card">
                     <div class="w-14 h-14 rounded-2xl bg-black flex items-center justify-center text-brand-accent1 text-2xl mb-6 shadow-[0_0_15px_rgba(0,240,255,0.2)] border border-brand-accent1/30 group-hover:bg-brand-accent1 group-hover:text-black transition-colors">
                         <i class="fas fa-pen-nib"></i>
                     </div>
                     <h4 class="text-2xl font-display font-bold mb-3 text-white" data-i18n="prin_5_title">Clean Design</h4>
                     <p class="text-brand-text2 text-base leading-relaxed" data-i18n="prin_5_desc">Minimalist, purposeful interfaces that remove friction and convey clarity.</p>
                 </div>
-                <div class="glass-panel p-8 reveal-blur delay-200 hoverable group">
+                <div class="glass-panel p-8 reveal-blur delay-200 group glow-card">
                     <div class="w-14 h-14 rounded-2xl bg-black flex items-center justify-center text-brand-accent1 text-2xl mb-6 shadow-[0_0_15px_rgba(0,240,255,0.2)] border border-brand-accent1/30 group-hover:bg-brand-accent1 group-hover:text-black transition-colors">
                         <i class="fas fa-brain"></i>
                     </div>
@@ -490,7 +455,7 @@
         </div>
     </section>
 
-    <!-- Horizon Section -->
+    <!-- Horizon Section (Restored connection line) -->
     <section class="py-24 md:py-40 relative overflow-hidden z-10">
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand-accent1/10 rounded-full blur-[150px] pointer-events-none"></div>
 
@@ -502,18 +467,18 @@
             </p>
 
             <div class="flex flex-col gap-6 md:gap-8 max-w-3xl mx-auto text-left relative">
-                <!-- Line connecting phases -->
+                <!-- Line connecting phases RESTORED -->
                 <div class="absolute left-[38px] top-10 bottom-10 w-1 bg-brand-accent1/30 rounded-full hidden md:block shadow-[0_0_10px_rgba(79,163,165,0.5)]"></div>
 
-                <div class="glass-panel p-8 md:p-10 border-l-4 border-brand-accent1 hover:translate-x-4 transition-transform duration-500 reveal-blur hoverable relative z-10 bg-brand-bg1/90">
+                <div class="glass-panel p-8 md:p-10 border-l-4 border-brand-accent1 hover:translate-x-4 transition-transform duration-500 reveal-blur relative z-10 bg-brand-bg1/90 glow-card">
                     <h4 class="text-xl md:text-3xl font-display font-bold mb-4 text-white drop-shadow-md" data-i18n="fd_1">Phase 1: Operational Workflows</h4>
                     <p class="text-brand-text2 leading-relaxed text-base md:text-lg" data-i18n="fd_1_desc">Deploying utility-driven platforms to map and digitize complex, fragmented supply chains and daily operations.</p>
                 </div>
-                <div class="glass-panel p-8 md:p-10 border-l-4 border-brand-accent1 hover:translate-x-4 transition-transform duration-500 reveal-blur delay-100 hoverable relative z-10 bg-brand-bg1/90">
+                <div class="glass-panel p-8 md:p-10 border-l-4 border-brand-accent1 hover:translate-x-4 transition-transform duration-500 reveal-blur delay-100 relative z-10 bg-brand-bg1/90 glow-card">
                     <h4 class="text-xl md:text-3xl font-display font-bold mb-4 text-white drop-shadow-md" data-i18n="fd_2">Phase 2: Horizontal Automation Protocols</h4>
                     <p class="text-brand-text2 leading-relaxed text-base md:text-lg" data-i18n="fd_2_desc">Connecting digitized nodes to enable seamless data flow, automated decision-making, and structural efficiency.</p>
                 </div>
-                <div class="glass-panel p-8 md:p-10 border-l-4 border-brand-accent1 hover:translate-x-4 transition-transform duration-500 reveal-blur delay-200 hoverable relative z-10 bg-brand-bg1/90">
+                <div class="glass-panel p-8 md:p-10 border-l-4 border-brand-accent1 hover:translate-x-4 transition-transform duration-500 reveal-blur delay-200 relative z-10 bg-brand-bg1/90 glow-card">
                     <h4 class="text-xl md:text-3xl font-display font-bold mb-4 text-white drop-shadow-md" data-i18n="fd_3">Phase 3: Intelligent Operating Environments</h4>
                     <p class="text-brand-text2 leading-relaxed text-base md:text-lg" data-i18n="fd_3_desc">Evolving into a comprehensive, intelligent software ecosystem capable of dynamic problem-solving at scale.</p>
                 </div>
@@ -534,22 +499,22 @@
                 
                 <!-- Left: Benefits -->
                 <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div class="glass-panel p-8 reveal-blur hoverable group">
+                    <div class="glass-panel p-8 reveal-blur group glow-card">
                         <div class="w-12 h-12 rounded-full bg-brand-accent1/10 flex items-center justify-center text-brand-accent1 mb-5 border border-brand-accent1/30 group-hover:scale-110 transition-transform"><i class="fas fa-robot text-xl"></i></div>
                         <h5 class="text-xl font-display font-bold text-white mb-2" data-i18n="ben_1_title">AI & Technology Updates</h5>
                         <p class="text-brand-text2 text-sm leading-relaxed" data-i18n="ben_1_desc">Curated insights on AI advancements, emerging tech, and automation trends.</p>
                     </div>
-                    <div class="glass-panel p-8 reveal-blur delay-100 hoverable group">
+                    <div class="glass-panel p-8 reveal-blur delay-100 group glow-card">
                         <div class="w-12 h-12 rounded-full bg-brand-accent1/10 flex items-center justify-center text-brand-accent1 mb-5 border border-brand-accent1/30 group-hover:scale-110 transition-transform"><i class="fas fa-code-branch text-xl"></i></div>
                         <h5 class="text-xl font-display font-bold text-white mb-2" data-i18n="ben_2_title">Development Updates</h5>
                         <p class="text-brand-text2 text-sm leading-relaxed" data-i18n="ben_2_desc">Behind-the-scenes progress on NeeVLY, UI/UX evolution, and future experiments.</p>
                     </div>
-                    <div class="glass-panel p-8 reveal-blur hoverable group">
+                    <div class="glass-panel p-8 reveal-blur group glow-card">
                         <div class="w-12 h-12 rounded-full bg-brand-accent1/10 flex items-center justify-center text-brand-accent1 mb-5 border border-brand-accent1/30 group-hover:scale-110 transition-transform"><i class="fas fa-key text-xl"></i></div>
                         <h5 class="text-xl font-display font-bold text-white mb-2" data-i18n="ben_3_title">Early Access</h5>
                         <p class="text-brand-text2 text-sm leading-relaxed" data-i18n="ben_3_desc">Selected members receive beta access, prototype testing, and early feature previews.</p>
                     </div>
-                    <div class="glass-panel p-8 reveal-blur delay-100 hoverable group">
+                    <div class="glass-panel p-8 reveal-blur delay-100 group glow-card">
                         <div class="w-12 h-12 rounded-full bg-brand-accent1/10 flex items-center justify-center text-brand-accent1 mb-5 border border-brand-accent1/30 group-hover:scale-110 transition-transform"><i class="fas fa-comments text-xl"></i></div>
                         <h5 class="text-xl font-display font-bold text-white mb-2" data-i18n="ben_4_title">Exclusive Discussions</h5>
                         <p class="text-brand-text2 text-sm leading-relaxed" data-i18n="ben_4_desc">Access future-focused talks around AI, product systems, and operational innovation.</p>
@@ -558,7 +523,7 @@
 
                 <!-- Right: Form -->
                 <div class="lg:col-span-5 reveal-blur delay-200">
-                    <div class="glass-panel p-8 md:p-10 relative hoverable">
+                    <div class="glass-panel p-8 md:p-10 relative glow-card">
                         <div class="absolute top-6 right-6 p-3 bg-black/50 backdrop-blur-md rounded-full border border-white/10 shadow-[0_0_20px_rgba(34,197,94,0.2)]">
                             <i class="fab fa-whatsapp text-3xl text-green-500"></i>
                         </div>
@@ -569,7 +534,7 @@
                             <div>
                                 <label class="block text-xs font-bold tracking-widest uppercase text-brand-text2 mb-2" data-i18n="form_name">Full Name</label>
                                 <input type="text" id="entry_name" required
-                                    class="w-full bg-black border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-brand-accent1 transition-colors placeholder-white/20 hoverable"
+                                    class="w-full bg-black border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-brand-accent1 transition-colors placeholder-white/20"
                                     placeholder="Enter your name">
                             </div>
 
@@ -578,7 +543,7 @@
                                 <div class="flex">
                                     <span class="inline-flex items-center px-5 font-bold text-brand-text2 bg-[#1A1A24] border border-r-0 border-white/10 rounded-l-xl">+91</span>
                                     <input type="tel" id="entry_phone" required maxlength="10"
-                                        class="w-full bg-black border border-white/10 rounded-r-xl px-5 py-4 text-white focus:outline-none focus:border-brand-accent1 transition-colors placeholder-white/20 hoverable"
+                                        class="w-full bg-black border border-white/10 rounded-r-xl px-5 py-4 text-white focus:outline-none focus:border-brand-accent1 transition-colors placeholder-white/20"
                                         placeholder="10-digit number">
                                 </div>
                                 <p id="phone_error" class="text-xs text-red-400 mt-2 hidden font-medium" data-i18n="form_phone_err">Please enter a valid 10-digit number</p>
@@ -587,7 +552,7 @@
                             <div>
                                 <label class="block text-xs font-bold tracking-widest uppercase text-brand-text2 mb-2" data-i18n="form_email">Email Address</label>
                                 <input type="email" id="entry_email" required
-                                    class="w-full bg-black border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-brand-accent1 transition-colors placeholder-white/20 hoverable"
+                                    class="w-full bg-black border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-brand-accent1 transition-colors placeholder-white/20"
                                     placeholder="you@example.com">
                             </div>
 
@@ -596,7 +561,7 @@
                                     <label class="block text-xs font-bold tracking-widest uppercase text-brand-text2 mb-2" data-i18n="form_state">State</label>
                                     <div class="custom-select-wrapper">
                                         <div class="custom-select" id="state-select">
-                                            <div class="custom-select__trigger bg-black border-white/10 rounded-xl py-4 hoverable">
+                                            <div class="custom-select__trigger bg-black border-white/10 rounded-xl py-4">
                                                 <span id="state-trigger-text" class="text-white/50 truncate" data-i18n="form_state_ph">Select State</span>
                                                 <i class="fas fa-chevron-down text-sm transition-transform ml-2"></i>
                                             </div>
@@ -610,7 +575,7 @@
                                     <label class="block text-xs font-bold tracking-widest uppercase text-brand-text2 mb-2" data-i18n="form_city">City</label>
                                     <div class="custom-select-wrapper">
                                         <div class="custom-select pointer-events-none opacity-50 transition-opacity" id="city-select">
-                                            <div class="custom-select__trigger bg-black border-white/10 rounded-xl py-4 hoverable">
+                                            <div class="custom-select__trigger bg-black border-white/10 rounded-xl py-4">
                                                 <span id="city-trigger-text" class="text-white/50 truncate" data-i18n="form_city_ph">Select City</span>
                                                 <i class="fas fa-chevron-down text-sm transition-transform ml-2"></i>
                                             </div>
@@ -622,7 +587,7 @@
                             </div>
 
                             <div class="magnetic-wrap w-full mt-6">
-                                <button type="submit" id="submitBtn" class="magnetic-btn w-full py-4 rounded-xl bg-white text-black font-bold hover:bg-brand-accent1 transition-all duration-300 flex items-center justify-center gap-3 group hoverable">
+                                <button type="submit" id="submitBtn" class="magnetic-btn w-full py-4 rounded-xl bg-white text-black font-bold hover:bg-brand-accent1 transition-all duration-300 flex items-center justify-center gap-3 group">
                                     <span id="btnText" data-i18n="form_submit" class="text-lg">Join the Community</span>
                                     <div id="btnLoader" class="loader hidden !border-black !border-l-transparent"></div>
                                 </button>
@@ -635,7 +600,7 @@
     </section>
 
     <!-- AI Scroll Prompt -->
-    <div id="ai-scroll-prompt" class="fixed bottom-28 right-6 md:right-8 glass-panel !border-brand-accent1/50 px-5 py-4 flex items-center gap-4 z-40 transition-all duration-700 transform translate-y-8 opacity-0 pointer-events-none cursor-pointer hoverable hover:scale-105" onclick="toggleAIChat()">
+    <div id="ai-scroll-prompt" class="fixed bottom-28 right-6 md:right-8 glass-panel !border-brand-accent1/50 px-5 py-4 flex items-center gap-4 z-40 transition-all duration-700 transform translate-y-8 opacity-0 pointer-events-none cursor-pointer hover:scale-105" onclick="toggleAIChat()">
         <div class="w-12 h-12 rounded-full bg-brand-accent1/20 flex items-center justify-center border border-brand-accent1/50 shadow-[0_0_15px_rgba(0,240,255,0.3)]">
             <i class="fas fa-robot text-brand-accent1 text-xl"></i>
         </div>
@@ -650,7 +615,7 @@
 
     <!-- KritaVa AI Floating Button -->
     <div class="magnetic-wrap fixed bottom-6 right-6 md:right-8 z-50">
-        <button id="ai-fab" class="magnetic-btn w-16 h-16 md:w-20 md:h-20 rounded-full glass-panel border border-brand-accent1/50 flex items-center justify-center hoverable group shadow-[0_0_30px_rgba(0,240,255,0.3)]">
+        <button id="ai-fab" class="magnetic-btn w-16 h-16 md:w-20 md:h-20 rounded-full glass-panel border border-brand-accent1/50 flex items-center justify-center group shadow-[0_0_30px_rgba(0,240,255,0.3)]">
             <div class="relative w-12 h-12 md:w-14 md:h-14 rounded-full overflow-hidden border border-brand-accent1/50 group-hover:scale-110 transition-transform duration-500 bg-black">
                 <img src="android-chrome-512x512.png" alt="KritaVa AI" class="w-full h-full object-cover">
             </div>
@@ -670,7 +635,7 @@
                     <p class="text-[10px] text-brand-accent1 flex items-center gap-1.5 font-bold tracking-widest uppercase mt-1"><span class="w-2 h-2 rounded-full bg-brand-accent1 animate-pulse"></span> System Active</p>
                 </div>
             </div>
-            <button id="ai-close" class="text-brand-text2 hover:text-white p-3 rounded-full hover:bg-white/10 hoverable">
+            <button id="ai-close" class="text-brand-text2 hover:text-white p-3 rounded-full hover:bg-white/10">
                 <i class="fas fa-chevron-down md:fa-times text-xl"></i>
             </button>
         </div>
@@ -688,41 +653,90 @@
 
         <div class="p-6 border-t border-white/10 bg-black/80">
             <form id="ai-form" class="relative flex items-center">
-                <input type="text" id="ai-input" autocomplete="off" placeholder="Ask about KritaVa..." class="w-full bg-[#101018] border border-white/10 rounded-full pl-6 pr-16 py-4 text-base text-white focus:outline-none focus:border-brand-accent1 hoverable">
-                <button type="submit" id="ai-submit" class="absolute right-2 w-12 h-12 rounded-full bg-brand-accent1 text-black flex items-center justify-center hover:bg-white hover:scale-105 transition-all hoverable">
+                <input type="text" id="ai-input" autocomplete="off" placeholder="Ask about KritaVa..." class="w-full bg-[#101018] border border-white/10 rounded-full pl-6 pr-16 py-4 text-base text-white focus:outline-none focus:border-brand-accent1">
+                <button type="submit" id="ai-submit" class="absolute right-2 w-12 h-12 rounded-full bg-brand-accent1 text-black flex items-center justify-center hover:bg-white hover:scale-105 transition-all">
                     <i class="fas fa-arrow-up text-lg"></i>
                 </button>
             </form>
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="bg-[#020204] py-16 border-t border-white/10 relative z-10">
-        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-10">
-            
-            <div class="flex flex-col items-center md:items-start gap-4">
-                <div class="flex items-center gap-4 group cursor-pointer hoverable" onclick="window.scrollTo(0,0)">
-                    <div class="relative w-12 h-12 rounded-full overflow-hidden border border-white/20 flex items-center justify-center bg-black">
-                        <img src="android-chrome-512x512.png" alt="KritaVa" class="w-full h-full object-cover z-10">
-                    </div>
-                    <span class="font-display font-bold text-3xl tracking-widest text-white group-hover:text-brand-accent1 transition-colors">KritaVa</span>
+    <!-- Complete Rebuilt Footer Matching Design -->
+    <footer class="bg-[#050810] pt-20 pb-8 border-t border-white/5 relative z-10 font-sans">
+        <div class="max-w-7xl mx-auto px-6">
+            <!-- Top Section -->
+            <div class="flex flex-col md:flex-row justify-between items-center md:items-start gap-8 mb-16">
+                <div class="text-center md:text-left">
+                    <h2 class="text-3xl md:text-4xl font-display font-bold text-white mb-3" data-i18n="foot_ready">Ready to simplify procurement?</h2>
+                    <p class="text-brand-text2 text-lg" data-i18n="foot_ready_sub">Join the foundational list and shape the future of local commerce.</p>
                 </div>
-                <div class="flex flex-wrap items-center justify-center md:justify-start gap-x-6 gap-y-2 text-sm text-brand-text2/50 font-bold tracking-widest uppercase mt-2">
-                    <span data-i18n="footer_copy">&copy; 2026 KritaVa Technologies.</span>
-                    <button onclick="openModal('privacy-modal')" class="hover:text-brand-accent1 transition-colors hoverable">Privacy Policy</button>
-                    <button onclick="openModal('terms-modal')" class="hover:text-brand-accent1 transition-colors hoverable">Terms of Service</button>
+                <button onclick="document.getElementById('entry_name').focus();" class="px-8 py-4 bg-white text-black font-bold rounded-full hover:bg-brand-accent1 transition-colors whitespace-nowrap shadow-[0_0_20px_rgba(255,255,255,0.1)]" data-i18n="foot_btn">Get Early Access</button>
+            </div>
+
+            <!-- Divider -->
+            <div class="w-full h-px bg-white/10 mb-16"></div>
+
+            <!-- Grid Section -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8 mb-16">
+                <!-- Branding -->
+                <div class="lg:col-span-2">
+                    <div class="flex items-center gap-3 mb-6">
+                        <img src="android-chrome-512x512.png" alt="KritaVa" class="w-8 h-8 object-cover rounded-full bg-black border border-white/20">
+                        <span class="font-display font-bold text-xl tracking-wider text-white">KritaVa</span>
+                    </div>
+                    <p class="text-brand-text2 text-sm leading-relaxed max-w-sm" data-i18n="foot_desc">Empowering offline local businesses through technology. Building digital infrastructure for Tier-2 & Tier-3 cities in India.</p>
+                </div>
+
+                <!-- Platform -->
+                <div>
+                    <h4 class="text-white font-bold mb-6" data-i18n="foot_platform">Platform</h4>
+                    <ul class="space-y-4 text-sm text-brand-text2 font-medium">
+                        <li><a href="#about" class="hover:text-brand-accent1 transition-colors" data-i18n="foot_prob">The Problem</a></li>
+                        <li><a href="#architecture" class="hover:text-brand-accent1 transition-colors" data-i18n="foot_how">How it Works</a></li>
+                        <li><a href="#projects" class="hover:text-brand-accent1 transition-colors" data-i18n="foot_feat">Core Features</a></li>
+                        <li><a href="#community" class="hover:text-brand-accent1 transition-colors" data-i18n="foot_who">Who is it for?</a></li>
+                        <li><a href="#community" class="text-brand-accent1 hover:text-white transition-colors" data-i18n="foot_join">Join Waitlist</a></li>
+                    </ul>
+                </div>
+
+                <!-- Company -->
+                <div>
+                    <h4 class="text-white font-bold mb-6" data-i18n="foot_company">Company</h4>
+                    <ul class="space-y-4 text-sm text-brand-text2 font-medium">
+                        <li><a href="#about" class="hover:text-brand-accent1 transition-colors" data-i18n="foot_about">About KritaVa</a></li>
+                        <li><button onclick="openModal('privacy-modal')" class="hover:text-brand-accent1 transition-colors" data-i18n="foot_privacy">Privacy Policy</button></li>
+                        <li><button onclick="openModal('terms-modal')" class="hover:text-brand-accent1 transition-colors" data-i18n="foot_terms">Terms of Service</button></li>
+                        <li><a href="mailto:kritava.tech@gmail.com" class="hover:text-brand-accent1 transition-colors" data-i18n="foot_contact">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Connect -->
+                <div>
+                    <h4 class="text-white font-bold mb-6" data-i18n="foot_connect">Connect</h4>
+                    <ul class="space-y-4 text-sm text-brand-text2 font-medium">
+                        <li>
+                            <a href="mailto:kritava.tech@gmail.com" class="flex items-center gap-3 hover:text-brand-accent1 transition-colors group">
+                                <span class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-brand-accent1/50 transition-colors"><i class="fas fa-envelope text-xs"></i></span>
+                                Email Us
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://instagram.com/kritava.tech" target="_blank" class="flex items-center gap-3 hover:text-brand-accent1 transition-colors group">
+                                <span class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-brand-accent1/50 transition-colors"><i class="fab fa-instagram text-xs"></i></span>
+                                Instagram
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
 
-            <div class="flex flex-col sm:flex-row items-center gap-6 md:gap-8">
-                <a href="mailto:kritava.tech@gmail.com" class="text-brand-text2 hover:text-brand-accent1 transition-colors flex items-center gap-3 text-base font-medium hoverable">
-                    <span class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center border border-white/10"><i class="fas fa-envelope"></i></span>
-                    kritava.tech@gmail.com
-                </a>
-                <a href="https://instagram.com/kritava.tech" target="_blank" rel="noopener noreferrer" class="text-brand-text2 hover:text-brand-accent1 transition-colors flex items-center gap-3 text-base font-medium hoverable">
-                    <span class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center border border-white/10"><i class="fab fa-instagram text-lg"></i></span>
-                    kritava.tech
-                </a>
+            <!-- Divider -->
+            <div class="w-full h-px bg-white/10 mb-8"></div>
+
+            <!-- Bottom Strip -->
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-medium text-brand-text2/60 text-center">
+                <p data-i18n="foot_copy">&copy; 2026 KritaVa Technologies. Building for India.</p>
+                <p>Designed & Developed with <i class="fas fa-heart text-brand-accent2 mx-1"></i> in India</p>
             </div>
         </div>
     </footer>
@@ -732,7 +746,7 @@
         <div class="glass-panel w-full max-w-3xl max-h-[85vh] flex flex-col transform scale-95 transition-transform duration-300">
             <div class="flex justify-between items-center p-6 border-b border-white/10">
                 <h3 class="text-2xl font-display font-bold text-white">Privacy Policy</h3>
-                <button onclick="closeModal('privacy-modal')" class="text-brand-text2 hover:text-white transition-colors hoverable w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/10">
+                <button onclick="closeModal('privacy-modal')" class="text-brand-text2 hover:text-white transition-colors w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/10">
                     <i class="fas fa-times text-xl"></i>
                 </button>
             </div>
@@ -847,7 +861,7 @@
         <div class="glass-panel w-full max-w-3xl max-h-[85vh] flex flex-col transform scale-95 transition-transform duration-300">
             <div class="flex justify-between items-center p-6 border-b border-white/10">
                 <h3 class="text-2xl font-display font-bold text-white">Terms of Service</h3>
-                <button onclick="closeModal('terms-modal')" class="text-brand-text2 hover:text-white transition-colors hoverable w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/10">
+                <button onclick="closeModal('terms-modal')" class="text-brand-text2 hover:text-white transition-colors w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/10">
                     <i class="fas fa-times text-xl"></i>
                 </button>
             </div>
@@ -1067,15 +1081,6 @@
         scene.add(particlesMesh);
         camera.position.z = 16;
 
-        // Custom Cursor LERP Logic
-        const cursorDot = document.querySelector('.cursor-dot');
-        const cursorOutline = document.querySelector('.cursor-outline');
-        
-        let mouseX = window.innerWidth / 2;
-        let mouseY = window.innerHeight / 2;
-        let outlineX = mouseX;
-        let outlineY = mouseY;
-        
         let targetX = 0; 
         let targetY = 0;
         const windowHalfX = window.innerWidth / 2;
@@ -1083,40 +1088,11 @@
 
         if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
             window.addEventListener('mousemove', (e) => {
-                mouseX = e.clientX;
-                mouseY = e.clientY;
-
-                // Move dot instantly via GPU translate3d
-                cursorDot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
-
-                let rawTargetX = (mouseX - windowHalfX) * 0.0005;
-                let rawTargetY = (mouseY - windowHalfY) * 0.0005;
-                
+                let rawTargetX = (e.clientX - windowHalfX) * 0.0005;
+                let rawTargetY = (e.clientY - windowHalfY) * 0.0005;
                 const cap = 0.3;
                 targetX = Math.max(-cap, Math.min(cap, rawTargetX));
                 targetY = Math.max(-cap, Math.min(cap, rawTargetY));
-            });
-
-            const renderCursor = () => {
-                outlineX += (mouseX - outlineX) * 0.15; 
-                outlineY += (mouseY - outlineY) * 0.15;
-                cursorOutline.style.transform = `translate3d(${outlineX}px, ${outlineY}px, 0) translate(-50%, -50%)`;
-                requestAnimationFrame(renderCursor);
-            };
-            requestAnimationFrame(renderCursor);
-
-            // Cursor Hover States
-            document.querySelectorAll('.hoverable, a, button, input').forEach(el => {
-                el.addEventListener('mouseenter', () => {
-                    cursorDot.style.width = '10px'; cursorDot.style.height = '10px';
-                    cursorOutline.style.width = '60px'; cursorOutline.style.height = '60px';
-                    cursorOutline.style.backgroundColor = 'rgba(0,240,255,0.05)';
-                });
-                el.addEventListener('mouseleave', () => {
-                    cursorDot.style.width = '6px'; cursorDot.style.height = '6px';
-                    cursorOutline.style.width = '40px'; cursorOutline.style.height = '40px';
-                    cursorOutline.style.backgroundColor = 'transparent';
-                });
             });
         }
 
@@ -1135,11 +1111,13 @@
             requestAnimationFrame(animate);
             const elapsedTime = clock.getElapsedTime();
             
+            // Sphere rotation + mouse parallax (Using 0.015 for strong delay/lag)
             particlesMesh.rotation.y += 0.001;
             particlesMesh.rotation.x += 0.0005;
             particlesMesh.rotation.y += 0.015 * (targetX - particlesMesh.rotation.y);
             particlesMesh.rotation.x += 0.015 * (targetY - particlesMesh.rotation.x);
             
+            // Subtle breathing
             const scale = 1 + Math.sin(elapsedTime * 0.5) * 0.02;
             particlesMesh.scale.set(scale, scale, scale);
             
@@ -1154,7 +1132,7 @@
             ScrollTrigger.refresh();
         });
 
-        // Subtle Magnetic Buttons 
+        // Subtle Magnetic Buttons (Multiplier 0.1)
         document.querySelectorAll('.magnetic-btn').forEach(btn => {
             const wrap = btn.parentElement; 
             if(wrap.classList.contains('magnetic-wrap')) {
@@ -1172,6 +1150,27 @@
 
         // GSAP Scroll Animations
         gsap.registerPlugin(ScrollTrigger);
+
+        // Solid GSAP Horizontal Scroll Logic
+        if (window.innerWidth > 768) {
+            let track = document.querySelector(".horizontal-track");
+            
+            if(track) {
+                let tl = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: ".horizontal-container",
+                        pin: true, 
+                        scrub: 1, 
+                        end: () => "+=" + (track.scrollWidth - window.innerWidth)
+                    }
+                });
+
+                tl.to(track, {
+                    x: () => -(track.scrollWidth - window.innerWidth) + "px",
+                    ease: "none"
+                });
+            }
+        }
 
         // Apple-style scroll reveals
         const observerOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
@@ -1316,11 +1315,11 @@
             });
         });
 
-        // Expanded i18n Data Structure with Native format
+        // i18n EXACT DATA + Footer Updates
         const i18nData = {
             "en": {
-                name: "English", native: "English",
-                nav_about: "About", nav_projects: "Projects", nav_vision: "Vision", nav_community: "Community", nav_arch: "Architecture",
+                name: "English",
+                nav_about: "About", nav_projects: "Projects", nav_vision: "Vision", nav_community: "Community",
                 hero_badge: "Future Systems Architecture",
                 hero_headline: "Architecting Digital <br/><span class='gradient-text pb-2 inline-block'>Infrastructure.</span>",
                 hero_subhead: "KritaVa designs and builds intelligent systems, scalable digital infrastructure, and advanced software ecosystems to simplify real-world operational complexity.",
@@ -1356,96 +1355,129 @@
                 ben_2_title: "Development Updates", ben_2_desc: "Behind-the-scenes progress on NeeVLY, UI/UX evolution, and future experiments.",
                 ben_3_title: "Early Access", ben_3_desc: "Selected members receive beta access, prototype testing, and early feature previews.",
                 ben_4_title: "Exclusive Discussions", ben_4_desc: "Access future-focused talks around AI, product systems, and operational innovation.",
+                ben_locked_1: "Community Unlock", ben_locked_2: "Future Perks",
                 form_title: "Request Access", form_sub: "Submit to receive the official WhatsApp Community invite.",
                 form_name: "Full Name", form_phone: "Phone Number", form_email: "Email Address", form_state: "State", form_city: "City",
                 form_state_ph: "Select State", form_city_ph: "Select City", form_submit: "Join the Community",
                 form_phone_err: "Please enter a valid 10-digit number", err_loc: "Please select State and City.",
                 success_msg: "Welcome! Redirecting to WhatsApp...",
-                footer_copy: "&copy; 2026 KritaVa Technologies."
+                foot_ready: "Ready to simplify procurement?", foot_ready_sub: "Join the foundational list and shape the future of local commerce.", foot_btn: "Get Early Access",
+                foot_desc: "Empowering offline local businesses through technology. Building digital infrastructure for Tier-2 & Tier-3 cities in India.",
+                foot_platform: "Platform", foot_prob: "The Problem", foot_how: "How it Works", foot_feat: "Core Features", foot_who: "Who is it for?", foot_join: "Join Waitlist",
+                foot_company: "Company", foot_about: "About KritaVa", foot_privacy: "Privacy Policy", foot_terms: "Terms of Service", foot_contact: "Contact Us",
+                foot_connect: "Connect", foot_copy: "&copy; 2026 KritaVa Technologies. Building for India."
             },
             "hi": { 
-                name: "Hindi", native: "हिन्दी", 
-                nav_about: "हमारे बारे में", nav_projects: "परियोजनाएं", nav_vision: "दृष्टिकोण", nav_community: "समुदाय", nav_arch: "सिस्टम आर्किटेक्चर",
+                name: "हिंदी", nav_about: "हमारे बारे में", nav_projects: "परियोजनाएं", nav_vision: "दृष्टिकोण", nav_community: "समुदाय", 
                 hero_badge: "भविष्य की प्रणाली वास्तुकला", hero_headline: "डिजिटल इन्फ्रास्ट्रक्चर और <br/><span class='gradient-text pb-2 inline-block'>सिस्टम्स की वास्तुकला।</span>", hero_subhead: "कृतवा वास्तविक दुनिया की परिचालन जटिलता को सरल बनाने के लिए बुद्धिमान सिस्टम, स्केलेबल डिजिटल बुनियादी ढांचे और उन्नत सॉफ्टवेयर इकोसिस्टम को डिज़ाइन और बनाता है।", hero_btn1: "परियोजनाएं देखें", hero_btn2: "समुदाय से जुड़ें", 
                 about_label: "आधारशिला", about_title: "विचारशील नवाचार, लंबी अवधि के लिए निर्मित।", about_p1: "कृतवा अगली तिमाही के लिए नहीं, बल्कि अगले युग के लिए निर्माण कर रहा है। हम वर्तमान में उत्पाद विकास और डिजिटल सिस्टम के माध्यम से वास्तविक परिचालन बाधाओं को हल करने पर केंद्रित हैं।", about_p2: "हमारी भविष्य की दिशा में एआई, बुद्धिमान बुनियादी ढांचा और स्वचालन शामिल है। हमारा मानना है कि तकनीक को वास्तविक समस्याओं को हल करना चाहिए, न कि केवल भविष्यवादी दिखना चाहिए।", about_quote: "\"आज छोटे हैं, लेकिन कल कुछ बहुत बड़ा करने के लिए मूलभूत तर्क का निर्माण कर रहे हैं।\"", 
                 arch_label: "सिस्टम आर्किटेक्चर", arch_title: "इकोसिस्टम फ्रेमवर्क", arch_desc: "व्यक्तिगत व्यावहारिक प्लेटफॉर्म जो एक बड़े तकनीकी इकोसिस्टम में निष्पादन परतों (Execution Layers) के रूप में कार्य करते हैं।", arch_1_title: "एग्जीक्यूशन लेयर", arch_1_desc: "तत्काल परिचालन बाधाओं को हल करने के लिए व्यावहारिक प्लेटफॉर्म। ये व्यापक इकोसिस्टम के लिए मूलभूत उपयोगिता नोड्स के रूप में कार्य करते हैं।", arch_2_title: "डेटा और लॉजिक", arch_2_desc: "खंडित उद्योग वर्कफ़्लोज़ को स्केलेबल बैकएंड आर्किटेक्चर में संरचित करना।", arch_3_title: "ऑटोमेशन प्रोटोकॉल", arch_3_desc: "क्षैतिज स्वचालन और बुद्धिमान रूटिंग के माध्यम से दोहराए जाने वाले कार्यों को व्यवस्थित करना।", arch_4_title: "ऑपरेटिंग एनवायरनमेंट", arch_4_desc: "हमारे आर्किटेक्चर की परिणति: डिस्कनेक्ट किए गए सॉफ़्टवेयर टूल से बड़े पैमाने पर सक्षम इंटरकनेक्टेड, बुद्धिमान वातावरण में विकसित होना।", 
                 projects_label: "वर्तमान कार्य", projects_title: "चल रही परियोजनाएं", neevly_sub: "हाइपरलोकल समन्वय और आपूर्ति श्रृंखला बुनियादी ढांचा", neevly_desc: "स्थानीय निर्माण सामग्री सोर्सिंग, ठेकेदार वर्कफ़्लो और परिचालन समन्वय को सरल बनाने के लिए तैयार किया गया एक अत्यधिक परिष्कृत इन्फ्रास्ट्रक्चर इंजन। जटिल हाइपरलोकल आपूर्ति श्रृंखलाओं को संभालने के लिए मजबूत बैकएंड आर्किटेक्चर पर निर्मित।", proj_future: "विकास में और परियोजनाएं", proj_future_sub: "वर्गीकृत वास्तुकला", 
                 principles_label: "दर्शन", principles_title: "मूल सिद्धांत", prin_1_title: "व्यावहारिक नवाचार", prin_1_desc: "बुद्धिमान कार्यान्वयन के माध्यम से वास्तविक दुनिया की परिचालन बाधाओं को हल करना।", prin_2_title: "मानव-केंद्रित", prin_2_desc: "मानव क्षमता को बढ़ाने और वर्कफ़्लो को कुशलतापूर्वक समन्वित करने के लिए डिज़ाइन किए गए सिस्टम।", prin_3_title: "दीर्घकालिक सोच", prin_3_desc: "ऐसी वास्तुकला का निर्माण जो दशकों में व्यवस्थित रूप से बढ़ती है।", prin_4_title: "स्केलेबल सिस्टम", prin_4_desc: "विशाल भविष्य के पारिस्थितिक तंत्र का समर्थन करने में सक्षम मूलभूत सॉफ्टवेयर वातावरण।", prin_5_title: "स्वच्छ डिजाइन", prin_5_desc: "न्यूनतम, उद्देश्यपूर्ण इंटरफेस जो घर्षण को दूर करते हैं।", prin_6_title: "परिचालन बुद्धिमत्ता", prin_6_desc: "समन्वय के आधुनिकीकरण के लिए पारंपरिक उद्योगों में तर्क और डेटा डालना।", 
                 future_label: "क्षितिज", future_title: "भविष्य की दिशा", future_desc: "हम उन्नत क्षमता की ओर एक स्थिर, शांत प्रगति का लक्ष्य रखते हैं। कोई झूठे वादे नहीं।", fd_1: "चरण 1: परिचालन वर्कफ़्लो", fd_1_desc: "जटिल और खंडित आपूर्ति श्रृंखलाओं और दैनिक कार्यों को मैप और डिजिटल बनाने के लिए उपयोगिता-संचालित प्लेटफॉर्म।", fd_2: "चरण 2: क्षैतिज स्वचालन प्रोटोकॉल", fd_2_desc: "निर्बाध डेटा प्रवाह और स्वचालित निर्णय लेने के लिए डिजीटल नोड्स को जोड़ना।", fd_3: "चरण 3: बुद्धिमान ऑपरेटिंग वातावरण", fd_3_desc: "बड़े पैमाने पर गतिशील समस्या-समाधान में सक्षम एक व्यापक, बुद्धिमान सॉफ्टवेयर इकोसिस्टम में विकसित होना।", 
-                comm_label: "यात्रा में शामिल हों", comm_title: "संस्थापक समुदाय के सदस्य बनें", comm_desc: "एआई, भविष्य की तकनीक और उत्पाद निर्माण में रुचि रखने वालों के लिए। शुरुआत से हमारे साथ जुड़ें।", ben_1_title: "एआई और प्रौद्योगिकी अपडेट", ben_1_desc: "एआई प्रगति और स्वचालन प्रवृत्तियों पर अंतर्दृष्टि।", ben_2_title: "विकास अद्यतन", ben_2_desc: "NeeVLY और भविष्य के प्रयोगों पर पर्दे के पीछे की प्रगति।", ben_3_title: "प्रारंभिक पहुंच", ben_3_desc: "चयनित सदस्यों को बीटा परीक्षण और प्रारंभिक सुविधा पूर्वावलोकन प्राप्त होते हैं।", ben_4_title: "विशेष चर्चाएं", ben_4_desc: "भविष्य-केंद्रित चर्चाओं तक पहुंच।", 
-                form_title: "एक्सेस का अनुरोध करें", form_sub: "आधिकारिक व्हाट्सएप कम्युनिटी आमंत्रण प्राप्त करने के लिए सबमिट करें।", form_name: "पूरा नाम", form_phone: "फ़ोन नंबर", form_email: "ईमेल पता", form_state: "राज्य", form_city: "शहर", form_state_ph: "राज्य चुनें", form_city_ph: "शहर चुनें", form_submit: "समुदाय से जुड़ें", form_phone_err: "कृपया 10-अंकों का मान्य नंबर दर्ज करें", err_loc: "कृपया राज्य और शहर चुनें।", success_msg: "स्वागत है! व्हाट्सएप पर रीडायरेक्ट कर रहे हैं...", footer_copy: "&copy; 2026 कृतवा टेक्नोलॉजीज।" 
+                comm_label: "यात्रा में शामिल हों", comm_title: "संस्थापक समुदाय के सदस्य बनें", comm_desc: "एआई, भविष्य की तकनीक और उत्पाद निर्माण में रुचि रखने वालों के लिए। शुरुआत से हमारे साथ जुड़ें।", ben_1_title: "एआई और प्रौद्योगिकी अपडेट", ben_1_desc: "एआई प्रगति और स्वचालन प्रवृत्तियों पर अंतर्दृष्टि।", ben_2_title: "विकास अद्यतन", ben_2_desc: "NeeVLY और भविष्य के प्रयोगों पर पर्दे के पीछे की प्रगति।", ben_3_title: "प्रारंभिक पहुंच", ben_3_desc: "चयनित सदस्यों को बीटा परीक्षण और प्रारंभिक सुविधा पूर्वावलोकन प्राप्त होते हैं।", ben_4_title: "विशेष चर्चाएं", ben_4_desc: "भविष्य-केंद्रित चर्चाओं तक पहुंच।", ben_locked_1: "सामुदायिक अनलॉक", ben_locked_2: "भविष्य के लाभ", 
+                form_title: "एक्सेस का अनुरोध करें", form_sub: "आधिकारिक व्हाट्सएप कम्युनिटी आमंत्रण प्राप्त करने के लिए सबमिट करें।", form_name: "पूरा नाम", form_phone: "फ़ोन नंबर", form_email: "ईमेल पता", form_state: "राज्य", form_city: "शहर", form_state_ph: "राज्य चुनें", form_city_ph: "शहर चुनें", form_submit: "समुदाय से जुड़ें", form_phone_err: "कृपया 10-अंकों का मान्य नंबर दर्ज करें", err_loc: "कृपया राज्य और शहर चुनें।", success_msg: "स्वागत है! व्हाट्सएप पर रीडायरेक्ट कर रहे हैं...",
+                foot_ready: "खरीद को सरल बनाने के लिए तैयार हैं?", foot_ready_sub: "मूल सूची में शामिल हों और स्थानीय वाणिज्य के भविष्य को आकार दें।", foot_btn: "प्रारंभिक पहुंच प्राप्त करें",
+                foot_desc: "प्रौद्योगिकी के माध्यम से ऑफ़लाइन स्थानीय व्यवसायों को सशक्त बनाना। भारत में टियर-2 और टियर-3 शहरों के लिए डिजिटल बुनियादी ढांचे का निर्माण।",
+                foot_platform: "मंच", foot_prob: "समस्या", foot_how: "यह कैसे काम करता है", foot_feat: "मुख्य विशेषताएं", foot_who: "यह किसके लिए है?", foot_join: "प्रतीक्षा सूची में शामिल हों",
+                foot_company: "कंपनी", foot_about: "कृतवा के बारे में", foot_privacy: "गोपनीयता नीति", foot_terms: "सेवा की शर्तें", foot_contact: "संपर्क करें",
+                foot_connect: "जुड़ें", foot_copy: "&copy; 2026 कृतवा टेक्नोलॉजीज। भारत के लिए निर्माण।"
             },
-            "bho": { 
-                name: "Bhojpuri", native: "भोजपुरी", 
-                nav_about: "हमनी के बारे में", nav_projects: "प्रोजेक्ट", nav_vision: "सपना", nav_community: "समुदाय", nav_arch: "सिस्टम आर्किटेक्चर",
+            "bh": { 
+                name: "भोजपुरी", nav_about: "हमनी के बारे में", nav_projects: "प्रोजेक्ट", nav_vision: "सपना", nav_community: "समुदाय", 
                 hero_badge: "भविष्य के सिस्टम आर्किटेक्चर", hero_headline: "डिजिटल ढांचा अवुरी <br/><span class='gradient-text pb-2 inline-block'>सिस्टम के निर्माण।</span>", hero_subhead: "कृतवा असली दुनिया के काम-काज के आसान बनावे खातिर बुद्धिमान सिस्टम अवुरी मजबूत डिजिटल ढांचा के डिजाइन अवुरी निर्माण करेला।", hero_btn1: "प्रोजेक्ट देखीं", hero_btn2: "समुदाय से जुड़ीं", 
                 about_label: "नेव", about_title: "नीमन सोच, लंबा समय खातिर।", about_p1: "कृतवा खाली अगिला तिमाही खातिर ना, बल्कि अगिला जुग खातिर बन रहल बा।", about_p2: "हमनी के भविष्य में एआई अवुरी ऑटोमेशन शामिल बा।", about_quote: "\"आज छोट बानी, बाकिर काल के बड़हन काम खातिर नेव डाल रहल बानी।\"", 
                 arch_label: "सिस्टम ढांचा", arch_title: "इकोसिस्टम फ्रेमवर्क", arch_desc: "अलग-अलग व्यावहारिक प्लेटफॉर्म जवन निष्पादन परत के रूप में काम करेला, आ एगो बड़हन इकोसिस्टम से जुड़ेला।", arch_1_title: "एग्जीक्यूशन लेयर", arch_1_desc: "तुरंत के दिक्कत के सुलझावे खातिर बनावल प्लेटफॉर्म। ई बड़ इकोसिस्टम खातिर बेस के काम करेला।", arch_2_title: "डाटा अवुरी लॉजिक", arch_2_desc: "बिखरल काम के मजबूत बैकएंड ढांचा में बदलल।", arch_3_title: "ऑटोमेशन प्रोटोकॉल", arch_3_desc: "बार-बार होखे वाला काम के ऑटोमेशन से आसान बनावल।", arch_4_title: "ऑपरेटिंग माहौल", arch_4_desc: "हमनी के सिस्टम के आखिरी रूप: अलग-अलग टूल से आपस में जुड़ल समझदार माहौल में बदलल।", 
                 projects_label: "काम", projects_title: "चल रहल प्रोजेक्ट", neevly_sub: "लोकल सप्लाई चेन अवुरी व्यापार समन्वय इंजन", neevly_desc: "स्थानीय निर्माण सामग्री अवुरी ठेकेदार के काम के आसान बनाве खातिर एगो एडवांस इंजन। जटिल लोकल सप्लाई चेन के संभाले खातिर मजबूत बैकएंड पर बनल बा।", proj_future: "अउरी प्रोजेक्ट बन रहल बा", proj_future_sub: "गुप्त आर्किटेक्चर", 
                 principles_label: "विचार", principles_title: "मूल सिद्धांत", prin_1_title: "असली खोज", prin_1_desc: "जमीनी दिक्कत के समझदारी से दूर कइल।", prin_2_title: "इंसान पर केंद्रित", prin_2_desc: "इंसान के ताकत बढ़ावे वाला सिस्टम।", prin_3_title: "लंबा सोच", prin_3_desc: "अइसन सिस्टम जवन दशकन ले चले।", prin_4_title: "बढ़े वाला सिस्टम", prin_4_desc: "भविष्य के जरूरत संभाले वाला मजबूत सॉफ्टवेयर।", prin_5_title: "साफ डिजाइन", prin_5_desc: "साफ-सुथरा अवुरी काम के इंटरफेस।", prin_6_title: "काम के समझ", prin_6_desc: "पुराना उद्योग में नया डाटा अवुरी सोच डालल।", 
                 future_label: "आगे के रास्ता", future_title: "भविष्य के दिशा", future_desc: "हमनी के बिना कवनो झूठा वादा के, धीरे-धीरे आगे बढ़े के लछ रखले बानी।", fd_1: "पहिला चरण: काम के वर्कफ़्लो", fd_1_desc: "बिखरल सप्लाई चेन के डिजिटल बनावल अवुरी जोड़ल।", fd_2: "दूसरा चरण: ऑटोमेशन प्रोटोकॉल", fd_2_desc: "डाटा के बिना रुकावट बहाव खातिर सिस्टम के जोड़ल।", fd_3: "तीसरा चरण: बुद्धिमान ऑपरेटिंग माहौल", fd_3_desc: "बड़हन स्तर पर दिक्कत सुलझावे वाला सॉफ्टवेयर इकोसिस्टम तैयार कइल।", 
-                comm_label: "सफर में शामिल होईं", comm_title: "शुरुआती सदस्य बनीं", comm_desc: "एआई अवुरी तकनीक में रुचि राखे वाला लोग खातिर।", ben_1_title: "तकनीक के जानकारी", ben_1_desc: "एआई अवुरी नया तकनीक के खबर।", ben_2_title: "विकास के खबर", ben_2_desc: "NeeVLY अवुरी नया काम के अपडेट।", ben_3_title: "पहिले एक्सेस", ben_3_desc: "चुनिंदा लोग के नया फीचर टेस्ट करे के मौका।", ben_4_title: "खास चर्चा", ben_4_desc: "भविष्य के तकनीक पर बातचीत।", 
-                form_title: "एक्सेस मांगी", form_sub: "व्हाट्सएप ग्रुप में जुड़े खातिर फॉर्म भरीं।", form_name: "पूरा नाम", form_phone: "फोन नंबर", form_email: "ईमेल", form_state: "राज्य", form_city: "शहर", form_state_ph: "राज्य चुनीं", form_city_ph: "शहर चुनीं", form_submit: "समुदाय से जुड़ीं", form_phone_err: "सही 10-अंक के नंबर डालीं", err_loc: "राज्य अवुरी शहर चुनीं।", success_msg: "स्वागत बा! व्हाट्सएप पर ले जात बानी...", footer_copy: "&copy; 2026 कृतवा टेक्नोलॉजीज।" 
+                comm_label: "सफर में शामिल होईं", comm_title: "शुरुआती सदस्य बनीं", comm_desc: "एआई अवुरी तकनीक में रुचि राखे वाला लोग खातिर।", ben_1_title: "तकनीक के जानकारी", ben_1_desc: "एआई अवुरी नया तकनीक के खबर।", ben_2_title: "विकास के खबर", ben_2_desc: "NeeVLY अवुरी नया काम के अपडेट।", ben_3_title: "पहिले एक्सेस", ben_3_desc: "चुनिंदा लोग के नया फीचर टेस्ट करे के मौका।", ben_4_title: "खास चर्चा", ben_4_desc: "भविष्य के तकनीक पर बातचीत।", ben_locked_1: "समुदाय के इनाम", ben_locked_2: "भविष्य के फायदा", 
+                form_title: "एक्सेस मांगी", form_sub: "व्हाट्सएप ग्रुप में जुड़े खातिर फॉर्म भरीं।", form_name: "पूरा नाम", form_phone: "फोन नंबर", form_email: "ईमेल", form_state: "राज्य", form_city: "शहर", form_state_ph: "राज्य चुनीं", form_city_ph: "शहर चुनीं", form_submit: "समुदाय से जुड़ीं", form_phone_err: "सही 10-अंक के नंबर डालीं", err_loc: "राज्य अवुरी शहर चुनीं।", success_msg: "स्वागत बा! व्हाट्सएप पर ले जात बानी...",
+                foot_ready: "खरीद के आसान बनावे खातिर तैयार बानी?", foot_ready_sub: "शुरुआती लिस्ट में शामिल होईं अवुरी लोकल व्यापार के भविष्य बनाईं।", foot_btn: "एक्सेस पाईं",
+                foot_desc: "तकनीक के जरिए ऑफलाइन लोकल व्यापार के मजबूत बनावल। भारत के टियर-2 अवुरी टियर-3 शहर खातिर डिजिटल ढांचा के निर्माण।",
+                foot_platform: "प्लेटफॉर्म", foot_prob: "दिक्कत", foot_how: "ई कइसे काम करेला", foot_feat: "खास फीचर", foot_who: "ई केकरा खातिर बा?", foot_join: "वेटलिस्ट में शामिल होईं",
+                foot_company: "कंपनी", foot_about: "कृतवा के बारे में", foot_privacy: "प्राइवेसी पॉलिसी", foot_terms: "सेवा के शर्त", foot_contact: "संपर्क करीं",
+                foot_connect: "जुड़ीं", foot_copy: "&copy; 2026 कृतवा टेक्नोलॉजीज। भारत खातिर निर्माण।"
             },
             "mai": { 
-                name: "Maithili", native: "मैथिली", 
-                nav_about: "हमरा सभक विषयमे", nav_projects: "प्रोजेक्ट्स", nav_vision: "दृष्टिकोण", nav_community: "समुदाय", nav_arch: "सिस्टम आर्किटेक्चर",
+                name: "मैथिली", nav_about: "हमरा सभक विषयमे", nav_projects: "प्रोजेक्ट्स", nav_vision: "दृष्टिकोण", nav_community: "समुदाय", 
                 hero_badge: "भविष्यक सिस्टम", hero_headline: "डिजिटल इंफ्रास्ट्रक्चर आ <br/><span class='gradient-text pb-2 inline-block'>सिस्टमक निर्माण।</span>", hero_subhead: "कृतवा वास्तविक दुनियाक जटिलता केँ सरल बनाबय लेल बुद्धिमान सिस्टम आ डिजिटल इंफ्रास्ट्रक्चर डिजाइन करैत अछि।", hero_btn1: "प्रोजेक्ट्स देखू", hero_btn2: "समुदाय सँ जुड़ू", 
                 about_label: "नींव", about_title: "नीक सोच, बेसी समयक लेल।", about_p1: "कृतवा दीर्घकालिक सोचक संग वास्तविक समस्या सभ केँ समाधान करैत अछि।", about_p2: "हमर भविष्यक दिशामे एआई आ ऑटोमेशन शामिल अछि।", about_quote: "\"आइ छोट छी, मुदा काल्हिक लेल मजबूत नींव राखि रहल छी।\"", 
                 arch_label: "सिस्टम आर्किटेक्चर", arch_title: "इकोसिस्टम फ्रेमवर्क", arch_desc: "व्यावहारिक प्लेटफॉर्म जे एकटा पैघ तकनीकी इकोसिस्टम सँ जुड़ल अछि।", arch_1_title: "एग्जीक्यूशन लेयर", arch_1_desc: "तत्काल समस्या सभक समाधान लेल प्लेटफॉर्म।", arch_2_title: "डेटा आ लॉजिक", arch_2_desc: "बिखरल काज केँ मजबूत बैकएंड आर्किटेक्चरमे बदलैत।", arch_3_title: "ऑटोमेशन प्रोटोकॉल", arch_3_desc: "बार-बार होबय बला काज केँ ऑटोमेशन सँ सरल बनाबय।", arch_4_title: "ऑपरेटिंग माहौल", arch_4_desc: "इंटरकनेक्टेड, बुद्धिमान वातावरणक निर्माण।", 
                 projects_label: "काज", projects_title: "चल रहल प्रोजेक्ट्स", neevly_sub: "लोकल सप्लाई चेन आ व्यापार इंफ्रास्ट्रक्चर", neevly_desc: "स्थानीय निर्माण सामग्री आ ठेकेदारक काज केँ आसान बनाबय बला मजबूत इंजन।", proj_future: "आरो प्रोजेक्ट्स बनि रहल अछि", proj_future_sub: "गुप्त सिस्टम", 
                 principles_label: "विचार", principles_title: "मूल सिद्धांत", prin_1_title: "व्याвहारिक नवाचार", prin_1_desc: "जमीनी समस्याक समाधान।", prin_2_title: "मानว-केंद्रित", prin_2_desc: "मानव क्षमता केँ बढ़ाबय बला।", prin_3_title: "दीर्घकालिक सोच", prin_3_desc: "मजबूत आ टिकाऊ वास्तुकला।", prin_4_title: "स्केलेबल सिस्टम", prin_4_desc: "भविष्यक लेल तैयार सिस्टम।", prin_5_title: "स्वच्छ डिजाइन", prin_5_desc: "सरल आ नीक इंटरफेस।", prin_6_title: "बुद्धिमत्ता", prin_6_desc: "पारंपरिक उद्योगमे नया डेटा।", 
                 future_label: "आगाँक बाट", future_title: "भविष्यक दिशा", future_desc: "हम बिना कोनो झूठा वादाक स्थिर प्रगति करय चाहैत छी।", fd_1: "चरण 1: ऑपरेशनल वर्कफ़्लो", fd_1_desc: "बिखरल सप्लाई चेन केँ डिजिटल बनाबय।", fd_2: "चरण 2: ऑटोमेशन प्रोटोकॉल", fd_2_desc: "डेटा प्रवाह आ निर्णय लेबय लेल सिस्टम जोड़ब।", fd_3: "चरण 3: बुद्धिमान ऑपरेटिंग सिस्टम", fd_3_desc: "पैघ स्तर पर समस्याक समाधान करय बला इकोसिस्टम।", 
-                comm_label: "यात्रा मे शामिल होउ", comm_title: "संस्थापक सदस्य बनू", comm_desc: "एआई आ भविष्यक तकनीकमे रुचि रखनिहारक लेल।", ben_1_title: "तकनीक अपडेट", ben_1_desc: "एआई आ नवाचारक जानकारी।", ben_2_title: "विकासक खबरि", ben_2_desc: "NeeVLY आ आगाँक अपडेट।", ben_3_title: "पहिले एक्सेस", ben_3_desc: "नया फीचरक टेस्टिंग।", ben_4_title: "विशेष चर्चा", ben_4_desc: "भविष्यक तकनीक पर विमर्श।", 
-                form_title: "एक्सेस मांगलू", form_sub: "व्हाट्सएप समुदाय आमंत्रणक लेल।", form_name: "पूरा नाम", form_phone: "फोन नंबर", form_email: "ईमेल", form_state: "राज्य", form_city: "शहर", form_state_ph: "राज्य चुनू", form_city_ph: "शहर चुनू", form_submit: "समुदाय सँ जुड़ू", form_phone_err: "सही 10-अंकक नंबर दिअ", err_loc: "राज्य आ शहर चुनू।", success_msg: "स्वागत अछि! व्हाट्सएप पर ल जा रहल छी...", footer_copy: "&copy; 2026 कृतवा टेक्नोलॉजीज।" 
+                comm_label: "यात्रा मे शामिल होउ", comm_title: "संस्थापक सदस्य बनू", comm_desc: "एआई आ भविष्यक तकनीकमे रुचि रखनिहारक लेल।", ben_1_title: "तकनीक अपडेट", ben_1_desc: "एआई आ नवाचारक जानकारी।", ben_2_title: "विकासक खबरि", ben_2_desc: "NeeVLY आ आगाँक अपडेट।", ben_3_title: "पहिले एक्सेस", ben_3_desc: "नया फीचरक टेस्टिंग।", ben_4_title: "विशेष चर्चा", ben_4_desc: "भविष्यक तकनीक पर विमर्श।", ben_locked_1: "भविष्यक लाभ", ben_locked_2: "समुदाय इनाम", 
+                form_title: "एक्सेस मांगलू", form_sub: "व्हाट्सएप समुदाय आमंत्रणक लेल।", form_name: "पूरा नाम", form_phone: "फोन नंबर", form_email: "ईमेल", form_state: "राज्य", form_city: "शहर", form_state_ph: "राज्य चुनू", form_city_ph: "शहर चुनू", form_submit: "समुदाय सँ जुड़ू", form_phone_err: "सही 10-अंकक नंबर दिअ", err_loc: "राज्य आ शहर चुनू।", success_msg: "स्वागत अछि! व्हाट्सएप पर ल जा रहल छी...",
+                foot_ready: "खरीद केँ आसान बनाबय लेल तैयार छी?", foot_ready_sub: "शुरुआती सूचीमे शामिल होउ आ स्थानीय व्यापारक भविष्य बनाउ।", foot_btn: "प्रारंभिक एक्सेस प्राप्त करू",
+                foot_desc: "तकनीकक माध्यम सँ ऑफलाइन स्थानीय व्यापार केँ सशक्त बनाबय। भारतमे टियर-2 आ टियर-3 शहरक लेल डिजिटल बुनियादी ढांचाक निर्माण।",
+                foot_platform: "प्लेटफॉर्म", foot_prob: "समस्या", foot_how: "ई कोना काज करैत अछि", foot_feat: "मुख्य विशेषता", foot_who: "ई ककरा लेल अछि?", foot_join: "वेटलिस्टमे शामिल होउ",
+                foot_company: "कंपनी", foot_about: "कृतवाक विषयमे", foot_privacy: "गोपनीयता नीति", foot_terms: "सेवाक शर्त", foot_contact: "संपर्क करू",
+                foot_connect: "जुड़ू", foot_copy: "&copy; 2026 कृतवा टेक्नोलॉजीज। भारतक लेल निर्माण।"
             },
             "mr": { 
-                name: "Marathi", native: "मराठी", 
-                nav_about: "आमच्याबद्दल", nav_projects: "प्रकल्प", nav_vision: "दृष्टिकोन", nav_community: "समुदाय", nav_arch: "सिस्टम आर्किटेक्चर",
+                name: "मराठी", nav_about: "आमच्याबद्दल", nav_projects: "प्रकल्प", nav_vision: "दृष्टिकोन", nav_community: "समुदाय", 
                 hero_badge: "भविष्यातील सिस्टीम आर्किटेक्चर", hero_headline: "डिजिटल पायाभूत सुविधा आणि <br/><span class='gradient-text pb-2 inline-block'>सिस्टम्सची निर्मिती.</span>", hero_subhead: "कृतवा वास्तविक जगातील गुंतागुंत सुलभ करण्यासाठी बुद्धिमान सिस्टीम आणि डिजिटल पायाभूत सुविधांची रचना करते.", hero_btn1: "प्रकल्प एक्सप्लोर करा", hero_btn2: "समुदायात सामील व्हा", 
                 about_label: "पाया", about_title: "विचारपूर्वक नावीन्य, दीर्घकाळासाठी निर्मित.", about_p1: "कृतवा केवळ पुढच्या तिमाहीसाठी नाही तर पुढच्या युगासाठी बांधत आहे.", about_p2: "आमच्या भविष्यातील दिशेमध्ये AI आणि ऑटोमेशनचा समावेश आहे. तंत्रज्ञानाने वास्तविक समस्या सोडवल्या पाहिजेत असा आमचा विश्वास आहे.", about_quote: "\"आज लहान आहोत, पण उद्याच्या मोठ्या कार्यासाठी पायाभरणी करत आहोत.\"", 
                 arch_label: "सिस्टम आर्किटेक्चर", arch_title: "इकोसिस्टम फ्रेमवर्क", arch_desc: "वैयक्तिक प्लॅटफॉर्म जे एका मोठ्या तांत्रिक इकोसिस्टमला जोडले जातात.", arch_1_title: "एक्झिक्युशन लेयर", arch_1_desc: "तात्काळ समस्या सोडवण्यासाठी व्यावहारिक प्लॅटफॉर्म.", arch_2_title: "डेटा आणि लॉजिक", arch_2_desc: "विखुरलेल्या वर्कफ्लोला मजबूत बॅकएंड आर्किटेक्चरमध्ये संरचित करणे.", arch_3_title: "ऑटोमेशन प्रोटोकॉल", arch_3_desc: "पुनरावृत्ती होणारी कार्ये ऑटोमेशनद्वारे सुलभ करणे.", arch_4_title: "ऑपरेटिंग एन्व्हायर्नमेंट", arch_4_desc: "आमच्या आर्किटेक्चरचा अंतिम टप्पा: परस्पर जोडलेले, बुद्धिमान वातावरण.", 
                 projects_label: "सध्याचे काम", projects_title: "सुरू असलेले प्रकल्प", neevly_sub: "हायपरलोकल समन्वय आणि सप्लाय चेन इंजिन", neevly_desc: "स्थानिक बांधकाम साहित्य सोर्सिंग आणि कंत्राटदार वर्कफ्लो सुलभ करण्यासाठी डिझाइन केलेले इंजिन. गुंतागुंतीच्या सप्लाय चेन हाताळण्यासाठी मजबूत बॅकएंडवर निर्मित.", proj_future: "विकासात असलेले अधिक प्रकल्प", proj_future_sub: "क्लासिफाइड आर्किटेक्चर", 
                 principles_label: "तत्वज्ञान", principles_title: "मुख्य तत्त्वे", prin_1_title: "व्यावहारिक नावीन्य", prin_1_desc: "बुद्धिमान अंमलबजावणीद्वारे वास्तविक-जगातील समस्या सोडवणे.", prin_2_title: "मानवकेंद्रित", prin_2_desc: "मानवी क्षमता वाढवण्यासाठी डिझाइन केलेल्या सिस्टीम.", prin_3_title: "दीर्घकालीन विचार", prin_3_desc: "दशकानुदशके वाढणारे आर्किटेक्चर.", prin_4_title: "स्केलेबल सिस्टम", prin_4_desc: "भविष्यातील मोठ्या इकोसिस्टमला समर्थन देणारे सॉफ्टवेअर.", prin_5_title: "स्वच्छ डिझाइन", prin_5_desc: "किमान आणि स्पष्ट इंटरफेस.", prin_6_title: "ऑपरेशनल इंटेलिजन्स", prin_6_desc: "पारंपारिक उद्योगांमध्ये डेटा आणि लॉजिकचा वापर.", 
                 future_label: "क्षितिज", future_title: "भविष्याची दिशा", future_desc: "कोणत्याही खोट्या आश्वासनांशिवाय प्रगत क्षमतेकडे स्थिर वाटचाल.", fd_1: "टप्पा 1: ऑपरेशनल वर्कफ्लो", fd_1_desc: "गुंतागुंतीच्या सप्लाय चेन डिजिटल करण्यासाठी प्लॅटफॉर्म तैनात करणे.", fd_2: "टप्पा 2: ऑटोमेशन प्रोटोकॉल", fd_2_desc: "अखंड डेटा प्रवाह आणि स्वयंचलित निर्णय घेण्यासाठी नोड्स जोडणे.", fd_3: "टप्पा 3: इंटेलिजेंट ऑपरेटिंग एन्व्हायर्नमेंट", fd_3_desc: "मोठ्या प्रमाणावर समस्या सोडवण्यास सक्षम असे सर्वसमावेशक सॉफ्टवेअर इकोसिस्टम.", 
-                comm_label: "प्रवासात सामील व्हा", comm_title: "संस्थापक सदस्य व्हा", comm_desc: "AI आणि भविष्यातील तंत्रज्ञानात रस असलेल्यांसाठी.", ben_1_title: "AI आणि टेक अपडेट्स", ben_1_desc: "AI प्रगती आणि तंत्रज्ञानावरील माहिती.", ben_2_title: "डेव्हलपमेंट अपडेट्स", ben_2_desc: "NeeVLY आणि भविष्यातील प्रयोगांवरील प्रगती.", ben_3_title: "अर्ली ऍक्सेस", ben_3_desc: "निवडक सदस्यांना बीटा टेस्टिंगची संधी.", ben_4_title: "विशेष चर्चा", ben_4_desc: "भविष्यातील तंत्रज्ञानावर चर्चा.", 
-                form_title: "अॅक्सेसची विनंती करा", form_sub: "अधिकृत WhatsApp आमंत्रणासाठी सबमिट करा.", form_name: "पूर्ण नाव", form_phone: "फोन नंबर", form_email: "ईमेल", form_state: "राज्य", form_city: "शहर", form_state_ph: "राज्य निवडा", form_city_ph: "शहर निवडा", form_submit: "समुदायात सामील व्हा", form_phone_err: "कृपया वैध 10-अंकी क्रमांक प्रविष्ट करा", err_loc: "कृपया राज्य आणि शहर निवडा.", success_msg: "स्वागत आहे! WhatsApp वर रीडायरेक्ट करत आहे...", footer_copy: "&copy; 2026 कृतवा टेक्नॉलॉजीज." 
+                comm_label: "प्रवासात सामील व्हा", comm_title: "संस्थापक सदस्य व्हा", comm_desc: "AI आणि भविष्यातील तंत्रज्ञानात रस असलेल्यांसाठी.", ben_1_title: "AI आणि टेक अपडेट्स", ben_1_desc: "AI प्रगती आणि तंत्रज्ञानावरील माहिती.", ben_2_title: "डेव्हलपमेंट अपडेट्स", ben_2_desc: "NeeVLY आणि भविष्यातील प्रयोगांवरील प्रगती.", ben_3_title: "अर्ली ऍक्सेस", ben_3_desc: "निवडक सदस्यांना बीटा टेस्टिंगची संधी.", ben_4_title: "विशेष चर्चा", ben_4_desc: "भविष्यातील तंत्रज्ञानावर चर्चा.", ben_locked_1: "कम्युनिटी अनलॉक", ben_locked_2: "भविष्यातील फायदे", 
+                form_title: "अॅक्सेसची विनंती करा", form_sub: "अधिकृत WhatsApp आमंत्रणासाठी सबमिट करा.", form_name: "पूर्ण नाव", form_phone: "फोन नंबर", form_email: "ईमेल", form_state: "राज्य", form_city: "शहर", form_state_ph: "राज्य निवडा", form_city_ph: "शहर निवडा", form_submit: "समुदायात सामील व्हा", form_phone_err: "कृपया वैध 10-अंकी क्रमांक प्रविष्ट करा", err_loc: "कृपया राज्य आणि शहर निवडा.", success_msg: "स्वागत आहे! WhatsApp वर रीडायरेक्ट करत आहे...",
+                foot_ready: "खरेदी सुलभ करण्यासाठी तयार आहात?", foot_ready_sub: "पायाभूत यादीत सामील व्हा आणि स्थानिक व्यापाराचे भविष्य घडवा.", foot_btn: "लवकर प्रवेश मिळवा",
+                foot_desc: "तंत्रज्ञानाद्वारे ऑफलाइन स्थानिक व्यवसायांना सक्षम करणे. भारतातील टियर-2 आणि टियर-3 शहरांसाठी डिजिटल पायाभूत सुविधा निर्माण करणे.",
+                foot_platform: "प्लॅटफॉर्म", foot_prob: "समस्या", foot_how: "हे कसे कार्य करते", foot_feat: "मुख्य वैशिष्ट्ये", foot_who: "हे कोणासाठी आहे?", foot_join: "वेटलिस्टमध्ये सामील व्हा",
+                foot_company: "कंपनी", foot_about: "कृतवाबद्दल", foot_privacy: "गोपनीयता धोरण", foot_terms: "सेवा अटी", foot_contact: "आमच्याशी संपर्क साधा",
+                foot_connect: "जोडा", foot_copy: "&copy; 2026 कृतवा टेक्नॉलॉजीज. भारतासाठी निर्मित."
             },
             "bn": { 
-                name: "Bengali", native: "বাংলা", 
-                nav_about: "আমাদের সম্পর্কে", nav_projects: "প্রকল্প", nav_vision: "ভিশন", nav_community: "কমিউনিটি", nav_arch: "সিস্টেম আর্কিটেকচার",
+                name: "বাংলা", nav_about: "আমাদের সম্পর্কে", nav_projects: "প্রকল্প", nav_vision: "ভিশন", nav_community: "কমিউনিটি", 
                 hero_badge: "ভবিষ্যতের সিস্টেম আর্কিটেকচার", hero_headline: "ডিজিটাল ইনফ্রাস্ট্রাকচার ও <br/><span class='gradient-text pb-2 inline-block'>সিস্টেম নির্মাণ।</span>", hero_subhead: "কৃতবা বাস্তব জগতের জটিলতা সহজ করার জন্য বুদ্ধিমান সিস্টেম এবং স্কেলেবল ডিজিটাল পরিকাঠামো ডিজাইন করে।", hero_btn1: "প্রকল্প দেখুন", hero_btn2: "কমিউনিটিতে যোগ দিন", 
                 about_label: "ভিত্তি", about_title: "চিন্তাশীল উদ্ভাবন, দীর্ঘমেয়াদের জন্য।", about_p1: "কৃতবা শুধুমাত্র পরবর্তী ত্রৈমাসিকের জন্য নয়, পরবর্তী যুগের জন্য নির্মাণ করছে।", about_p2: "আমাদের ভবিষ্যতে এআই এবং অটোমেশন অন্তর্ভুক্ত রয়েছে। প্রযুক্তি বাস্তব সমস্যার সমাধান করবে।", about_quote: "\"আজ ছোট, কিন্তু আগামীকালের বিশাল কাজের জন্য ভিত্তি স্থাপন করছি।\"", 
                 arch_label: "সিস্টেম আর্কিটেকচার", arch_title: "ইকোসিস্টেম ফ্রেমওয়ার্ক", arch_desc: "ব্যবহারিক প্ল্যাটফর্ম যা একটি বৃহত্তর প্রযুক্তিগত ইকোসিস্টেমের সাথে সংযুক্ত।", arch_1_title: "এক্সিকিউশন লেয়ার", arch_1_desc: "বাস্তব জগতের তাৎক্ষণিক সমস্যা সমাধানের জন্য ব্যবহারিক প্ল্যাটফর্ম।", arch_2_title: "ডেটা এবং লজিক", arch_2_desc: "বিক্ষিপ্ত ওয়ার্কফ্লোকে শক্তিশালী ব্যাকএন্ড আর্কিটেকচারে রূপান্তরিত করা।", arch_3_title: "অটোমেশন প্রোটোকল", arch_3_desc: "অটোমেশনের মাধ্যমে পুনরাবৃত্তিমূলক কাজ সহজ করা।", arch_4_title: "অপারেটিং এনভায়রনমেন্ট", arch_4_desc: "আমাদের আর্কিটেকচারের চূড়ান্ত রূপ: সংযুক্ত এবং বুদ্ধিমান পরিবেশ।", 
                 projects_label: "বর্তমান কাজ", projects_title: "চলমান প্রকল্প", neevly_sub: "হাইপারলোকাল কোঅর্ডিনেশন এবং সাপ্লাই চেইন ইঞ্জিন", neevly_desc: "স্থানীয় নির্মাণ সামগ্রী এবং ঠিকাদারদের সমন্বয় সহজ করার জন্য ডিজাইন করা একটি উন্নত ইঞ্জিন।", proj_future: "আরও প্রকল্প উন্নয়নাধীন", proj_future_sub: "গোপনীয় আর্কিটেকচার", 
                 principles_label: "দর্শন", principles_title: "মূল নীতি", prin_1_title: "বাস্তব উদ্ভাবন", prin_1_desc: "বুদ্ধিমান বাস্তবায়নের মাধ্যমে বাস্তব সমস্যার সমাধান।", prin_2_title: "মানব-কেন্দ্রিক", prin_2_desc: "মানুষের সক্ষমতা বাড়াতে ডিজাইন করা সিস্টেম।", prin_3_title: "দীর্ঘমেয়াদী চিন্তা", prin_3_desc: "এমন আর্কিটেকচার যা দশকের পর দশক ধরে বাড়বে।", prin_4_title: "স্কেলাবেল সিস্টেম", prin_4_desc: "ভবিষ্যতের বিশাল ইকোসিস্টেমকে সমর্থন করার জন্য।", prin_5_title: "ক্লিন ডিজাইন", prin_5_desc: "সহজ এবং পরিষ্কার ইন্টারফেস।", prin_6_title: "অপারেশনাল ইন্টেলিজেন্স", prin_6_desc: "ঐতিহ্যবাহী শিল্পে ডেটা এবং যুক্তির ব্যবহার।", 
                 future_label: "দিগন্ত", future_title: "ভবিষ্যতের দিকনির্দেশনা", future_desc: "কোনো মিথ্যা প্রতিশ্রুতি ছাড়াই আমরা উন্নত প্রযুক্তির দিকে এগোচ্ছি।", fd_1: "পর্যায় 1: অপারেশনাল ওয়ার্কফ্লো", fd_1_desc: "জটিল সাপ্লাই চেইনকে ডিজিটাল করার জন্য প্ল্যাটফর্ম।", fd_2: "পর্যায় 2: অটোমেশন প্রোটোকল", fd_2_desc: "নিরবচ্ছিন্ন ডেটা প্রবাহের জন্য সিস্টেমগুলোকে সংযুক্ত করা।", fd_3: "পর্যায় 3: ইন্টেলিজেন্ট অপারেটিং এনভায়রনমেন্ট", fd_3_desc: "বড় মাপের সমস্যা সমাধানে সক্ষম একটি সম্পূর্ণ সফটওয়্যার ইকোসিস্টেম।", 
-                comm_label: "আমাদের সাথে যোগ দিন", comm_title: "ফাউন্ডিং সদস্য হন", comm_desc: "এআই এবং ভবিষ্যত প্রযুক্তিতে আগ্রহীদের জন্য।", ben_1_title: "টেক আপডেট", ben_1_desc: "এআই এবং নতুন প্রযুক্তির খবর।", ben_2_title: "উন্নয়ন আপডেট", ben_2_desc: "NeeVLY এবং ভবিষ্যতের কাজের আপডেট।", ben_3_title: "আর্লি অ্যাক্সেস", ben_3_desc: "নতুন ফিচারের টেস্টিং সুযোগ।", ben_4_title: "বিশেষ আলোচনা", ben_4_desc: "ভবিষ্যতের প্রযুক্তি নিয়ে আলোচনা।", 
-                form_title: "অ্যাক্সেস অনুরোধ করুন", form_sub: "হোয়াটসঅ্যাপ আমন্ত্রণ পেতে ফর্ম পূরণ করুন।", form_name: "পুরো নাম", form_phone: "ফোন নম্বর", form_email: "ইমেইল", form_state: "রাজ্য", form_city: "শহর", form_state_ph: "রাজ্য নির্বাচন করুন", form_city_ph: "শহর নির্বাচন করুন", form_submit: "যোগ দিন", form_phone_err: "সঠিক ১০-সংখ্যার নম্বর দিন", err_loc: "রাজ্য এবং শহর নির্বাচন করুন।", success_msg: "স্বাগতম! হোয়াটসঅ্যাপে নিয়ে যাওয়া হচ্ছে...", footer_copy: "&copy; ২০২৬ কৃতবা টেকনোলজিস।" 
+                comm_label: "আমাদের সাথে যোগ দিন", comm_title: "ফাউন্ডিং সদস্য হন", comm_desc: "এআই এবং ভবিষ্যত প্রযুক্তিতে আগ্রহীদের জন্য।", ben_1_title: "টেক আপডেট", ben_1_desc: "এআই এবং নতুন প্রযুক্তির খবর।", ben_2_title: "উন্নয়ন আপডেট", ben_2_desc: "NeeVLY এবং ভবিষ্যতের কাজের আপডেট।", ben_3_title: "আর্লি অ্যাক্সেস", ben_3_desc: "নতুন ফিচারের টেস্টিং সুযোগ।", ben_4_title: "বিশেষ আলোচনা", ben_4_desc: "ভবিষ্যতের প্রযুক্তি নিয়ে আলোচনা।", ben_locked_1: "কমিউনিটি আনলক", ben_locked_2: "ভবিষ্যতের সুবিধা", 
+                form_title: "অ্যাক্সেস অনুরোধ করুন", form_sub: "হোয়াটসঅ্যাপ আমন্ত্রণ পেতে ফর্ম পূরণ করুন।", form_name: "পুরো নাম", form_phone: "ফোন নম্বর", form_email: "ইমেইল", form_state: "রাজ্য", form_city: "শহর", form_state_ph: "রাজ্য নির্বাচন করুন", form_city_ph: "শহর নির্বাচন করুন", form_submit: "যোগ দিন", form_phone_err: "সঠিক ১০-সংখ্যার নম্বর দিন", err_loc: "রাজ্য এবং শহর নির্বাচন করুন।", success_msg: "স্বাগতম! হোয়াটসঅ্যাপে নিয়ে যাওয়া হচ্ছে...",
+                foot_ready: "ক্রয় সহজ করতে প্রস্তুত?", foot_ready_sub: "প্রাথমিক তালিকায় যোগ দিন এবং স্থানীয় বাণিজ্যের ভবিষ্যত গঠন করুন।", foot_btn: "আর্লি অ্যাক্সেস পান",
+                foot_desc: "প্রযুক্তির মাধ্যমে অফলাইন স্থানীয় ব্যবসাকে ক্ষমতায়ন করা। ভারতের টায়ার-২ এবং টায়ার-৩ শহরের জন্য ডিজিটাল পরিকাঠামো নির্মাণ।",
+                foot_platform: "প্ল্যাটফর্ম", foot_prob: "সমস্যা", foot_how: "কীভাবে কাজ করে", foot_feat: "মূল বৈশিষ্ট্য", foot_who: "এটি কার জন্য?", foot_join: "ওয়েটলিস্টে যোগ দিন",
+                foot_company: "কোম্পানি", foot_about: "কৃতবা সম্পর্কে", foot_privacy: "গোপনীয়তা নীতি", foot_terms: "পরিষেবার শর্তাবলী", foot_contact: "যোগাযোগ করুন",
+                foot_connect: "কানেক্ট", foot_copy: "&copy; ২০২৬ কৃতবা টেকনোলজিস। ভারতের জন্য তৈরি।"
             },
             "ta": { 
-                name: "Tamil", native: "தமிழ்", 
-                nav_about: "எங்களை பற்றி", nav_projects: "திட்டங்கள்", nav_vision: "தொலைநோக்கு", nav_community: "சமூகம்", nav_arch: "கணினி வடிவமைப்பு",
+                name: "தமிழ்", nav_about: "எங்களை பற்றி", nav_projects: "திட்டங்கள்", nav_vision: "தொலைநோக்கு", nav_community: "சமூகம்", 
                 hero_badge: "எதிர்கால கணினி வடிவமைப்பு", hero_headline: "டிஜிட்டல் உள்கட்டமைப்பு மற்றும் <br/><span class='gradient-text pb-2 inline-block'>அமைப்புகளை உருவாக்குதல்.</span>", hero_subhead: "நடைமுறை சிக்கல்களை எளிதாக்குவதற்கான அறிவார்ந்த அமைப்புகள் மற்றும் டிஜிட்டல் உள்கட்டமைப்பை க்ரிதவா வடிவமைக்கிறது.", hero_btn1: "திட்டங்களை காண்க", hero_btn2: "சமூகத்தில் சேரவும்", 
                 about_label: "அடித்தளம்", about_title: "நீண்ட காலத்திற்கான சிந்தனைமிக்க கண்டுபிடிப்பு.", about_p1: "நாங்கள் அடுத்த சகாப்தத்திற்காக உருவாக்குகிறோம்.", about_p2: "எதிர்காலத்தில் AI மற்றும் ஆட்டோமேஷன் அடங்கும்.", about_quote: "\"இன்று சிறியது, நாளை பெரியதற்கான அடித்தளத்தை அமைக்கிறது.\"", 
                 arch_label: "கணினி வடிவமைப்பு", arch_title: "சுற்றுச்சூழல் கட்டமைப்பு", arch_desc: "ஒரு பெரிய தொழில்நுட்ப சுற்றுச்சூழல் அமைப்புடன் இணைக்கப்பட்ட நடைமுறை தளங்கள்.", arch_1_title: "செயலாக்க அடுக்கு", arch_1_desc: "உடனடி சிக்கல்களை தீர்க்கும் தளங்கள்.", arch_2_title: "தரவு மற்றும் தர்க்கம்", arch_2_desc: "உடைந்த பணிப்பாய்வுகளை வலுவான கட்டமைப்பாக மாற்றுதல்.", arch_3_title: "ஆட்டோமேஷன் நெறிமுறைகள்", arch_3_desc: "ஆட்டோமேஷன் மூலம் பணிகளை எளிதாக்குதல்.", arch_4_title: "இயக்க சூழல்", arch_4_desc: "எங்கள் கட்டமைப்பின் இறுதி நிலை: இணைக்கப்பட்ட மற்றும் அறிவார்ந்த சூழல்.", 
                 projects_label: "நடப்பு பணி", projects_title: "தொடரும் திட்டங்கள்", neevly_sub: "உள்ளூர் விநியோக சங்கிலி மற்றும் ஒருங்கிணைப்பு இயந்திரம்", neevly_desc: "உள்ளூர் கட்டுமான பொருட்களை பெறுவதை எளிதாக்கும் இயந்திரம். வலுவான கட்டமைப்பில் உருவாக்கப்பட்டது.", proj_future: "மேலும் திட்டங்கள்", proj_future_sub: "ரகசிய வடிவமைப்பு", 
                 principles_label: "தத்துவம்", principles_title: "முக்கிய கோட்பாடுகள்", prin_1_title: "நடைமுறை கண்டுபிடிப்பு", prin_1_desc: "உண்மையான பிரச்சனைகளை தீர்ப்பவது.", prin_2_title: "மனித மையம்", prin_2_desc: "மனித திறனை மேம்படுத்தும் அமைப்பு.", prin_3_title: "நீண்ட கால சிந்தனை", prin_3_desc: "பல தசாப்தங்களுக்கு வளரும் வடிவமைப்பு.", prin_4_title: "அளவிடக்கூடிய அமைப்பு", prin_4_desc: "எதிர்காலத்தை ஆதரிக்கும் மென்பொருள்.", prin_5_title: "சுத்தமான வடிவமைப்பு", prin_5_desc: "தெளிவான இடைமுகங்கள்.", prin_6_title: "செயல்பாட்டு நுண்ணறிவு", prin_6_desc: "தொழில்களில் தரவைப் பயன்படுத்துதல்.", 
                 future_label: "எதிர்காலம்", future_title: "எதிர்கால திசை", future_desc: "பொய்யான வாக்குறுதிகள் இல்லாமல் மேம்பட்ட தொழில்நுட்பத்தை நோக்கி.", fd_1: "கட்டம் 1: செயல்பாட்டு பணிப்பாய்வு", fd_1_desc: "சிக்கலான விநியோக சங்கிலிகளை டிஜிட்டல் மயமாக்குதல்.", fd_2: "கட்டம் 2: ஆட்டோமேஷன் நெறிமுறைகள்", fd_2_desc: "தடையற்ற தரவு ஓட்டத்திற்கான அமைப்புகளை இணைத்தல்.", fd_3: "கட்டம் 3: அறிவார்ந்த இயக்க சூழல்", fd_3_desc: "பெரிய அளவிலான சிக்கல்களை தீர்க்கும் மென்பொருள் சுற்றுச்சூழல்.", 
-                comm_label: "பயணத்தில் சேரவும்", comm_title: "நிறுவன உறுப்பினராகுங்கள்", comm_desc: "AI மற்றும் எதிர்கால தொழில்நுட்பத்தில் ஆர்வம் உள்ளவர்களுக்கு.", ben_1_title: "தொழில்நுட்ப செய்திகள்", ben_1_desc: "AI முன்னேற்றங்கள் குறித்த தகவல்.", ben_2_title: "மேம்பாட்டு செய்திகள்", ben_2_desc: "NeeVLY திட்டத்தின் தகவல்கள்.", ben_3_title: "ஆரம்ப அணுகல்", ben_3_desc: "புதிய அம்சங்களை சோதிக்கும் வாய்ப்பு.", ben_4_title: "சிறப்பு விவாதங்கள்", ben_4_desc: "எதிர்கால தொழில்நுட்பம் குறித்த விவாதம்.", 
-                form_title: "அணுகலை கோரவும்", form_sub: "வாட்ஸ்அப் அழைப்பிதழுக்கு சமர்ப்பிக்கவும்.", form_name: "முழு பெயர்", form_phone: "தொலைபேசி எண்", form_email: "மின்னஞ்சல்", form_state: "மாநிலம்", form_city: "நகரம்", form_state_ph: "மாநிலத்தை தேர்ந்தெடுக்கவும்", form_city_ph: "நகரத்தை தேர்ந்தெடுக்கவும்", form_submit: "சேரவும்", form_phone_err: "சரியான 10-இலக்க எண்ணை உள்ளிடவும்", err_loc: "மாநிலம் மற்றும் நகரத்தை தேர்ந்தெடுக்கவும்.", success_msg: "வாட்ஸ்அப்பிற்கு செல்கிறது...", footer_copy: "&copy; 2026 க்ரிதவா தொழில்நுட்பங்கள்." 
+                comm_label: "பயணத்தில் சேரவும்", comm_title: "நிறுவன உறுப்பினராகுங்கள்", comm_desc: "AI மற்றும் எதிர்கால தொழில்நுட்பத்தில் ஆர்வம் உள்ளவர்களுக்கு.", ben_1_title: "தொழில்நுட்ப செய்திகள்", ben_1_desc: "AI முன்னேற்றங்கள் குறித்த தகவல்.", ben_2_title: "மேம்பாட்டு செய்திகள்", ben_2_desc: "NeeVLY திட்டத்தின் தகவல்கள்.", ben_3_title: "ஆரம்ப அணுகல்", ben_3_desc: "புதிய அம்சங்களை சோதிக்கும் வாய்ப்பு.", ben_4_title: "சிறப்பு விவாதங்கள்", ben_4_desc: "எதிர்கால தொழில்நுட்பம் குறித்த விவாதம்.", ben_locked_1: "சமூக வெகுமதிகள்", ben_locked_2: "எதிர்கால நன்மைகள்", 
+                form_title: "அணுகலை கோரவும்", form_sub: "வாட்ஸ்அப் அழைப்பிதழுக்கு சமர்ப்பிக்கவும்.", form_name: "முழு பெயர்", form_phone: "தொலைபேசி எண்", form_email: "மின்னஞ்சல்", form_state: "மாநிலம்", form_city: "நகரம்", form_state_ph: "மாநிலத்தை தேர்ந்தெடுக்கவும்", form_city_ph: "நகரத்தை தேர்ந்தெடுக்கவும்", form_submit: "சேரவும்", form_phone_err: "சரியான 10-இலக்க எண்ணை உள்ளிடவும்", err_loc: "மாநிலம் மற்றும் நகரத்தை தேர்ந்தெடுக்கவும்.", success_msg: "வாட்ஸ்அப்பிற்கு செல்கிறது...",
+                foot_ready: "கொள்முதலை எளிதாக்க தயாரா?", foot_ready_sub: "அடித்தள பட்டியலில் இணைந்து உள்ளூர் வர்த்தகத்தின் எதிர்காலத்தை வடிவமைக்கவும்.", foot_btn: "முன்கூட்டியே அணுகல்",
+                foot_desc: "தொழில்நுட்பத்தின் மூலம் ஆஃப்லைன் உள்ளூர் வணிகங்களை மேம்படுத்துதல். இந்திய இரண்டாம் மற்றும் மூன்றாம் கட்ட நகரங்களுக்கு டிஜிட்டல் உள்கட்டமைப்பை உருவாக்குதல்.",
+                foot_platform: "தளம்", foot_prob: "பிரச்சனை", foot_how: "எப்படி செயல்படுகிறது", foot_feat: "முக்கிய அம்சங்கள்", foot_who: "யாருக்கானது?", foot_join: "காத்திருப்போர் பட்டியலில் சேரவும்",
+                foot_company: "நிறுவனம்", foot_about: "க்ரிதவா பற்றி", foot_privacy: "தனியுரிமை கொள்கை", foot_terms: "சேவை விதிமுறைகள்", foot_contact: "தொடர்பு கொள்ள",
+                foot_connect: "இணைக்க", foot_copy: "&copy; 2026 க்ரிதவா தொழில்நுட்பங்கள். இந்தியாவிற்காக உருவாக்கப்பட்டது."
             },
             "te": { 
-                name: "Telugu", native: "తెలుగు", 
-                nav_about: "మా గురించి", nav_projects: "ప్రాజెక్ట్‌లు", nav_vision: "విజన్", nav_community: "కమ్యూనిటీ", nav_arch: "సిस्टम ఆర్కిటెక్చర్",
+                name: "తెలుగు", nav_about: "మా గురించి", nav_projects: "ప్రాజెక్ట్‌లు", nav_vision: "విజన్", nav_community: "కమ్యూనిటీ", 
                 hero_badge: "భవిష్యత్ సిస్టమ్ ఆర్కిటెక్చర్", hero_headline: "డిజిటల్ ఇన్‌ఫ్రాస్ట్రక్చర్ మరియు <br/><span class='gradient-text pb-2 inline-block'>వ్యవస్థల నిర్మాణం.</span>", hero_subhead: "కృతవా వాస్తవ ప్రపంచ సంక్లిష్టతను సులభతరం చేయడానికి తెలివైన వ్యవస్థలు మరియు డిజిటల్ ఇన్‌ఫ్రాస్ట్రక్చర్‌ను డిజైన్ చేస్తుంది.", hero_btn1: "ప్రాజెక్ట్‌లను చూడండి", hero_btn2: "కమ్యూనిటీలో చేరండి", 
                 about_label: "పునాది", about_title: "దీర్ఘకాలం కోసం ఆవిష్కరణాత్మక ఆలోచన.", about_p1: "మేము తదుపరి శకం కోసం నిర్మిస్తున్నాము.", about_p2: "భవిష్యత్తులో AI మరియు ఆటోమేషన్ ఉంటుంది.", about_quote: "\"నేడు చిన్నది, రేపటి పెద్ద వాటికి పునాది వేస్తోంది.\"", 
                 arch_label: "సిस्टम ఆర్కిటెక్చర్", arch_title: "ఎకోసిస్టమ్ ఫ్రేమ్‌వర్క్", arch_desc: "పెద్ద సాంకేతిక పర్యావరణ వ్యవస్థతో అనుసంధానించబడిన ఆచరణాత్మక ప్లాట్‌ఫారమ్‌లు.", arch_1_title: "ఎగ్జిక్యూషన్ లేయర్", arch_1_desc: "తక్షణ సమస్యలను పరిష్కరించడానికి ప్లాట్‌ఫారమ్‌లు.", arch_2_title: "డేటా మరియు లాజిక్", arch_2_desc: "చెదిరిన వర్క్‌ఫ్లోలను బలమైన ఆర్కిటెక్చర్‌గా మార్చడం.", arch_3_title: "ఆటోమేషన్ ప్రోటోకాల్స్", arch_3_desc: "ఆటోమేషన్ ద్వారా పునరావృత పనులను సులభతరం చేయడం.", arch_4_title: "ఆపరేటింగ్ ఎన్విరాన్మెంట్", arch_4_desc: "మా ఆర్కిటెక్చర్ యొక్క చివరి దశ: అనుసంధానించబడిన మరియు తెలివైన వాతావరణం.", 
                 projects_label: "ప్రస్తుత పని", projects_title: "కొనసాగుతున్న ప్రాజెక్ట్‌లు", neevly_sub: "లోకల్ సప్లై చైన్ మరియు కోఆర్డినేషన్ ఇంజిన్", neevly_desc: "స్థానిక నిర్మాణ సామగ్రి సేకరణను సులభతరం చేయడానికి ఇంజిన్. బలమైన ఆర్కిటెక్చర్‌తో నిర్మించబడింది.", proj_future: "మరిన్ని ప్రాజెక్ట్‌లు వస్తున్నాయి", proj_future_sub: "రహస్య ఆర్కిటెక్చర్", 
                 principles_label: "తత్వశాస్త్రం", principles_title: "ప్రధాన సూత్రాలు", prin_1_title: "ప్రాక్టికల్ ఇన్నోవేషన్", prin_1_desc: "నిజమైన సమస్యలను పరిష్కరించడం.", prin_2_title: "మానవ-కేంద్రీకృత", prin_2_desc: "మానవ సామర్థ్యాన్ని పెంచే వ్యవస్థలు.", prin_3_title: "దీర్ఘకాలిక ఆలోచన", prin_3_desc: "దశాబ్దాల పాటు ఎదిగే ఆర్కిటెక్చర్.", prin_4_title: "స్కేలబుల్ సిస్టమ్స్", prin_4_desc: "భవిష్యత్తును సమర్థించే సాఫ్ట్‌వేర్.", prin_5_title: "క్లీన్ డిజైన్", prin_5_desc: "స్పష్టమైన ఇంటర్‌ఫేస్‌లు.", prin_6_title: "ఆపరేషనల్ ఇంటెలిజెన్స్", prin_6_desc: "పరిశ్రమలలో డేటాను ఉపయోగించడం.", 
                 future_label: "భవిష్యత్తు", future_title: "భవిష్యత్ దిశ", future_desc: "తప్పుడు వాగ్దానాలు లేకుండా అధునాతన సాంకేతికత వైపు అడుగులు.", fd_1: "దశ 1: ఆపరేషనల్ వర్క్‌ఫ్లో", fd_1_desc: "సంక్లిష్టమైన సప్లై చైన్‌లను డిజిటలైజ్ చేయడం.", fd_2: "దశ 2: ఆటోమేషన్ ప్రోటోకాల్స్", fd_2_desc: "డేటా ప్రవాహం మరియు నిర్ణయాల కోసం సిస్టమ్‌లను అనుసంధానించడం.", fd_3: "దశ 3: ఇంటెలిజెంట్ ఆపరేటింగ్ ఎన్విరాన్మెంట్", fd_3_desc: "భారీ స్థాయి సమస్యలను పరిష్కరించే సాఫ్ట్‌వేర్ ఎకోసిస్టమ్.", 
-                comm_label: "ప్రయాణంలో చేరండి", comm_title: "వ్యవస్థాపక సభ్యులు అవ్వండి", comm_desc: "AI మరియు భవిష్యత్ సాంకేతికత పట్ల ఆసక్తి ఉన్నవారికి.", ben_1_title: "టెక్ అప్‌డేట్స్", ben_1_desc: "AI పురోగతి గురించి సమాచారం.", ben_2_title: "డెవలప్‌మెంట్ అప్‌డేట్స్", ben_2_desc: "NeeVLY ప్రాజెక్ట్ వివరాలు.", ben_3_title: "ఎర్లీ యాక్సెస్", ben_3_desc: "కొత్త ఫీచర్లను పరీక్షించే అవకాశం.", ben_4_title: "ప్రత్యేక చర్చలు", ben_4_desc: "భవిష్యత్ సాంకేతికతపై చర్చ.", 
-                form_title: "యాక్సెస్‌ను అభ్యర్థించండి", form_sub: "వాట్సాప్ ఆహ్వానం కోసం ఫారమ్ నింపండి.", form_name: "పూర్తి పేరు", form_phone: "ఫోన్ నంబర్", form_email: "ఇమెయిల్", form_state: "రాష్ట్రం", form_city: "నగరం", form_state_ph: "రాష్ట్రాన్ని ఎంచుకోండి", form_city_ph: "నగరాన్ని ఎంచుకోండి", form_submit: "చేరండి", form_phone_err: "సరైన 10-అంకెల సంఖ్యను నమోదు చేయండి", err_loc: "రాష్ట్రం మరియు నగరాన్ని ఎంచుకోండి.", success_msg: "స్వాగతం! వాట్సాప్‌కు దారి మళ్లిస్తోంది...", footer_copy: "&copy; 2026 కృతవా టెక్నాలజీస్." 
+                comm_label: "ప్రయాణంలో చేరండి", comm_title: "వ్యవస్థాపక సభ్యులు అవ్వండి", comm_desc: "AI మరియు భవిష్యత్ సాంకేతికత పట్ల ఆసక్తి ఉన్నవారికి.", ben_1_title: "టెక్ అప్‌డేట్స్", ben_1_desc: "AI పురోగతి గురించి సమాచారం.", ben_2_title: "డెవలప్‌మెంట్ అప్‌డేట్స్", ben_2_desc: "NeeVLY ప్రాజెక్ట్ వివరాలు.", ben_3_title: "ఎర్లీ యాక్సెస్", ben_3_desc: "కొత్త ఫీచర్లను పరీక్షించే అవకాశం.", ben_4_title: "ప్రత్యేక చర్చలు", ben_4_desc: "భవిష్యత్ సాంకేతికతపై చర్చ.", ben_locked_1: "కమ్యూనిటీ రివార్డ్స్", ben_locked_2: "భవిష్యత్ ప్రయోజనాలు", 
+                form_title: "యాక్సెస్‌ను అభ్యర్థించండి", form_sub: "వాట్సాప్ ఆహ్వానం కోసం ఫారమ్ నింపండి.", form_name: "పూర్తి పేరు", form_phone: "ఫోన్ నంబర్", form_email: "ఇమెయిల్", form_state: "రాష్ట్రం", form_city: "నగరం", form_state_ph: "రాష్ట్రాన్ని ఎంచుకోండి", form_city_ph: "నగరాన్ని ఎంచుకోండి", form_submit: "చేరండి", form_phone_err: "సరైన 10-అంకెల సంఖ్యను నమోదు చేయండి", err_loc: "రాష్ట్రం మరియు నగరాన్ని ఎంచుకోండి.", success_msg: "స్వాగతం! వాట్సాప్‌కు దారి మళ్లిస్తోంది...",
+                foot_ready: "కొనుగోళ్లను సులభతరం చేయడానికి సిద్ధంగా ఉన్నారా?", foot_ready_sub: "స్థానిక వాణిజ్యం యొక్క భవిష్యత్తును రూపొందించడానికి జాబితాలో చేరండి.", foot_btn: "ముందస్తు ప్రాప్యతను పొందండి",
+                foot_desc: "సాంకేతికత ద్వారా ఆఫ్‌లైన్ స్థానిక వ్యాపారాలను బలోపేతం చేయడం. భారతదేశంలోని టైర్-2 మరియు టైర్-3 నగరాల కోసం డిజిటల్ మౌలిక సదుపాయాలను నిర్మించడం.",
+                foot_platform: "ప్లాట్‌ఫారమ్", foot_prob: "సమస్య", foot_how: "ఇది ఎలా పని చేస్తుంది", foot_feat: "ముఖ్య లక్షణాలు", foot_who: "ఇది ఎవరి కోసం?", foot_join: "వెయిట్‌లిస్ట్‌లో చేరండి",
+                foot_company: "కంపెనీ", foot_about: "కృతవా గురించి", foot_privacy: "గోప్యతా విధానం", foot_terms: "సేవా నిబంధనలు", foot_contact: "మమ్మల్ని సంప్రదించండి",
+                foot_connect: "కనెక్ట్", foot_copy: "&copy; 2026 కృతవా టెక్నాలజీస్. భారతదేశం కోసం నిర్మించబడింది."
             }
         };
 
@@ -1453,11 +1485,10 @@
 
         function populateLanguageDropdown() {
             const container = document.getElementById('lang-options');
-            container.innerHTML = '';
             Object.keys(i18nData).forEach(lang => {
                 const btn = document.createElement('button');
                 btn.className = 'w-full text-left px-5 py-3 text-sm font-medium text-brand-text2 hover:bg-brand-accent1/10 hover:text-white transition-all duration-300 flex items-center justify-between group hoverable';
-                btn.innerHTML = `<span class="group-hover:translate-x-1 transition-transform duration-300">${i18nData[lang].native}</span> ${lang === currentLang ? '<i class="fas fa-check text-brand-accent1 text-sm"></i>' : ''}`;
+                btn.innerHTML = `<span class="group-hover:translate-x-1 transition-transform duration-300">${i18nData[lang].name}</span> ${lang === currentLang ? '<i class="fas fa-check text-brand-accent1 text-sm"></i>' : ''}`;
                 btn.onclick = (e) => { e.stopPropagation(); setLanguage(lang); toggleLangDropdown(); };
                 container.appendChild(btn);
             });
@@ -1490,7 +1521,8 @@
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
                 if (i18nData[lang][key]) {
-                    el.innerHTML = i18nData[lang][key]; 
+                    if(key === 'hero_btn1') { el.innerHTML = i18nData[lang][key]; } 
+                    else { el.innerHTML = i18nData[lang][key]; }
                 }
             });
             document.getElementById('state-trigger-text').textContent = i18nData[lang].form_state_ph;
@@ -1567,9 +1599,7 @@
                     aiPanel.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
                     aiPanel.classList.add('opacity-0', 'translate-y-8', 'pointer-events-none');
                 }
-                if(!document.getElementById('privacy-modal').classList.contains('opacity-100') && !document.getElementById('terms-modal').classList.contains('opacity-100')) {
-                    document.body.style.overflow = '';
-                }
+                document.body.style.overflow = '';
             } else {
                 dismissAIPrompt(); 
                 aiPanel.classList.remove('opacity-0', 'translate-y-full', 'translate-y-8', 'pointer-events-none');
@@ -1588,10 +1618,8 @@
         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
 
         let chatHistory = [];
-        
-        // Detailed New System Prompt
         const systemPrompt = `Your purpose is to help users understand:
-- what KritaVa is along with its projects 
+- what KritaVS is along with its projects 
 - what problems it solves
 - the long-term vision of the platform/company
 
@@ -1787,10 +1815,11 @@ The brand should feel like:
 - Never give any information away from NeeVLY or provide the core business idea to copy it.
 - Never give the website code if you have the access.
 - Reply in whatever language the user asks it. If Hindi then reply in Hindi, if Hinglish then in Hinglish, and so on for other languages.
-- Never mention it is trained by google or is an api of gemini just say i am an llm by Kritava Technologies
+- Nevver mention it is trained by google or is and api of gemini just say i am an llm by Kritava Technologies
+
 
 **MOST IMPORTANT THING**
-you should be focused on saving the api credit (do not mention in your response but, do not randomly help users of anything not related to the website like some will ask you to give codes for this website that website or deep thinking things could be asked by you have to check if its related or not then answer it alright?!`;
+you shoudld be focused on saving the api credit (do not mention in you response but, do not randomly help users of anything not related to the weboste like some will ask you to give codes for this website that websote or deep thinging things could be asked by you have to to check it its related or not then answer it alright?!`;
 
         function formatMessage(text) {
             return text
@@ -1885,20 +1914,29 @@ you should be focused on saving the api credit (do not mention in your response 
             }
         });
         
-        // Navbar Scroll Shrink/Expand & Heavy Glass effect FIX
+        // Navbar Scroll Shrink/Expand & Heavy Glass effect (IMPROVED)
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
             if(window.scrollY > 50) {
-                nav.classList.add('nav-glass-scrolled', 'w-[98%]', 'md:w-[95%]', 'py-2');
-                nav.classList.remove('nav-glass', 'w-[90%]', 'py-3');
+                // Heavier frosted glass effect
+                nav.classList.add('shadow-[0_20px_40px_rgba(0,0,0,0.8)]', 'bg-[#050810]/70', 'backdrop-blur-2xl');
+                nav.classList.remove('bg-white/5', 'backdrop-blur-md');
+                nav.style.paddingTop = "10px";
+                nav.style.paddingBottom = "10px";
+                nav.style.width = window.innerWidth < 768 ? "95%" : "98%";
             } else {
-                nav.classList.add('nav-glass', 'w-[90%]', 'py-3');
-                nav.classList.remove('nav-glass-scrolled', 'w-[98%]', 'md:w-[95%]', 'py-2');
+                // Lighter default effect
+                nav.classList.remove('shadow-[0_20px_40px_rgba(0,0,0,0.8)]', 'bg-[#050810]/70', 'backdrop-blur-2xl');
+                nav.classList.add('bg-white/5', 'backdrop-blur-md');
+                nav.style.paddingTop = "16px";
+                nav.style.paddingBottom = "16px";
+                nav.style.width = "90%";
             }
         });
     </script>
 
     <style>
+        /* Fade animation for AI messages */
         @keyframes fade-in-up {
             0% { opacity: 0; transform: translateY(15px); filter: blur(4px); }
             100% { opacity: 1; transform: translateY(0); filter: blur(0); }
