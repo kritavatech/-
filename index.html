@@ -159,6 +159,33 @@
 
         .loader { border: 2px solid rgba(255,255,255,0.1); border-left-color: #00F0FF; border-radius: 50%; width: 20px; height: 20px; animation: spin 1s linear infinite; }
 
+        /* ===== PERFORMANCE OPTIMIZATIONS ===== */
+        /* Scroll Progress Bar */
+        #scroll-progress {
+            position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+            background: linear-gradient(90deg, #00F0FF, #0080FF);
+            z-index: 200; box-shadow: 0 0 10px rgba(0,240,255,0.6);
+            transform-origin: left; will-change: width;
+        }
+
+        /* Mobile Optimizations */
+        @media (max-width: 768px) {
+            .glass-panel { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+            .cyber-grid { background-size: 24px 24px; }
+            .animate-blob-float { filter: blur(40px) !important; }
+            .glass-panel:hover { transform: none; }
+            .glass-panel:hover::before { opacity: 0; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
         .magnetic-wrap { display: inline-block; cursor: pointer; }
         
         #canvas-container {
@@ -173,6 +200,9 @@
     </style>
 </head>
 <body class="antialiased font-sans selection:bg-brand-accent1 selection:text-black cyber-grid">
+
+    <!-- Scroll Progress Bar -->
+    <div id="scroll-progress"></div>
 
     <!-- Global Dynamic Aurora Backgrounds -->
     <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden mix-blend-screen">
@@ -1924,25 +1954,49 @@ you shoudld be focused on saving the api credit (do not mention in you response 
             }
         });
         
-        // Navbar Scroll Shrink/Expand & Heavy Glass effect (IMPROVED)
-        window.addEventListener('scroll', () => {
-            const nav = document.getElementById('navbar');
-            if(window.scrollY > 50) {
-                // Heavier frosted glass effect
-                nav.classList.add('shadow-[0_20px_40px_rgba(0,0,0,0.8)]', 'bg-[#050810]/70', 'backdrop-blur-2xl');
-                nav.classList.remove('bg-white/5', 'backdrop-blur-md');
-                nav.style.paddingTop = "10px";
-                nav.style.paddingBottom = "10px";
-                nav.style.width = window.innerWidth < 768 ? "95%" : "98%";
+        // ===== OPTIMIZED SCROLL LISTENER (Consolidated for performance) =====
+        const navEl = document.getElementById('navbar');
+        let navShrunk = false;
+        const scrollProgressEl = document.getElementById('scroll-progress');
+
+        function handleNavbarScroll() {
+            const shouldShrink = window.scrollY > 50;
+            if (shouldShrink === navShrunk) return;
+            navShrunk = shouldShrink;
+            if (shouldShrink) {
+                navEl.classList.add('shadow-[0_20px_40px_rgba(0,0,0,0.8)]', 'bg-[#050810]/70', 'backdrop-blur-2xl');
+                navEl.classList.remove('bg-white/5', 'backdrop-blur-md');
+                navEl.style.paddingTop = "10px";
+                navEl.style.paddingBottom = "10px";
+                navEl.style.width = window.innerWidth < 768 ? "95%" : "98%";
             } else {
-                // Lighter default effect
-                nav.classList.remove('shadow-[0_20px_40px_rgba(0,0,0,0.8)]', 'bg-[#050810]/70', 'backdrop-blur-2xl');
-                nav.classList.add('bg-white/5', 'backdrop-blur-md');
-                nav.style.paddingTop = "16px";
-                nav.style.paddingBottom = "16px";
-                nav.style.width = "90%";
+                navEl.classList.remove('shadow-[0_20px_40px_rgba(0,0,0,0.8)]', 'bg-[#050810]/70', 'backdrop-blur-2xl');
+                navEl.classList.add('bg-white/5', 'backdrop-blur-md');
+                navEl.style.paddingTop = "16px";
+                navEl.style.paddingBottom = "16px";
+                navEl.style.width = "90%";
             }
-        });
+        }
+
+        function handleScrollProgress() {
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const pct = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0;
+            scrollProgressEl.style.width = pct + '%';
+        }
+
+        let scrollTicking = false;
+        function onScrollFrame() {
+            handleNavbarScroll();
+            handleScrollProgress();
+            scrollTicking = false;
+        }
+        window.addEventListener('scroll', () => {
+            if (!scrollTicking) {
+                requestAnimationFrame(onScrollFrame);
+                scrollTicking = true;
+            }
+        }, { passive: true });
+        onScrollFrame();
     </script>
 
     <style>
